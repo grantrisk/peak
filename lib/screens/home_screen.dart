@@ -49,6 +49,8 @@ class _HomeScreenState extends State<HomeScreen> {
         // Handle Settings Tap
         break;
       case 2:
+        break;
+      case 3:
         // Handle Logout Tap
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -105,7 +107,11 @@ class _HomeScreenState extends State<HomeScreen> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.fitness_center),
-            label: 'Workouts',
+            label: 'Weights',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.directions_run),
+            label: 'Run',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.settings),
@@ -118,7 +124,17 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.amber[800],
+        unselectedItemColor: Colors.grey[600],
         onTap: _onItemTapped,
+        type: BottomNavigationBarType.fixed, // Add this line
+        selectedLabelStyle: TextStyle(
+          // Style for selected label text
+          color: Colors.amber[800], // Match with selectedItemColor
+        ),
+        unselectedLabelStyle: TextStyle(
+          // Style for unselected label text
+          color: Colors.grey[600], // Match with unselectedItemColor
+        ),
       ),
     );
   }
