@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.light,
         ),
         textTheme: const TextTheme(
-          headline6: TextStyle(color: Colors.black),
-          bodyText2: TextStyle(color: Colors.black87),
+          titleLarge: TextStyle(color: Colors.black),
+          bodyMedium: TextStyle(color: Colors.black87),
         ),
         iconTheme: const IconThemeData(color: Colors.black54),
         buttonTheme: ButtonThemeData(
@@ -39,8 +39,7 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            primary: Color(0xff00a5c5), // This is your brand's primary color
-            onPrimary: Colors.white, // This is the color for text/iconography
+            foregroundColor: Colors.white, backgroundColor: Color(0xff00a5c5), // This is the color for text/iconography
           ),
         ),
         appBarTheme: const AppBarTheme(

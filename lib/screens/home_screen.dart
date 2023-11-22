@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../models/workout_model.dart';
 import 'login_screen.dart';
 import 'new_workout_screen.dart';
 
@@ -56,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
       width: double.infinity,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          primary: Theme.of(context)
+          backgroundColor: Theme.of(context)
               .colorScheme
               .secondary, // Use the theme's accent color
           shape: RoundedRectangleBorder(
