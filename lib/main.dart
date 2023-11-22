@@ -39,14 +39,20 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.white, backgroundColor: Color(0xff00a5c5), // This is the color for text/iconography
+            foregroundColor: Colors.white,
+            backgroundColor:
+                Color(0xff00a5c5), // This is the color for text/iconography
           ),
         ),
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.transparent,
           elevation: 0,
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+          shadowColor: Colors.grey,
         ),
-        // Define other custom theme properties if needed
       ),
       home: LoginScreen(),
     );

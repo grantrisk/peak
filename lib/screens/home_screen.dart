@@ -18,11 +18,8 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         title: Text(
           'Fitness Tracker',
-          style: TextStyle(color: Theme.of(context).primaryColor),
+          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
         ),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -115,6 +112,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return BottomNavigationBar(
       items: const <BottomNavigationBarItem>[
         BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: 'Home',
+        ),
+        BottomNavigationBarItem(
           icon: Icon(Icons.fitness_center),
           label: 'Weights',
         ),
@@ -143,23 +144,37 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _selectedIndex = index;
     });
-    // ... Handle navigation logic ...
+
     switch (index) {
       case 0:
-        // Navigate to Weights Screen
+        // Navigate to Home Screen
         break;
       case 1:
-        // Navigate to Run Screen
+        // Navigate to Weights Screen
         break;
       case 2:
-        // Navigate to Settings Screen
+        // Navigate to Run Screen
         break;
       case 3:
-        // Navigate to Login Screen
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (context) => LoginScreen()),
-        );
+        // Navigate to Settings Screen
+        break;
+      case 4:
+        // Navigate to Login Screen with a fade transition
+        Navigator.of(context).pushReplacement(_createFadeRoute());
         break;
     }
+  }
+
+  Route _createFadeRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => LoginScreen(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
+      transitionDuration: Duration(milliseconds: 300),
+    );
   }
 }
