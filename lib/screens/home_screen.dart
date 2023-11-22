@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             Text(
               'Welcome to the Fitness Tracker!',
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.titleLarge,
             ),
             SizedBox(height: 20),
             ElevatedButton(

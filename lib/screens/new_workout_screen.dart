@@ -121,7 +121,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
           TextButton(
             onPressed: widget.onDelete,
             child: Text('Delete Exercise'),
-            style: TextButton.styleFrom(primary: Colors.red),
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
           ),
         ],
       ),
