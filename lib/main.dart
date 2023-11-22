@@ -11,16 +11,67 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false, // Hide the debug banner
+      title: 'Fitness App',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
-        primaryColor: Color(0xffedfdfe),
-        primaryColorDark: Color(0xffb6e3e9),
-        primaryColorLight: Color(0xffedfdfe),
-        scaffoldBackgroundColor: Color(0xffedfdfe),
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: _createMaterialColor(Color(0xffedfdfe)),
+        ).copyWith(
+          secondary: Color(0xff00a5c5),
+          background: Color(0xffedfdfe),
+          onPrimary: Colors.black,
+          onSecondary: Colors.white,
+          error: Color(0xffb00020),
+          onError: Colors.white,
+          brightness: Brightness.light,
+        ),
+        textTheme: const TextTheme(
+          headline6: TextStyle(color: Colors.black),
+          bodyText2: TextStyle(color: Colors.black87),
+        ),
+        iconTheme: const IconThemeData(color: Colors.black54),
+        buttonTheme: ButtonThemeData(
+          buttonColor: Color(0xff00a5c5),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18.0),
+          ),
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            primary: Color(0xff00a5c5), // This is your brand's primary color
+            onPrimary: Colors.white, // This is the color for text/iconography
+          ),
+        ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        // Define other custom theme properties if needed
       ),
       home: LoginScreen(),
     );
   }
+}
+
+// Helper function to create a material color from a single color
+MaterialColor _createMaterialColor(Color color) {
+  List strengths = <double>[.05];
+  Map<int, Color> swatch = {};
+  final int r = color.red, g = color.green, b = color.blue;
+
+  for (int i = 1; i < 10; i++) {
+    strengths.add(0.1 * i);
+  }
+
+  for (var strength in strengths) {
+    final double ds = 0.5 - strength;
+    swatch[(strength * 1000).round()] = Color.fromRGBO(
+      r + ((ds < 0 ? r : (255 - r)) * ds).round(),
+      g + ((ds < 0 ? g : (255 - g)) * ds).round(),
+      b + ((ds < 0 ? b : (255 - b)) * ds).round(),
+      1,
+    );
+  }
+  return MaterialColor(color.value, swatch);
 }
