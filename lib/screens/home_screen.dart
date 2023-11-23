@@ -1,7 +1,9 @@
+import 'package:fitness_app/screens/setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'login_screen.dart';
+import '../widgets/app_header.dart';
+import '../widgets/bottom_navigation.dart';
 import 'new_workout_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -10,16 +12,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int _selectedIndex = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Fitness Tracker',
-          style: TextStyle(color: Theme.of(context).colorScheme.onPrimary),
-        ),
+      appBar: AppHeader(
+        title: 'Fitness Tracker',
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.settings),
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => SettingsScreen()),
+              );
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -43,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(),
+      bottomNavigationBar: BottomNavigation(), // No need to pass selectedIndex
     );
   }
 
@@ -105,76 +112,6 @@ class _HomeScreenState extends State<HomeScreen> {
         color: Colors.grey[300],
       ),
       child: Text(text),
-    );
-  }
-
-  BottomNavigationBar _buildBottomNavigationBar() {
-    return BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Icon(Icons.home),
-          label: 'Home',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.fitness_center),
-          label: 'Weights',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.directions_run),
-          label: 'Run',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.settings),
-          label: 'Settings',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.logout),
-          label: 'Logout',
-        ),
-      ],
-      currentIndex: _selectedIndex,
-      selectedItemColor: Theme.of(context).colorScheme.secondary,
-      unselectedItemColor: Colors.grey[600],
-      onTap: _onItemTapped,
-      type: BottomNavigationBarType.fixed,
-    );
-  }
-
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-
-    switch (index) {
-      case 0:
-        // Navigate to Home Screen
-        break;
-      case 1:
-        // Navigate to Weights Screen
-        break;
-      case 2:
-        // Navigate to Run Screen
-        break;
-      case 3:
-        // Navigate to Settings Screen
-        break;
-      case 4:
-        // Navigate to Login Screen with a fade transition
-        Navigator.of(context).pushReplacement(_createFadeRoute());
-        break;
-    }
-  }
-
-  Route _createFadeRoute() {
-    return PageRouteBuilder(
-      pageBuilder: (context, animation, secondaryAnimation) => LoginScreen(),
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      },
-      transitionDuration: Duration(milliseconds: 300),
     );
   }
 }
