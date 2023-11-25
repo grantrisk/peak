@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../models/exercise_model.dart';
 import '../models/exercise_set_model.dart';
 import '../models/workout_session_model.dart';
@@ -20,6 +23,8 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
   final Duration _refreshRate = Duration(seconds: 1);
   late Timer _timer;
   String _displayTime = '00:00:00';
+  List<dynamic> _allExercises = []; // This will hold all exercises
+  List<dynamic> _filteredExercises = []; // This will hold filtered exercises
 
   @override
   void initState() {
@@ -30,6 +35,39 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
         _displayTime = _formatDuration(_stopwatch.elapsed);
       });
     });
+    _loadExercises();
+  }
+
+  void _loadExercises() async {
+    String jsonString =
+        await rootBundle.loadString('assets/resources/workouts.json');
+    Map<String, dynamic> jsonMap = json.decode(jsonString);
+
+    List<dynamic> exercises = [];
+    jsonMap.forEach((key, value) {
+      exercises.addAll(
+          value); // Add all exercises from each muscle group to the list
+    });
+
+    setState(() {
+      _allExercises = exercises;
+      _filteredExercises = exercises;
+    });
+  }
+
+  void _filterExercises(String input) {
+    if (input.isEmpty) {
+      setState(() => _filteredExercises = _allExercises);
+    } else {
+      setState(() {
+        _filteredExercises = _allExercises
+            .where((exercise) => exercise['name']
+                .toString()
+                .toLowerCase()
+                .contains(input.toLowerCase()))
+            .toList();
+      });
+    }
   }
 
   @override
@@ -115,14 +153,40 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                         color:
                             theme.colorScheme.onSurface), // Set the text color
                     cursorColor: theme.colorScheme.onPrimary,
+                    onChanged: _filterExercises,
                     onFieldSubmitted: (value) => _addNewExercise(),
                   ),
+                  // Display filtered exercises
+                  ..._filteredExercises.map((exercise) => ListTile(
+                        title: Text(exercise['name']),
+                        onTap: () => _selectExercise(exercise),
+                      )),
                   SizedBox(height: 20),
                 ],
               ),
             ),
+            /*Expanded(
+              child: SearchableDropdown(
+                items: _allExercises,
+                onItemSelect: (exercise) {
+                  _selectExercise(exercise);
+                },
+              ),
+            ),*/
           ]),
         ));
+  }
+
+  void _selectExercise(Map<String, dynamic> exercise) {
+    setState(() {
+      Exercise newExercise = Exercise(
+        name: exercise['name'],
+        sets: List.generate(3, (_) => ExerciseSet(reps: 10, weight: 0.0)),
+      );
+      workoutSession.exercises.add(newExercise);
+      _exerciseNameController.clear();
+      _filterExercises('');
+    });
   }
 
   void _addNewExercise() {
@@ -240,8 +304,8 @@ class _ExerciseCardState extends State<ExerciseCard> {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: TextButton(
-              onPressed: () =>
-                  setState(() => widget.exercise.sets.add(ExerciseSet())),
+              onPressed: () => setState(
+                  () => widget.exercise.sets.add(ExerciseSet(reps: 10))),
               child: Text('Add Set'),
               style: TextButton.styleFrom(
                 foregroundColor: theme.colorScheme.secondary,
