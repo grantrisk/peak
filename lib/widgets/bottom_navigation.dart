@@ -61,8 +61,10 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
+    Color disabledColor = Colors.grey; // Color for disabled items
+
     return BottomNavigationBar(
-      items: const <BottomNavigationBarItem>[
+      items: <BottomNavigationBarItem>[
         BottomNavigationBarItem(
           activeIcon: Icon(Icons.home),
           icon: Icon(Icons.home_outlined),
@@ -73,20 +75,23 @@ class _BottomNavigationState extends State<BottomNavigation> {
           label: 'Workouts',
         ),
         BottomNavigationBarItem(
-          activeIcon: Icon(Icons.restaurant_menu),
-          icon: Icon(Icons.restaurant),
-          label: 'Food',
+          icon: Icon(Icons.restaurant, color: disabledColor),
+          label: 'Meals',
         ),
         BottomNavigationBarItem(
-          activeIcon: Icon(Icons.draw),
-          icon: Icon(Icons.draw_outlined),
-          label: 'Diary',
+          icon: Icon(Icons.draw_outlined, color: disabledColor),
+          label: 'Logs',
         ),
       ],
       currentIndex: _selectedIndex,
       selectedItemColor: Theme.of(context).colorScheme.secondary,
       unselectedItemColor: Colors.grey[600],
-      onTap: _onItemTapped,
+      onTap: (index) {
+        // TODO: remove disabled navigation for items
+        if (index != 2 && index != 3) {
+          _onItemTapped(index);
+        }
+      },
       type: BottomNavigationBarType.fixed,
       backgroundColor: Theme.of(context).colorScheme.surface,
     );

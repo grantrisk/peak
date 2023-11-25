@@ -94,7 +94,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
           title: Text('New Workout Session'),
           actions: [
             IconButton(
-              icon: Icon(Icons.save),
+              icon: Icon(Icons.done),
               onPressed: _submitWorkout,
             ),
           ],
@@ -203,7 +203,60 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
   }
 
   void _submitWorkout() {
-    // Here, you can handle the submission logic, such as sending data to Firestore
+    showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Complete Workout'),
+          content: const Text(
+              'Are you sure you want to complete this workout session?'),
+          actions: <Widget>[
+            TextButton(
+                child: const Text('Cancel'),
+                onPressed: () {
+                  Navigator.pop(context); // Dismiss the dialog only
+                },
+                style: TextButton.styleFrom(
+                  foregroundColor: Theme.of(context)
+                      .colorScheme
+                      .secondary, // Button foreground
+                )),
+            TextButton(
+                child: const Text('Complete'),
+                onPressed: () {
+                  _finishWorkout();
+                },
+                style: TextButton.styleFrom(
+                  foregroundColor: Theme.of(context)
+                      .colorScheme
+                      .secondary, // Button foreground
+                )),
+          ],
+        );
+      },
+    );
+  }
+
+  void _finishWorkout() {
+    Navigator.pop(context); // Dismiss the dialog
+
+    if (workoutSession.exercises.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+            content: Text('Please add at least one exercise to the workout'),
+            elevation: 4,
+            backgroundColor: Theme.of(context).colorScheme.error,
+            margin: EdgeInsets.all(16.0),
+            behavior: SnackBarBehavior.floating,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+            padding: EdgeInsets.all(16.0)),
+      );
+      return;
+    }
+
+    // Here, handle the actual submission logic, such as sending data to Firestore
     // For now, let's print the workout session to the console
     print('Workout Session: ${workoutSession.date}');
     // print length of workout session in datetime
@@ -215,7 +268,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
         print('  ${set.reps} reps - ${set.weight} lbs');
       }
     }
-    // Navigator.of(context).pop();
+    //Navigator.of(context).pop(); // Pop the current screen
   }
 
   void _showBackDialog() {
