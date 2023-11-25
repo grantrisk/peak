@@ -9,6 +9,10 @@ import 'dart:async';
 import 'package:uuid/uuid.dart';
 
 class NewWorkoutScreen extends StatefulWidget {
+  final Map<String, dynamic>? initialExercise;
+
+  NewWorkoutScreen({this.initialExercise});
+
   @override
   _NewWorkoutScreenState createState() => _NewWorkoutScreenState();
 }
@@ -36,6 +40,16 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
       });
     });
     _loadExercises();
+
+    if (widget.initialExercise != null) {
+      // Use the initialExercise for your logic
+      // Example: Convert Map to ExerciseModel if you have such a class
+      // Example: initialExercise: {id: standing-barbell-shrugs, name: Standing Barbell Shrugs, muscles_worked: {primary: Traps}}
+      workoutSession.exercises.add(Exercise(
+        name: widget.initialExercise!['name'],
+        sets: List.generate(3, (_) => ExerciseSet(reps: 10, weight: 0.0)),
+      ));
+    }
   }
 
   void _loadExercises() async {
@@ -85,16 +99,37 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
     return "$hours:$minutes:$seconds";
   }
 
+  void _toggleStopwatch() {
+    if (_stopwatch.isRunning) {
+      _stopwatch.stop();
+    } else {
+      _stopwatch.start();
+      _startTimer();
+    }
+
+    // Update the UI
+    setState(() {});
+  }
+
+  void _startTimer() {
+    _timer = Timer.periodic(_refreshRate, (Timer t) {
+      setState(() {
+        _displayTime = _formatDuration(_stopwatch.elapsed);
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
     return Scaffold(
         appBar: AppBar(
-          title: Text('New Workout Session'),
+          title: Text('Active Workout'),
           actions: [
             IconButton(
               icon: Icon(Icons.done),
+              color: theme.colorScheme.secondary,
               onPressed: _submitWorkout,
             ),
           ],
@@ -174,6 +209,12 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
               ),
             ),*/
           ]),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: _toggleStopwatch,
+          child: Icon(_stopwatch.isRunning ? Icons.pause : Icons.play_arrow),
+          splashColor: theme.colorScheme.primary,
+          backgroundColor: theme.colorScheme.secondary,
         ));
   }
 
@@ -256,6 +297,9 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
       return;
     }
 
+    // Stop the stopwatch
+    _stopwatch.stop();
+
     // Here, handle the actual submission logic, such as sending data to Firestore
     // For now, let's print the workout session to the console
     print('Workout Session: ${workoutSession.date}');
@@ -318,6 +362,7 @@ class ExerciseCard extends StatefulWidget {
 
 class _ExerciseCardState extends State<ExerciseCard> {
   void onWeightChanged(int index, double weight) {
+    // TODO: Need to figure out state management here. This is not working
     print('Weight changed : $weight');
     setState(() {
       // Set the userModified flag to true for the changed set

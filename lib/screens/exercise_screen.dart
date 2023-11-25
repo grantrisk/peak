@@ -1,7 +1,12 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../widgets/app_header.dart';
 import '../widgets/bottom_navigation.dart';
+import 'new_workout_screen.dart';
 
 class ExerciseScreen extends StatefulWidget {
   @override
@@ -23,8 +28,23 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
           ),
           IconButton(
             icon: Icon(Icons.add),
-            onPressed: () {
-              // This can be wired to create a custom routine
+            onPressed: () async {
+              // TODO: this is temporary, update this later
+              final jsonString =
+                  await rootBundle.loadString('assets/resources/workouts.json');
+              final jsonResponse = json.decode(jsonString);
+              final exercises = jsonResponse['traps'] as List;
+
+              final randomExercise =
+                  exercises[Random().nextInt(exercises.length)];
+
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      NewWorkoutScreen(initialExercise: randomExercise),
+                ),
+              );
             },
           ),
         ],
