@@ -102,9 +102,18 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
   void _toggleStopwatch() {
     if (_stopwatch.isRunning) {
       _stopwatch.stop();
+      _timer.cancel();
     } else {
       _stopwatch.start();
+      _timer = Timer.periodic(_refreshRate, (timer) {
+        setState(() {
+          _displayTime = _formatDuration(_stopwatch.elapsed);
+        });
+      });
     }
+
+    // refresh the UI
+    setState(() {});
   }
 
   @override
@@ -133,11 +142,11 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                 _showBackDialog();
               },
               child: Column(children: [
-                SizedBox(height: 35),
                 Expanded(
                   child: ListView(
                     padding: EdgeInsets.all(16.0),
                     children: <Widget>[
+                      SizedBox(height: 35),
                       ...workoutSession.exercises
                           .map((exercise) => ExerciseCard(
                                 exercise: exercise,
@@ -194,17 +203,18 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
               ]),
             ),
             Positioned(
-              top: 0, // Adjust as needed
+              top: 0,
               right: 16,
               child: Card(
                 elevation: 4,
                 child: Padding(
                   padding: EdgeInsets.all(8),
                   child: Text(
-                    'Timer: $_displayTime', // Updated timer display
+                    'Timer: $_displayTime',
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
+                      color: _stopwatch.isRunning ? Colors.green : Colors.red,
                     ),
                   ),
                 ),
@@ -302,16 +312,22 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
     // Stop the stopwatch
     _stopwatch.stop();
 
+    print('');
     // Here, handle the actual submission logic, such as sending data to Firestore
     // For now, let's print the workout session to the console
     print('Workout Session: ${workoutSession.date}');
     // print length of workout session in datetime
     print('Workout Session Length: ${_stopwatch.elapsed}');
 
+    print('');
+
     for (var exercise in workoutSession.exercises) {
+      print('');
       print('Exercise: ${exercise.name}');
       for (var set in exercise.sets) {
-        print('  ${set.reps} reps - ${set.weight} lbs');
+        if (set.isCompleted) {
+          print('  ${set.reps} reps - ${set.weight} lbs');
+        }
       }
     }
     //Navigator.of(context).pop(); // Pop the current screen
@@ -464,6 +480,12 @@ class _SetInputState extends State<SetInput> {
     super.dispose();
   }
 
+  void toggleCompletion() {
+    setState(() {
+      widget.set.isCompleted = !widget.set.isCompleted;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -472,68 +494,82 @@ class _SetInputState extends State<SetInput> {
     String initialRepsValue =
         widget.set.reps > 0 ? widget.set.reps.toString() : '10';
 
-    return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextFormField(
-              initialValue: initialRepsValue,
-              decoration: InputDecoration(
-                labelText: 'Reps',
-                labelStyle: TextStyle(color: theme.colorScheme.onSurface),
-                border: OutlineInputBorder(),
-                focusedBorder: OutlineInputBorder(
-                  // Define the border when the TextField is focused
-                  borderSide: BorderSide(
-                      color: theme.colorScheme.secondary, width: 2.0),
+    return Opacity(
+      opacity: widget.set.isCompleted ? 0.5 : 1.0, // Gray out if completed
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        child: Row(
+          children: [
+            Expanded(
+              child: TextFormField(
+                initialValue: initialRepsValue,
+                decoration: InputDecoration(
+                  labelText: 'Reps',
+                  labelStyle: TextStyle(color: theme.colorScheme.onSurface),
+                  border: OutlineInputBorder(),
+                  focusedBorder: OutlineInputBorder(
+                    // Define the border when the TextField is focused
+                    borderSide: BorderSide(
+                        color: theme.colorScheme.secondary, width: 2.0),
+                  ),
+                  fillColor: theme.colorScheme.surface,
+                  filled: true,
                 ),
-                fillColor: theme.colorScheme.surface,
-                filled: true,
+                keyboardType: TextInputType.number,
+                onChanged: (value) =>
+                    widget.onRepsChanged(int.tryParse(value) ?? 0),
+                style: TextStyle(
+                    color: theme.colorScheme.onSurface), // Set the text color
+                cursorColor: theme.colorScheme.onPrimary,
               ),
-              keyboardType: TextInputType.number,
-              onChanged: (value) =>
-                  widget.onRepsChanged(int.tryParse(value) ?? 0),
-              style: TextStyle(
-                  color: theme.colorScheme.onSurface), // Set the text color
-              cursorColor: theme.colorScheme.onPrimary,
             ),
-          ),
-          SizedBox(width: 16.0),
-          Expanded(
-            child: TextFormField(
-              controller: _weightController,
-              decoration: InputDecoration(
-                labelText: 'Weight',
-                labelStyle: TextStyle(color: theme.colorScheme.onSurface),
-                border: OutlineInputBorder(),
-                focusedBorder: OutlineInputBorder(
-                  // Define the border when the TextField is focused
-                  borderSide: BorderSide(
-                      color: theme.colorScheme.secondary, width: 2.0),
+            SizedBox(width: 16.0),
+            Expanded(
+              child: TextFormField(
+                controller: _weightController,
+                decoration: InputDecoration(
+                  labelText: 'Weight',
+                  labelStyle: TextStyle(color: theme.colorScheme.onSurface),
+                  border: OutlineInputBorder(),
+                  focusedBorder: OutlineInputBorder(
+                    // Define the border when the TextField is focused
+                    borderSide: BorderSide(
+                        color: theme.colorScheme.secondary, width: 2.0),
+                  ),
+                  fillColor: theme.colorScheme.surface,
+                  filled: true,
                 ),
-                fillColor: theme.colorScheme.surface,
-                filled: true,
-              ),
-              keyboardType: TextInputType.number,
-              onChanged: (value) {
-                if (!_weightController.text.isEmpty) {
-                  double? weight = double.tryParse(value);
-                  if (weight != null) {
-                    widget.onWeightChanged(widget.index, weight);
+                keyboardType: TextInputType.number,
+                onChanged: (value) {
+                  if (!_weightController.text.isEmpty) {
+                    double? weight = double.tryParse(value);
+                    if (weight != null) {
+                      widget.onWeightChanged(widget.index, weight);
+                    }
                   }
-                }
-              },
-              style: TextStyle(
-                  color: theme.colorScheme.onSurface), // Set the text color
-              cursorColor: theme.colorScheme.onPrimary,
+                },
+                style: TextStyle(
+                    color: theme.colorScheme.onSurface), // Set the text color
+                cursorColor: theme.colorScheme.onPrimary,
+              ),
             ),
-          ),
-          IconButton(
-            icon: Icon(Icons.delete, color: theme.colorScheme.error),
-            onPressed: widget.onDeleted,
-          ),
-        ],
+            IconButton(
+              icon: Icon(
+                widget.set.isCompleted
+                    ? Icons.check_circle
+                    : Icons.check_circle_outline,
+                color: widget.set.isCompleted
+                    ? Colors.green
+                    : theme.colorScheme.onSurface,
+              ),
+              onPressed: toggleCompletion,
+            ),
+            IconButton(
+              icon: Icon(Icons.delete, color: theme.colorScheme.error),
+              onPressed: widget.onDeleted,
+            ),
+          ],
+        ),
       ),
     );
   }

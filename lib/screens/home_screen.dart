@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _sectionCard({required String title, required Widget child}) {
     return Card(
       elevation: 4,
-      margin: EdgeInsets.only(top: 20),
+      margin: EdgeInsets.only(top: 10, bottom: 10),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),

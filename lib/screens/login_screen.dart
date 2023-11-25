@@ -24,6 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Image.asset(
                 'assets/images/fitness_app_logo.png',
@@ -70,7 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: 24.0),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  foregroundColor: theme.colorScheme.onSecondary, backgroundColor: theme.colorScheme.secondary,
+                  foregroundColor: theme.colorScheme.onSecondary,
+                  backgroundColor: theme.colorScheme.secondary,
                 ),
                 onPressed: () {
                   HapticFeedback.lightImpact();
