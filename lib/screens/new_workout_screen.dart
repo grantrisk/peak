@@ -86,8 +86,8 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
 
   @override
   void dispose() {
-    _timer.cancel();
     _stopwatch.stop();
+    _timer.cancel();
     super.dispose();
   }
 
@@ -104,19 +104,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
       _stopwatch.stop();
     } else {
       _stopwatch.start();
-      _startTimer();
     }
-
-    // Update the UI
-    setState(() {});
-  }
-
-  void _startTimer() {
-    _timer = Timer.periodic(_refreshRate, (Timer t) {
-      setState(() {
-        _displayTime = _formatDuration(_stopwatch.elapsed);
-      });
-    });
   }
 
   @override
@@ -134,81 +122,95 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
             ),
           ],
         ),
-        body: PopScope(
-          canPop: false,
-          onPopInvoked: (bool didPop) {
-            if (didPop) {
-              return;
-            }
-            _showBackDialog();
-          },
-          child: Column(children: [
-            Center(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Text(
-                  'Timer: $_displayTime',
-                  style: theme.textTheme.titleLarge,
+        body: Stack(
+          children: [
+            PopScope(
+              canPop: false,
+              onPopInvoked: (bool didPop) {
+                if (didPop) {
+                  return;
+                }
+                _showBackDialog();
+              },
+              child: Column(children: [
+                SizedBox(height: 35),
+                Expanded(
+                  child: ListView(
+                    padding: EdgeInsets.all(16.0),
+                    children: <Widget>[
+                      ...workoutSession.exercises
+                          .map((exercise) => ExerciseCard(
+                                exercise: exercise,
+                                onDelete: () {
+                                  setState(() {
+                                    workoutSession.exercises.remove(exercise);
+                                  });
+                                },
+                              ))
+                          .toList(),
+                      TextFormField(
+                        controller: _exerciseNameController,
+                        decoration: InputDecoration(
+                          labelText: 'Exercise Name',
+                          labelStyle:
+                              TextStyle(color: theme.colorScheme.onSurface),
+                          border: OutlineInputBorder(),
+                          focusedBorder: OutlineInputBorder(
+                            // Define the border when the TextField is focused
+                            borderSide: BorderSide(
+                                color: theme.colorScheme.secondary, width: 2.0),
+                          ),
+                          fillColor: theme.colorScheme.surface,
+                          filled: true,
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.add),
+                            onPressed: _addNewExercise,
+                          ),
+                        ),
+                        style: TextStyle(
+                            color: theme
+                                .colorScheme.onSurface), // Set the text color
+                        cursorColor: theme.colorScheme.onPrimary,
+                        onChanged: _filterExercises,
+                        onFieldSubmitted: (value) => _addNewExercise(),
+                      ),
+                      // Display filtered exercises
+                      ..._filteredExercises.map((exercise) => ListTile(
+                            title: Text(exercise['name']),
+                            onTap: () => _selectExercise(exercise),
+                          )),
+                      SizedBox(height: 20),
+                    ],
+                  ),
+                ),
+                /*Expanded(
+                child: SearchableDropdown(
+                  items: _allExercises,
+                  onItemSelect: (exercise) {
+                    _selectExercise(exercise);
+                  },
+                ),
+              ),*/
+              ]),
+            ),
+            Positioned(
+              top: 0, // Adjust as needed
+              right: 16,
+              child: Card(
+                elevation: 4,
+                child: Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Text(
+                    'Timer: $_displayTime', // Updated timer display
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
             ),
-            Expanded(
-              child: ListView(
-                padding: EdgeInsets.all(16.0),
-                children: <Widget>[
-                  ...workoutSession.exercises
-                      .map((exercise) => ExerciseCard(
-                            exercise: exercise,
-                            onDelete: () {
-                              setState(() {
-                                workoutSession.exercises.remove(exercise);
-                              });
-                            },
-                          ))
-                      .toList(),
-                  TextFormField(
-                    controller: _exerciseNameController,
-                    decoration: InputDecoration(
-                      labelText: 'Exercise Name',
-                      labelStyle: TextStyle(color: theme.colorScheme.onSurface),
-                      border: OutlineInputBorder(),
-                      focusedBorder: OutlineInputBorder(
-                        // Define the border when the TextField is focused
-                        borderSide: BorderSide(
-                            color: theme.colorScheme.secondary, width: 2.0),
-                      ),
-                      fillColor: theme.colorScheme.surface,
-                      filled: true,
-                      suffixIcon: IconButton(
-                        icon: Icon(Icons.add),
-                        onPressed: _addNewExercise,
-                      ),
-                    ),
-                    style: TextStyle(
-                        color:
-                            theme.colorScheme.onSurface), // Set the text color
-                    cursorColor: theme.colorScheme.onPrimary,
-                    onChanged: _filterExercises,
-                    onFieldSubmitted: (value) => _addNewExercise(),
-                  ),
-                  // Display filtered exercises
-                  ..._filteredExercises.map((exercise) => ListTile(
-                        title: Text(exercise['name']),
-                        onTap: () => _selectExercise(exercise),
-                      )),
-                  SizedBox(height: 20),
-                ],
-              ),
-            ),
-            /*Expanded(
-              child: SearchableDropdown(
-                items: _allExercises,
-                onItemSelect: (exercise) {
-                  _selectExercise(exercise);
-                },
-              ),
-            ),*/
-          ]),
+          ],
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: _toggleStopwatch,
