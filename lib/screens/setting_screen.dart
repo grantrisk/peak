@@ -79,7 +79,6 @@ class SettingsScreen extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.of(context).pop(); // Close the dialog
                           Navigator.of(context).pushAndRemoveUntil(
                             _createFadeRoute(),
                             (Route<dynamic> route) => false,
