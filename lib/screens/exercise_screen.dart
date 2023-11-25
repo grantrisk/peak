@@ -33,7 +33,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
               final jsonString =
                   await rootBundle.loadString('assets/resources/workouts.json');
               final jsonResponse = json.decode(jsonString);
-              final exercises = jsonResponse['traps'] as List;
+              final exercises = jsonResponse['shoulders'] as List;
 
               final randomExercise =
                   exercises[Random().nextInt(exercises.length)];

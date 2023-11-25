@@ -32,6 +32,7 @@ dependencies:
     sdk: flutter
   cupertino_icons: ^1.0.2 # Use with the CupertinoIcons class for iOS style icons.
   uuid: ^4.2.1
+  provider: ^6.0.0
 
 dev_dependencies:
   flutter_test:

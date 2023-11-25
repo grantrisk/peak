@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
+
 class ExerciseSet {
+  final String id = UniqueKey().toString();
   int reps;
   double weight;
   bool userModified;

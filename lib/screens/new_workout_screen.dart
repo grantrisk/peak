@@ -1,12 +1,15 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
 import '../models/exercise_model.dart';
 import '../models/exercise_set_model.dart';
 import '../models/workout_session_model.dart';
-import 'dart:async';
-import 'package:uuid/uuid.dart';
+import '../providers/workout_session_provider.dart';
+import '../widgets/workout_timer.dart';
 
 class NewWorkoutScreen extends StatefulWidget {
   final Map<String, dynamic>? initialExercise;
@@ -18,15 +21,8 @@ class NewWorkoutScreen extends StatefulWidget {
 }
 
 class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
-  WorkoutSession workoutSession = WorkoutSession(
-    id: Uuid().v4(),
-    date: DateTime.now(),
-  );
   final TextEditingController _exerciseNameController = TextEditingController();
   final Stopwatch _stopwatch = Stopwatch();
-  final Duration _refreshRate = Duration(seconds: 1);
-  late Timer _timer;
-  String _displayTime = '00:00:00';
   List<dynamic> _allExercises = []; // This will hold all exercises
   List<dynamic> _filteredExercises = []; // This will hold filtered exercises
 
@@ -34,21 +30,21 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
   void initState() {
     super.initState();
     _stopwatch.start();
-    _timer = Timer.periodic(_refreshRate, (timer) {
-      setState(() {
-        _displayTime = _formatDuration(_stopwatch.elapsed);
-      });
-    });
     _loadExercises();
 
+    // Initialize the workout session provider
+    Future.microtask(() =>
+        Provider.of<WorkoutSessionProvider>(context, listen: false)
+            .initializeWorkoutSession(WorkoutSession(date: DateTime.now())));
+
     if (widget.initialExercise != null) {
-      // Use the initialExercise for your logic
-      // Example: Convert Map to ExerciseModel if you have such a class
-      // Example: initialExercise: {id: standing-barbell-shrugs, name: Standing Barbell Shrugs, muscles_worked: {primary: Traps}}
-      workoutSession.exercises.add(Exercise(
-        name: widget.initialExercise!['name'],
-        sets: List.generate(3, (_) => ExerciseSet(reps: 10, weight: 0.0)),
-      ));
+      // Schedule a microtask to update the provider after the build phase
+      Future.microtask(() =>
+          Provider.of<WorkoutSessionProvider>(context, listen: false)
+              .addExercise(Exercise(
+            name: widget.initialExercise!['name'],
+            sets: List.generate(3, (_) => ExerciseSet(reps: 10, weight: 0.0)),
+          )));
     }
   }
 
@@ -87,29 +83,14 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
   @override
   void dispose() {
     _stopwatch.stop();
-    _timer.cancel();
     super.dispose();
-  }
-
-  String _formatDuration(Duration duration) {
-    String twoDigits(int n) => n.toString().padLeft(2, '0');
-    final hours = twoDigits(duration.inHours);
-    final minutes = twoDigits(duration.inMinutes.remainder(60));
-    final seconds = twoDigits(duration.inSeconds.remainder(60));
-    return "$hours:$minutes:$seconds";
   }
 
   void _toggleStopwatch() {
     if (_stopwatch.isRunning) {
       _stopwatch.stop();
-      _timer.cancel();
     } else {
       _stopwatch.start();
-      _timer = Timer.periodic(_refreshRate, (timer) {
-        setState(() {
-          _displayTime = _formatDuration(_stopwatch.elapsed);
-        });
-      });
     }
 
     // refresh the UI
@@ -147,16 +128,23 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                     padding: EdgeInsets.all(16.0),
                     children: <Widget>[
                       SizedBox(height: 35),
-                      ...workoutSession.exercises
-                          .map((exercise) => ExerciseCard(
-                                exercise: exercise,
-                                onDelete: () {
-                                  setState(() {
-                                    workoutSession.exercises.remove(exercise);
-                                  });
-                                },
-                              ))
-                          .toList(),
+                      Consumer<WorkoutSessionProvider>(
+                        builder: (context, provider, child) {
+                          return Column(
+                            children: provider.workoutSession.exercises
+                                .map((exercise) => ExerciseCard(
+                                      key: Key(exercise.id),
+                                      exercise: exercise,
+                                      onDelete: () =>
+                                          provider.removeExercise(exercise),
+                                      onSetDeleted: (set) => provider
+                                          .removeSetFromExercise(exercise, set),
+                                    ))
+                                .toList(),
+                          );
+                        },
+                      ),
+
                       TextFormField(
                         controller: _exerciseNameController,
                         decoration: InputDecoration(
@@ -202,6 +190,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
               ),*/
               ]),
             ),
+            // Replace existing timer display in Stack
             Positioned(
               top: 0,
               right: 16,
@@ -209,14 +198,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                 elevation: 4,
                 child: Padding(
                   padding: EdgeInsets.all(8),
-                  child: Text(
-                    'Timer: $_displayTime',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: _stopwatch.isRunning ? Colors.green : Colors.red,
-                    ),
-                  ),
+                  child: WorkoutTimer(stopwatch: _stopwatch),
                 ),
               ),
             ),
@@ -230,28 +212,25 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
         ));
   }
 
-  void _selectExercise(Map<String, dynamic> exercise) {
-    setState(() {
-      Exercise newExercise = Exercise(
-        name: exercise['name'],
-        sets: List.generate(3, (_) => ExerciseSet(reps: 10, weight: 0.0)),
-      );
-      workoutSession.exercises.add(newExercise);
-      _exerciseNameController.clear();
-      _filterExercises('');
-    });
+  void _selectExercise(Map<String, dynamic> exerciseData) {
+    Provider.of<WorkoutSessionProvider>(context, listen: false)
+        .addExercise(Exercise(
+      name: exerciseData['name'],
+      sets: List.generate(3, (_) => ExerciseSet(reps: 10, weight: 0.0)),
+    ));
+    _exerciseNameController.clear();
+    _filterExercises('');
   }
 
   void _addNewExercise() {
     if (_exerciseNameController.text.isNotEmpty) {
-      setState(() {
-        Exercise newExercise = Exercise(
-          name: _exerciseNameController.text,
-          sets: List.generate(3, (_) => ExerciseSet(reps: 10, weight: 0.0)),
-        );
-        workoutSession.exercises.add(newExercise);
-        _exerciseNameController.clear();
-      });
+      var provider =
+          Provider.of<WorkoutSessionProvider>(context, listen: false);
+      provider.addExercise(Exercise(
+        name: _exerciseNameController.text,
+        sets: List.generate(3, (_) => ExerciseSet(reps: 10, weight: 0.0)),
+      ));
+      _exerciseNameController.clear();
     }
   }
 
@@ -293,6 +272,10 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
   void _finishWorkout() {
     Navigator.pop(context); // Dismiss the dialog
 
+    WorkoutSession workoutSession =
+        Provider.of<WorkoutSessionProvider>(context, listen: false)
+            .workoutSession;
+
     if (workoutSession.exercises.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -330,6 +313,11 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
         }
       }
     }
+
+    // clear the provider
+    /*Provider.of<WorkoutSessionProvider>(context, listen: false)
+        .clearWorkoutSession();*/
+
     //Navigator.of(context).pop(); // Pop the current screen
   }
 
@@ -354,6 +342,9 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
             TextButton(
                 child: const Text('Yes'),
                 onPressed: () {
+                  // clear the provider
+                  Provider.of<WorkoutSessionProvider>(context, listen: false)
+                      .clearWorkoutSession();
                   Navigator.pop(context); // Dismiss the dialog
                   Navigator.pop(context); // Pop the current screen
                 },
@@ -371,8 +362,14 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
 class ExerciseCard extends StatefulWidget {
   final Exercise exercise;
   final VoidCallback onDelete;
+  final Function(ExerciseSet) onSetDeleted;
 
-  ExerciseCard({required this.exercise, required this.onDelete});
+  ExerciseCard({
+    required this.exercise,
+    required this.onDelete,
+    required this.onSetDeleted,
+    required Key key,
+  }) : super(key: key);
 
   @override
   _ExerciseCardState createState() => _ExerciseCardState();
@@ -380,68 +377,64 @@ class ExerciseCard extends StatefulWidget {
 
 class _ExerciseCardState extends State<ExerciseCard> {
   void onWeightChanged(int index, double weight) {
-    // TODO: Need to figure out state management here. This is not working
-    print('Weight changed : $weight');
-    setState(() {
-      // Set the userModified flag to true for the changed set
-      widget.exercise.sets[index].weight = weight;
-      widget.exercise.sets[index].userModified = true;
-
-      // Propagate the weight to subsequent sets only if they haven't been modified
-      for (int i = index + 1; i < widget.exercise.sets.length; i++) {
-        if (!widget.exercise.sets[i].userModified) {
-          widget.exercise.sets[i].weight = weight;
-        }
-      }
-    });
+    var provider = Provider.of<WorkoutSessionProvider>(context, listen: false);
+    provider.updateWeight(widget.exercise.id, index, weight);
   }
 
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
-    return Card(
-      elevation: 4,
-      margin: EdgeInsets.only(bottom: 16.0),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: ExpansionTile(
-        title: Text(widget.exercise.name, style: theme.textTheme.titleLarge),
-        initiallyExpanded: true,
-        children: [
-          for (int i = 0; i < widget.exercise.sets.length; i++)
-            SetInput(
-              set: widget.exercise.sets[i],
-              index: i, // Pass the index here
-              onRepsChanged: (reps) =>
-                  setState(() => widget.exercise.sets[i].reps = reps),
-              onWeightChanged: onWeightChanged, // Pass the method reference
-              onDeleted: () => setState(() => widget.exercise.sets.removeAt(i)),
-            ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: TextButton(
-              onPressed: () => setState(
-                  () => widget.exercise.sets.add(ExerciseSet(reps: 10))),
-              child: Text('Add Set'),
-              style: TextButton.styleFrom(
-                foregroundColor: theme.colorScheme.secondary,
-                textStyle: TextStyle(fontWeight: FontWeight.bold),
+    return Consumer<WorkoutSessionProvider>(
+      builder: (context, provider, child) {
+        // Retrieve the updated exercise by its id
+        Exercise exercise = provider.getExerciseById(widget.exercise.id);
+
+        return Card(
+          elevation: 4,
+          margin: EdgeInsets.only(bottom: 16.0),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          child: ExpansionTile(
+            title: Text(exercise.name, style: theme.textTheme.titleLarge),
+            initiallyExpanded: true,
+            children: [
+              for (int i = 0; i < exercise.sets.length; i++)
+                SetInput(
+                  set: exercise.sets[i],
+                  index: i, // Pass the index here
+                  onRepsChanged: (reps) =>
+                      setState(() => exercise.sets[i].reps = reps),
+                  onWeightChanged: onWeightChanged, // Pass the method reference
+                  onDeleted: () => widget.onSetDeleted(exercise.sets[i]),
+                ),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: TextButton(
+                  onPressed: () => setState(() =>
+                      exercise.sets.add(ExerciseSet(reps: 10, weight: 0.0))),
+                  child: Text('Add Set'),
+                  style: TextButton.styleFrom(
+                    foregroundColor: theme.colorScheme.secondary,
+                    textStyle: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
               ),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-            child: TextButton(
-              onPressed: widget.onDelete,
-              child: Text('Delete Exercise'),
-              style: TextButton.styleFrom(
-                foregroundColor: Colors.red,
-                textStyle: TextStyle(fontWeight: FontWeight.bold),
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                child: TextButton(
+                  onPressed: widget.onDelete,
+                  child: Text('Delete Exercise'),
+                  style: TextButton.styleFrom(
+                    foregroundColor: Colors.red,
+                    textStyle: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
@@ -459,24 +452,74 @@ class SetInput extends StatefulWidget {
     required this.onRepsChanged,
     required this.onWeightChanged,
     required this.onDeleted,
-  });
+    Key? key,
+  }) : super(key: key ?? UniqueKey());
 
   @override
   State<SetInput> createState() => _SetInputState();
 }
 
 class _SetInputState extends State<SetInput> {
-  final TextEditingController _weightController = TextEditingController();
+  late TextEditingController _weightController, _repsController;
+  late FocusNode _weightFocusNode, _repsFocusNode;
 
   @override
   void initState() {
     super.initState();
-    _weightController.text = widget.set.weight.toString();
+    _weightController =
+        TextEditingController(text: widget.set.weight.toString());
+    _repsController = TextEditingController(text: widget.set.reps.toString());
+    _weightFocusNode = FocusNode();
+    _repsFocusNode = FocusNode();
+    _weightFocusNode.addListener(_handleWeightFocusChange);
+    _repsFocusNode.addListener(_handleRepsFocusChange);
+  }
+
+  void _handleWeightFocusChange() {
+    if (!_weightFocusNode.hasFocus) {
+      _updateWeight();
+    }
+  }
+
+  void _handleRepsFocusChange() {
+    if (!_repsFocusNode.hasFocus) {
+      _updateReps();
+    }
+  }
+
+  void _updateWeight() {
+    double? weight = double.tryParse(_weightController.text);
+    if (weight != null && weight != widget.set.weight) {
+      widget.onWeightChanged(widget.index, weight);
+    }
+  }
+
+  void _updateReps() {
+    int? reps = int.tryParse(_repsController.text);
+    if (reps != null && reps != widget.set.reps) {
+      widget.onRepsChanged(reps);
+    }
+  }
+
+  @override
+  void didUpdateWidget(SetInput oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.set.weight != oldWidget.set.weight &&
+        !_weightController.text.contains(widget.set.weight.toString())) {
+      _weightController.text = widget.set.weight.toString();
+    }
+    if (widget.set.reps != oldWidget.set.reps &&
+        !_repsController.text.contains(widget.set.reps.toString())) {
+      _repsController.text = widget.set.reps.toString();
+    }
   }
 
   @override
   void dispose() {
     _weightController.dispose();
+    _repsController.dispose();
+    _weightFocusNode.dispose();
+    _repsFocusNode.dispose();
     super.dispose();
   }
 
@@ -490,10 +533,6 @@ class _SetInputState extends State<SetInput> {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
-    // Assuming set.reps is an integer that defaults to 0 or null if not set
-    String initialRepsValue =
-        widget.set.reps > 0 ? widget.set.reps.toString() : '10';
-
     return Opacity(
       opacity: widget.set.isCompleted ? 0.5 : 1.0, // Gray out if completed
       child: Padding(
@@ -502,13 +541,12 @@ class _SetInputState extends State<SetInput> {
           children: [
             Expanded(
               child: TextFormField(
-                initialValue: initialRepsValue,
+                controller: _repsController,
                 decoration: InputDecoration(
                   labelText: 'Reps',
                   labelStyle: TextStyle(color: theme.colorScheme.onSurface),
                   border: OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
-                    // Define the border when the TextField is focused
                     borderSide: BorderSide(
                         color: theme.colorScheme.secondary, width: 2.0),
                   ),
@@ -516,10 +554,8 @@ class _SetInputState extends State<SetInput> {
                   filled: true,
                 ),
                 keyboardType: TextInputType.number,
-                onChanged: (value) =>
-                    widget.onRepsChanged(int.tryParse(value) ?? 0),
-                style: TextStyle(
-                    color: theme.colorScheme.onSurface), // Set the text color
+                focusNode: _repsFocusNode,
+                style: TextStyle(color: theme.colorScheme.onSurface),
                 cursorColor: theme.colorScheme.onPrimary,
               ),
             ),
@@ -532,7 +568,6 @@ class _SetInputState extends State<SetInput> {
                   labelStyle: TextStyle(color: theme.colorScheme.onSurface),
                   border: OutlineInputBorder(),
                   focusedBorder: OutlineInputBorder(
-                    // Define the border when the TextField is focused
                     borderSide: BorderSide(
                         color: theme.colorScheme.secondary, width: 2.0),
                   ),
@@ -540,16 +575,8 @@ class _SetInputState extends State<SetInput> {
                   filled: true,
                 ),
                 keyboardType: TextInputType.number,
-                onChanged: (value) {
-                  if (!_weightController.text.isEmpty) {
-                    double? weight = double.tryParse(value);
-                    if (weight != null) {
-                      widget.onWeightChanged(widget.index, weight);
-                    }
-                  }
-                },
-                style: TextStyle(
-                    color: theme.colorScheme.onSurface), // Set the text color
+                focusNode: _weightFocusNode,
+                style: TextStyle(color: theme.colorScheme.onSurface),
                 cursorColor: theme.colorScheme.onPrimary,
               ),
             ),
@@ -566,7 +593,7 @@ class _SetInputState extends State<SetInput> {
             ),
             IconButton(
               icon: Icon(Icons.delete, color: theme.colorScheme.error),
-              onPressed: widget.onDeleted,
+              onPressed: () => widget.onDeleted(),
             ),
           ],
         ),
