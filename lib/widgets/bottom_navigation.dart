@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../screens/exercise_screen.dart';
 import '../screens/home_screen.dart';
@@ -30,6 +31,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
   }
 
   void _onItemTapped(int index) {
+    HapticFeedback.heavyImpact();
     if (index == _selectedIndex) {
       return; // Do nothing if the current index is tapped again
     }

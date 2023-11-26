@@ -75,7 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   backgroundColor: theme.colorScheme.secondary,
                 ),
                 onPressed: () {
-                  HapticFeedback.lightImpact();
+                  HapticFeedback.heavyImpact();
                   Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => HomeScreen()),
                   );

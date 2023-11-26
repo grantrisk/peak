@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../screens/new_workout_screen.dart';
 
@@ -46,6 +47,7 @@ void showWorkoutOptions(BuildContext context) {
               leading: Icon(Icons.fitness_center),
               title: Text('Weightlift'),
               onTap: () {
+                HapticFeedback.heavyImpact();
                 Navigator.of(context).pop(); // Close the bottom sheet
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => NewWorkoutScreen()),
@@ -57,6 +59,7 @@ void showWorkoutOptions(BuildContext context) {
               title: Text('Run'), // Replace with other options as needed
               onTap: () {
                 // Handle other option tap
+                HapticFeedback.heavyImpact();
               },
             ),
             ListTile(
@@ -64,6 +67,7 @@ void showWorkoutOptions(BuildContext context) {
               title: Text('Other'), // Replace with other options as needed
               onTap: () {
                 // Handle other option tap
+                HapticFeedback.heavyImpact();
               },
             ),
           ],

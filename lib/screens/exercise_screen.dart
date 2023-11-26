@@ -25,12 +25,14 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
           IconButton(
             icon: Icon(Icons.electric_bolt),
             onPressed: () {
+              HapticFeedback.heavyImpact();
               showWorkoutOptions(context);
             },
           ),
           IconButton(
             icon: Icon(Icons.add_circle_outline),
             onPressed: () async {
+              HapticFeedback.heavyImpact();
               _showCreationOptions(context);
             },
           ),
@@ -148,60 +150,15 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                         .titleLarge, // Styling for the header
                   ),
                 ),
-                Divider(), // Optional: adds a divider for better visual separation
-                ListTile(
-                  leading: Icon(Icons.format_list_numbered),
-                  title: Text('Routine Template'),
-                  onTap: () {
-                    // Handle other option tap
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.build),
-                  title: Text('Exercise Customization'),
-                  onTap: () {
-                    // Handle other option tap
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.autorenew),
-                  title: Text('Workout Program Generator'),
-                  onTap: () {
-                    // Handle other option tap
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.file_download),
-                  title: Text('Import Workout Routine'),
-                  onTap: () {
-                    // Handle other option tap
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.flag),
-                  title: Text('Create Custom Challenge'),
-                  onTap: () {
-                    // Handle other option tap
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.trending_up),
-                  title: Text('Set Goals'),
-                  onTap: () {
-                    // Handle other option tap
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.calendar_today),
-                  title: Text('Schedule Workouts'),
-                  onTap: () {
-                    // Handle other option tap
-                  },
-                ),
+                Divider(),
                 ListTile(
                   leading: Icon(Icons.shuffle),
                   title: Text('Random Workout Generator'),
                   onTap: () async {
+                    HapticFeedback.heavyImpact();
+                    Future.delayed(Duration(milliseconds: 100), () {
+                      HapticFeedback.heavyImpact();
+                    });
                     final randomExercise = await _generateRandomWorkout();
 
                     Navigator.push(
@@ -211,6 +168,61 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                             NewWorkoutScreen(initialExercises: randomExercise),
                       ),
                     );
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.format_list_numbered),
+                  title: Text('Routine Template'),
+                  onTap: () {
+                    HapticFeedback.heavyImpact();
+                    // Handle other option tap
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.build),
+                  title: Text('Exercise Customization'),
+                  onTap: () {
+                    HapticFeedback.heavyImpact();
+                    // Handle other option tap
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.autorenew),
+                  title: Text('Workout Program Generator'),
+                  onTap: () {
+                    HapticFeedback.heavyImpact();
+                    // Handle other option tap
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.file_download),
+                  title: Text('Import Workout Routine'),
+                  onTap: () {
+                    HapticFeedback.heavyImpact();
+                    // Handle other option tap
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.flag),
+                  title: Text('Create Custom Challenge'),
+                  onTap: () {
+                    HapticFeedback.heavyImpact();
+                    // Handle other option tap
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.trending_up),
+                  title: Text('Set Goals'),
+                  onTap: () {
+                    HapticFeedback.heavyImpact();
+                    // Handle other option tap
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.calendar_today),
+                  title: Text('Schedule Workouts'),
+                  onTap: () {
+                    HapticFeedback.heavyImpact(); // Handle other option tap
                   },
                 ),
               ],

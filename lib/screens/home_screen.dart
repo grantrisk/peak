@@ -1,5 +1,6 @@
 import 'package:fitness_app/screens/setting_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../widgets/app_header.dart';
 import '../widgets/bottom_navigation.dart';
@@ -19,12 +20,14 @@ class _HomeScreenState extends State<HomeScreen> {
           IconButton(
             icon: Icon(Icons.electric_bolt),
             onPressed: () {
+              HapticFeedback.heavyImpact();
               showWorkoutOptions(context);
             },
           ),
           IconButton(
             icon: Icon(Icons.settings),
             onPressed: () {
+              HapticFeedback.heavyImpact();
               Navigator.of(context).push(
                 MaterialPageRoute(builder: (context) => SettingsScreen()),
               );

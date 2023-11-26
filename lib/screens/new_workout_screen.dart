@@ -43,7 +43,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
               .addExercise(Exercise(
             id: Uuid().v4(),
             name: exercise.name,
-            sets: List.generate(3, (_) => ExerciseSet(reps: 10, weight: 0.0)),
+            sets: List.generate(3, (_) => ExerciseSet(reps: 10, weight: 0)),
             primaryMuscle: exercise.primaryMuscle,
             secondaryMuscles: exercise.secondaryMuscles,
           ));
@@ -75,6 +75,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
   }
 
   void _toggleStopwatch() {
+    HapticFeedback.heavyImpact();
     if (_stopwatch.isRunning) {
       _stopwatch.stop();
     } else {
@@ -123,8 +124,10 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                                 .map((exercise) => ExerciseCard(
                                       key: Key(exercise.id),
                                       exercise: exercise,
-                                      onDelete: () =>
-                                          provider.removeExercise(exercise),
+                                      onDelete: () {
+                                        HapticFeedback.heavyImpact();
+                                        provider.removeExercise(exercise);
+                                      },
                                       onSetDeleted: (set) => provider
                                           .removeSetFromExercise(exercise, set),
                                     ))
@@ -135,6 +138,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                       SearchableDropdown(
                           items: _allExercises,
                           onItemSelect: (exercise) {
+                            HapticFeedback.heavyImpact();
                             _selectExercise(exercise);
                           }),
                       SizedBox(height: 20),
@@ -170,7 +174,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
         .addExercise(Exercise(
       id: Uuid().v4(),
       name: exerciseData['name'],
-      sets: List.generate(3, (_) => ExerciseSet(reps: 10, weight: 0.0)),
+      sets: List.generate(3, (_) => ExerciseSet(reps: 10, weight: 0)),
       primaryMuscle: exerciseData['muscles_worked']['primary'],
       secondaryMuscles: exerciseData['muscles_worked']['secondary'] != null
           ? List<String>.from(exerciseData['muscles_worked']['secondary'])
@@ -180,6 +184,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
   }
 
   void _submitWorkout() {
+    HapticFeedback.heavyImpact();
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -201,6 +206,10 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
             TextButton(
                 child: const Text('Complete'),
                 onPressed: () {
+                  HapticFeedback.heavyImpact();
+                  Future.delayed(Duration(milliseconds: 100), () {
+                    HapticFeedback.heavyImpact();
+                  });
                   _finishWorkout();
                 },
                 style: TextButton.styleFrom(
@@ -287,6 +296,10 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
             TextButton(
                 child: const Text('Yes'),
                 onPressed: () {
+                  HapticFeedback.heavyImpact();
+                  Future.delayed(Duration(milliseconds: 100), () {
+                    HapticFeedback.heavyImpact();
+                  });
                   // clear the provider
                   Provider.of<WorkoutSessionProvider>(context, listen: false)
                       .clearWorkoutSession();
@@ -344,7 +357,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
             title: Text(
               exercise.name,
               style: theme.textTheme.titleLarge,
-              overflow: TextOverflow.ellipsis,
+              // overflow: TextOverflow.ellipsis, // TODO: Fix overflow
             ),
             subtitle: _buildMusclesText(exercise),
             initiallyExpanded: false,
@@ -356,13 +369,18 @@ class _ExerciseCardState extends State<ExerciseCard> {
                   onRepsChanged: (reps) =>
                       setState(() => exercise.sets[i].reps = reps),
                   onWeightChanged: onWeightChanged, // Pass the method reference
-                  onDeleted: () => widget.onSetDeleted(exercise.sets[i]),
+                  onDeleted: () {
+                    HapticFeedback.heavyImpact();
+                    widget.onSetDeleted(exercise.sets[i]);
+                  },
                 ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                 child: TextButton(
-                  onPressed: () => setState(() =>
-                      exercise.sets.add(ExerciseSet(reps: 10, weight: 0.0))),
+                  onPressed: () => setState(() {
+                    HapticFeedback.heavyImpact();
+                    exercise.sets.add(ExerciseSet(reps: 10, weight: 0));
+                  }),
                   child: Text('Add Set'),
                   style: TextButton.styleFrom(
                     foregroundColor: theme.colorScheme.secondary,
@@ -486,6 +504,7 @@ class _SetInputState extends State<SetInput> {
   }
 
   void toggleCompletion() {
+    HapticFeedback.heavyImpact();
     setState(() {
       widget.set.isCompleted = !widget.set.isCompleted;
     });
@@ -555,7 +574,10 @@ class _SetInputState extends State<SetInput> {
             ),
             IconButton(
               icon: Icon(Icons.delete, color: theme.colorScheme.error),
-              onPressed: () => widget.onDeleted(),
+              onPressed: () {
+                HapticFeedback.heavyImpact();
+                widget.onDeleted();
+              },
             ),
           ],
         ),
