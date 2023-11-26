@@ -18,13 +18,14 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
   @override
   void initState() {
     super.initState();
-    _filteredItems = widget.items;
+    _filteredItems = [];
   }
 
   void _filterItems(String enteredKeyword) {
     List<dynamic> results = [];
     if (enteredKeyword.isEmpty) {
-      results = widget.items;
+      // If the search field is empty, keep the _filteredItems list empty
+      results = [];
     } else {
       results = widget.items
           .where((item) => item['name']
@@ -40,28 +41,48 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TextField(
-          controller: _controller,
-          onChanged: _filterItems,
-          decoration: InputDecoration(
-            labelText: 'Search',
-            suffixIcon: Icon(Icons.search),
+    ThemeData theme = Theme.of(context);
+
+    return Container(
+      height: MediaQuery.of(context)
+          .size
+          .height, // Set a fixed height for the container
+      child: Column(
+        children: [
+          TextField(
+            controller: _controller,
+            onChanged: _filterItems,
+            decoration: InputDecoration(
+              labelText: 'Search',
+              labelStyle: TextStyle(color: theme.colorScheme.onSurface),
+              border: OutlineInputBorder(),
+              focusedBorder: OutlineInputBorder(
+                borderSide:
+                    BorderSide(color: theme.colorScheme.secondary, width: 2.0),
+              ),
+              fillColor: theme.colorScheme.surface,
+              filled: true,
+              suffixIcon: Icon(Icons.search),
+            ),
+            cursorColor: theme.colorScheme.secondary,
           ),
-        ),
-        Expanded(
-          child: ListView.builder(
-            itemCount: _filteredItems.length,
-            itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(_filteredItems[index]['name']),
-                onTap: () => widget.onItemSelect(_filteredItems[index]),
-              );
-            },
+          Expanded(
+            child: ListView.builder(
+              itemCount: _filteredItems.length,
+              itemBuilder: (context, index) {
+                return ListTile(
+                  title: Text(_filteredItems[index]['name']),
+                  onTap: () {
+                    widget.onItemSelect(_filteredItems[index]);
+                    _controller.clear();
+                    _filterItems('');
+                  },
+                );
+              },
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

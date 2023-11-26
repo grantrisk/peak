@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:fitness_app/widgets/searchable_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -144,50 +145,15 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                           );
                         },
                       ),
-
-                      TextFormField(
-                        controller: _exerciseNameController,
-                        decoration: InputDecoration(
-                          labelText: 'Exercise Name',
-                          labelStyle:
-                              TextStyle(color: theme.colorScheme.onSurface),
-                          border: OutlineInputBorder(),
-                          focusedBorder: OutlineInputBorder(
-                            // Define the border when the TextField is focused
-                            borderSide: BorderSide(
-                                color: theme.colorScheme.secondary, width: 2.0),
-                          ),
-                          fillColor: theme.colorScheme.surface,
-                          filled: true,
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.add),
-                            onPressed: _addNewExercise,
-                          ),
-                        ),
-                        style: TextStyle(
-                            color: theme
-                                .colorScheme.onSurface), // Set the text color
-                        cursorColor: theme.colorScheme.onPrimary,
-                        onChanged: _filterExercises,
-                        onFieldSubmitted: (value) => _addNewExercise(),
-                      ),
-                      // Display filtered exercises
-                      ..._filteredExercises.map((exercise) => ListTile(
-                            title: Text(exercise['name']),
-                            onTap: () => _selectExercise(exercise),
-                          )),
+                      SearchableDropdown(
+                          items: _allExercises,
+                          onItemSelect: (exercise) {
+                            _selectExercise(exercise);
+                          }),
                       SizedBox(height: 20),
                     ],
                   ),
                 ),
-                /*Expanded(
-                child: SearchableDropdown(
-                  items: _allExercises,
-                  onItemSelect: (exercise) {
-                    _selectExercise(exercise);
-                  },
-                ),
-              ),*/
               ]),
             ),
             // Replace existing timer display in Stack
@@ -315,10 +281,10 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
     }
 
     // clear the provider
-    /*Provider.of<WorkoutSessionProvider>(context, listen: false)
-        .clearWorkoutSession();*/
+    Provider.of<WorkoutSessionProvider>(context, listen: false)
+        .clearWorkoutSession();
 
-    //Navigator.of(context).pop(); // Pop the current screen
+    Navigator.of(context).pop(); // Pop the current screen
   }
 
   void _showBackDialog() {
