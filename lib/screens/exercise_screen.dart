@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
+import 'package:fitness_app/screens/setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uuid/uuid.dart';
@@ -23,6 +24,13 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
         title: 'Workouts',
         actions: <Widget>[
           IconButton(
+            icon: Icon(Icons.add_circle_outline),
+            onPressed: () async {
+              HapticFeedback.heavyImpact();
+              _showCreationOptions(context);
+            },
+          ),
+          IconButton(
             icon: Icon(Icons.electric_bolt),
             onPressed: () {
               HapticFeedback.heavyImpact();
@@ -30,10 +38,12 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             },
           ),
           IconButton(
-            icon: Icon(Icons.add_circle_outline),
-            onPressed: () async {
+            icon: Icon(Icons.settings),
+            onPressed: () {
               HapticFeedback.heavyImpact();
-              _showCreationOptions(context);
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => SettingsScreen()),
+              );
             },
           ),
         ],
@@ -115,22 +125,6 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   }
 
   void _showCreationOptions(BuildContext context) async {
-    // TODO: this is temporary, update this later
-    final jsonString =
-        await rootBundle.loadString('assets/resources/workouts.json');
-    final jsonResponse = json.decode(jsonString);
-    final exercises = jsonResponse['shoulders'] as List;
-
-    final randomExercise = exercises[Random().nextInt(exercises.length)];
-
-    /*Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) =>
-            NewWorkoutScreen(initialExercise: randomExercise),
-      ),
-    );*/
-
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
