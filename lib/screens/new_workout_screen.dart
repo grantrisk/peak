@@ -1,10 +1,10 @@
-import 'dart:async';
 import 'dart:convert';
 
 import 'package:fitness_app/widgets/searchable_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:uuid/uuid.dart';
 
 import '../models/exercise_model.dart';
 import '../models/exercise_set_model.dart';
@@ -13,9 +13,9 @@ import '../providers/workout_session_provider.dart';
 import '../widgets/workout_timer.dart';
 
 class NewWorkoutScreen extends StatefulWidget {
-  final Map<String, dynamic>? initialExercise;
+  final List<Exercise>? initialExercises;
 
-  NewWorkoutScreen({this.initialExercise});
+  NewWorkoutScreen({this.initialExercises});
 
   @override
   _NewWorkoutScreenState createState() => _NewWorkoutScreenState();
@@ -25,7 +25,6 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
   final TextEditingController _exerciseNameController = TextEditingController();
   final Stopwatch _stopwatch = Stopwatch();
   List<dynamic> _allExercises = []; // This will hold all exercises
-  List<dynamic> _filteredExercises = []; // This will hold filtered exercises
 
   @override
   void initState() {
@@ -33,20 +32,24 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
     _stopwatch.start();
     _loadExercises();
 
-    // Initialize the workout session provider
-    Future.microtask(() =>
-        Provider.of<WorkoutSessionProvider>(context, listen: false)
-            .initializeWorkoutSession(WorkoutSession(date: DateTime.now())));
+    // Schedule the initialization of the workout session provider after the build phase
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<WorkoutSessionProvider>(context, listen: false)
+          .initializeWorkoutSession(WorkoutSession(date: DateTime.now()));
 
-    if (widget.initialExercise != null) {
-      // Schedule a microtask to update the provider after the build phase
-      Future.microtask(() =>
+      if (widget.initialExercises != null) {
+        for (var exercise in widget.initialExercises!) {
           Provider.of<WorkoutSessionProvider>(context, listen: false)
               .addExercise(Exercise(
-            name: widget.initialExercise!['name'],
+            id: Uuid().v4(),
+            name: exercise.name,
             sets: List.generate(3, (_) => ExerciseSet(reps: 10, weight: 0.0)),
-          )));
-    }
+            primaryMuscle: exercise.primaryMuscle,
+            secondaryMuscles: exercise.secondaryMuscles,
+          ));
+        }
+      }
+    });
   }
 
   void _loadExercises() async {
@@ -62,23 +65,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
 
     setState(() {
       _allExercises = exercises;
-      _filteredExercises = exercises;
     });
-  }
-
-  void _filterExercises(String input) {
-    if (input.isEmpty) {
-      setState(() => _filteredExercises = _allExercises);
-    } else {
-      setState(() {
-        _filteredExercises = _allExercises
-            .where((exercise) => exercise['name']
-                .toString()
-                .toLowerCase()
-                .contains(input.toLowerCase()))
-            .toList();
-      });
-    }
   }
 
   @override
@@ -181,23 +168,15 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
   void _selectExercise(Map<String, dynamic> exerciseData) {
     Provider.of<WorkoutSessionProvider>(context, listen: false)
         .addExercise(Exercise(
+      id: Uuid().v4(),
       name: exerciseData['name'],
       sets: List.generate(3, (_) => ExerciseSet(reps: 10, weight: 0.0)),
+      primaryMuscle: exerciseData['muscles_worked']['primary'],
+      secondaryMuscles: exerciseData['muscles_worked']['secondary'] != null
+          ? List<String>.from(exerciseData['muscles_worked']['secondary'])
+          : [],
     ));
     _exerciseNameController.clear();
-    _filterExercises('');
-  }
-
-  void _addNewExercise() {
-    if (_exerciseNameController.text.isNotEmpty) {
-      var provider =
-          Provider.of<WorkoutSessionProvider>(context, listen: false);
-      provider.addExercise(Exercise(
-        name: _exerciseNameController.text,
-        sets: List.generate(3, (_) => ExerciseSet(reps: 10, weight: 0.0)),
-      ));
-      _exerciseNameController.clear();
-    }
   }
 
   void _submitWorkout() {
@@ -362,8 +341,13 @@ class _ExerciseCardState extends State<ExerciseCard> {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           child: ExpansionTile(
-            title: Text(exercise.name, style: theme.textTheme.titleLarge),
-            initiallyExpanded: true,
+            title: Text(
+              exercise.name,
+              style: theme.textTheme.titleLarge,
+              overflow: TextOverflow.ellipsis,
+            ),
+            subtitle: _buildMusclesText(exercise),
+            initiallyExpanded: false,
             children: [
               for (int i = 0; i < exercise.sets.length; i++)
                 SetInput(
@@ -402,6 +386,18 @@ class _ExerciseCardState extends State<ExerciseCard> {
         );
       },
     );
+  }
+
+  Widget? _buildMusclesText(Exercise exercise) {
+    String musclesInfo = '';
+    if (exercise.primaryMuscle.isNotEmpty) {
+      musclesInfo = 'Primary: ${exercise.primaryMuscle}';
+    }
+    if (exercise.secondaryMuscles.isNotEmpty) {
+      if (musclesInfo.isNotEmpty) musclesInfo += '\n';
+      musclesInfo += 'Secondary: ${exercise.secondaryMuscles.join(', ')}';
+    }
+    return musclesInfo.isNotEmpty ? Text(musclesInfo) : null;
   }
 }
 

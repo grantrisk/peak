@@ -3,7 +3,9 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:uuid/uuid.dart';
 
+import '../models/exercise_model.dart';
 import '../widgets/app_header.dart';
 import '../widgets/bottom_navigation.dart';
 import 'new_workout_screen.dart';
@@ -27,24 +29,9 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             },
           ),
           IconButton(
-            icon: Icon(Icons.add),
+            icon: Icon(Icons.add_circle_outline),
             onPressed: () async {
-              // TODO: this is temporary, update this later
-              final jsonString =
-                  await rootBundle.loadString('assets/resources/workouts.json');
-              final jsonResponse = json.decode(jsonString);
-              final exercises = jsonResponse['shoulders'] as List;
-
-              final randomExercise =
-                  exercises[Random().nextInt(exercises.length)];
-
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      NewWorkoutScreen(initialExercise: randomExercise),
-                ),
-              );
+              _showCreationOptions(context);
             },
           ),
         ],
@@ -123,5 +110,141 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
       ),
       child: Text(text),
     );
+  }
+
+  void _showCreationOptions(BuildContext context) async {
+    // TODO: this is temporary, update this later
+    final jsonString =
+        await rootBundle.loadString('assets/resources/workouts.json');
+    final jsonResponse = json.decode(jsonString);
+    final exercises = jsonResponse['shoulders'] as List;
+
+    final randomExercise = exercises[Random().nextInt(exercises.length)];
+
+    /*Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) =>
+            NewWorkoutScreen(initialExercise: randomExercise),
+      ),
+    );*/
+
+    showModalBottomSheet(
+      isScrollControlled: true,
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize
+                  .min, // To make the sheet only as tall as its content
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    'Workout Tools',
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge, // Styling for the header
+                  ),
+                ),
+                Divider(), // Optional: adds a divider for better visual separation
+                ListTile(
+                  leading: Icon(Icons.format_list_numbered),
+                  title: Text('Routine Template'),
+                  onTap: () {
+                    // Handle other option tap
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.build),
+                  title: Text('Exercise Customization'),
+                  onTap: () {
+                    // Handle other option tap
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.autorenew),
+                  title: Text('Workout Program Generator'),
+                  onTap: () {
+                    // Handle other option tap
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.file_download),
+                  title: Text('Import Workout Routine'),
+                  onTap: () {
+                    // Handle other option tap
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.flag),
+                  title: Text('Create Custom Challenge'),
+                  onTap: () {
+                    // Handle other option tap
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.trending_up),
+                  title: Text('Set Goals'),
+                  onTap: () {
+                    // Handle other option tap
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.calendar_today),
+                  title: Text('Schedule Workouts'),
+                  onTap: () {
+                    // Handle other option tap
+                  },
+                ),
+                ListTile(
+                  leading: Icon(Icons.shuffle),
+                  title: Text('Random Workout Generator'),
+                  onTap: () async {
+                    final randomExercise = await _generateRandomWorkout();
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            NewWorkoutScreen(initialExercises: randomExercise),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<List<Exercise>> _generateRandomWorkout() async {
+    final jsonString =
+        await rootBundle.loadString('assets/resources/workouts.json');
+    final jsonResponse = json.decode(jsonString) as Map<String, dynamic>;
+
+    // Assuming the JSON structure has a list of exercises with names
+    List<Exercise> exercises = [];
+    for (var exerciseJson in jsonResponse.values) {
+      for (var e in exerciseJson) {
+        exercises.add(Exercise(
+            id: Uuid().v4(),
+            name: e['name'],
+            primaryMuscle: e['muscles_worked']['primary'] ?? '',
+            secondaryMuscles: e['muscles_worked']['secondary'] == null
+                ? []
+                : List<String>.from(e['muscles_worked']['secondary'] ?? [])));
+      }
+    }
+
+    Random random = Random();
+    int exercisesPerDay = 6; // Example number of exercises per day
+    List<Exercise> dailyWorkout = List.generate(
+        exercisesPerDay, (_) => exercises[random.nextInt(exercises.length)]);
+
+    return dailyWorkout;
   }
 }

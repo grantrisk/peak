@@ -45,23 +45,12 @@ class WorkoutSessionProvider with ChangeNotifier {
         }
       }
 
-      // print new weights
-      print('');
-      for (var set in exercise.sets) {
-        print('Set ${set.id} has weight ${set.weight}');
-      }
-
       notifyListeners();
     }
   }
 
   void removeSetFromExercise(Exercise exercise, ExerciseSet set) {
-    print('Removing set ${set.id} from exercise ${exercise.id}');
     exercise.sets.removeWhere((s) => s.id == set.id);
-    print('Exercise now has ${exercise.sets.length} sets');
-    for (var set in exercise.sets) {
-      print('Set ${set.id} has weight ${set.weight}');
-    }
     notifyListeners();
   }
 
@@ -83,6 +72,10 @@ class WorkoutSessionProvider with ChangeNotifier {
     if (exerciseIndex != -1) {
       return _workoutSession.exercises[exerciseIndex];
     }
-    return Exercise(name: 'Exercise not found');
+    return Exercise(
+        id: '',
+        name: 'Exercise not found',
+        primaryMuscle: '',
+        secondaryMuscles: []);
   }
 }
