@@ -348,11 +348,17 @@ class _ExerciseCardState extends State<ExerciseCard> {
         // Retrieve the updated exercise by its id
         Exercise exercise = provider.getExerciseById(widget.exercise.id);
 
+        // Check if all sets are completed
+        bool allSetsCompleted = exercise.sets.every((set) => set.isCompleted);
+
         return Card(
           elevation: 4,
           margin: EdgeInsets.only(bottom: 16.0),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          color: allSetsCompleted
+              ? Colors.lightGreen[300]
+              : Colors.white, // Change color based on completion
           child: ExpansionTile(
             title: Text(
               exercise.name,
@@ -369,8 +375,13 @@ class _ExerciseCardState extends State<ExerciseCard> {
                   onRepsChanged: (reps) =>
                       setState(() => exercise.sets[i].reps = reps),
                   onWeightChanged: onWeightChanged, // Pass the method reference
+                  onSetCompleted: () {
+                    setState(() {
+                      exercise.sets[i].isCompleted =
+                          !exercise.sets[i].isCompleted;
+                    });
+                  },
                   onDeleted: () {
-                    HapticFeedback.heavyImpact();
                     widget.onSetDeleted(exercise.sets[i]);
                   },
                 ),
@@ -425,6 +436,7 @@ class SetInput extends StatefulWidget {
   final Function(int) onRepsChanged;
   final Function(int, double) onWeightChanged;
   final VoidCallback onDeleted;
+  final VoidCallback onSetCompleted;
 
   SetInput({
     required this.set,
@@ -432,6 +444,7 @@ class SetInput extends StatefulWidget {
     required this.onRepsChanged,
     required this.onWeightChanged,
     required this.onDeleted,
+    required this.onSetCompleted,
     Key? key,
   }) : super(key: key ?? UniqueKey());
 
@@ -503,13 +516,6 @@ class _SetInputState extends State<SetInput> {
     super.dispose();
   }
 
-  void toggleCompletion() {
-    HapticFeedback.heavyImpact();
-    setState(() {
-      widget.set.isCompleted = !widget.set.isCompleted;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -567,10 +573,13 @@ class _SetInputState extends State<SetInput> {
                     ? Icons.check_circle
                     : Icons.check_circle_outline,
                 color: widget.set.isCompleted
-                    ? Colors.green
+                    ? theme.colorScheme.secondary
                     : theme.colorScheme.onSurface,
               ),
-              onPressed: toggleCompletion,
+              onPressed: () {
+                HapticFeedback.heavyImpact();
+                widget.onSetCompleted();
+              },
             ),
             IconButton(
               icon: Icon(Icons.delete, color: theme.colorScheme.error),
