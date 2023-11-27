@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:peak_risk/widgets/searchable_dropdown.dart';
+import 'package:peak/widgets/searchable_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';

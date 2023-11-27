@@ -1,4 +1,4 @@
-package com.risk.fitness_app
+package com.example.peak
 
 import io.flutter.embedding.android.FlutterActivity
 

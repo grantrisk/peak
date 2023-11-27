@@ -1,5 +1,5 @@
-import 'package:peak_risk/providers/workout_session_provider.dart';
-import 'package:peak_risk/screens/login_screen.dart';
+import 'package:peak/providers/workout_session_provider.dart';
+import 'package:peak/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';

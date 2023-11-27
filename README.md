@@ -1,16 +1,41 @@
-# fitness_app
+# Peak - Fitness Tracking App for Professionals
 
-A mobile app for fitness tracking.
+Peak is a comprehensive fitness tracking app tailored for fitness professionals. It offers robust tools for tracking workouts, meals, and various health metrics. With its intuitive dashboards, Peak empowers users to analyze and visualize their fitness journey effectively.
+
+## Features
+
+- **Workout Tracking:** Log every exercise with ease. Supports a wide range of activities and custom routines.
+- **Nutrition Logging:** Keep track of your dietary habits with a detailed food logging system.
+- **Metrics Dashboard:** Visualize your progress with customizable dashboards showing key fitness metrics.
+- **Exercise Database:** A vast library of exercises, catering to all types of fitness routines.
+
+## Screenshots
+
+(Place your app screenshots here)
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+To get a local copy up and running, follow these simple steps.
 
-A few resources to get you started if this is your first Flutter project:
+### Prerequisites
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Ensure you have Flutter installed on your system. If not, follow the [Flutter Installation Guide](https://flutter.dev/docs/get-started/install).
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Installation
+
+1. Clone the repository:
+   ```sh
+   git clone https://github.com/grantrisk/peak.git
+   ```
+2. Navigate to the project directory:
+   ```sh
+    cd Peak
+    ```
+3. Install dependencies:
+    ```sh
+   flutter pub get
+   ```
+4. Run the app:
+    ```sh
+    flutter run
+    ```
