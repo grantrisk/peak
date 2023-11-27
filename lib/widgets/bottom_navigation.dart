@@ -65,37 +65,46 @@ class _BottomNavigationState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     Color disabledColor = Colors.grey; // Color for disabled items
 
-    return BottomNavigationBar(
-      items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          activeIcon: Icon(Icons.home),
-          icon: Icon(Icons.home_outlined),
-          label: 'Summary',
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(
+              color: Colors.grey,
+              width: 0.5), // Add your desired border color and width
         ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.fitness_center),
-          label: 'Workouts',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.restaurant, color: disabledColor),
-          label: 'Meals',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.draw_outlined, color: disabledColor),
-          label: 'Logs',
-        ),
-      ],
-      currentIndex: _selectedIndex,
-      selectedItemColor: Theme.of(context).colorScheme.secondary,
-      unselectedItemColor: Colors.grey[600],
-      onTap: (index) {
-        // TODO: remove disabled navigation for items
-        if (index != 2 && index != 3) {
-          _onItemTapped(index);
-        }
-      },
-      type: BottomNavigationBarType.fixed,
-      backgroundColor: Theme.of(context).colorScheme.surface,
+      ),
+      child: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            activeIcon: Icon(Icons.home),
+            icon: Icon(Icons.home_outlined),
+            label: 'Summary',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.fitness_center),
+            label: 'Workouts',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.restaurant, color: disabledColor),
+            label: 'Meals',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.draw_outlined, color: disabledColor),
+            label: 'Logs',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Theme.of(context).colorScheme.secondary,
+        unselectedItemColor: Colors.grey[600],
+        onTap: (index) {
+          // TODO: remove disabled navigation for items
+          if (index != 2 && index != 3) {
+            _onItemTapped(index);
+          }
+        },
+        type: BottomNavigationBarType.fixed,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+      ),
     );
   }
 }

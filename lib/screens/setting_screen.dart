@@ -137,13 +137,14 @@ class _SettingsTile extends StatelessWidget {
     ThemeData theme = Theme.of(context);
 
     return ListTile(
-      leading: Icon(icon,
-          color: color ??
-              theme.iconTheme.color), // Use the passed color or default
+      leading: Icon(
+        icon,
+        color: color ??
+            theme.iconTheme.color, // Use the passed color or default for icon
+      ),
       title: Text(
         title,
-        style: theme.textTheme.bodyMedium?.copyWith(
-            color: color ?? theme.textTheme.bodyMedium?.color), // Apply color
+        style: TextStyle(color: color ?? theme.colorScheme.onBackground),
       ),
       onTap: onTap,
     );

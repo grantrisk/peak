@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:fitness_app/widgets/searchable_dropdown.dart';
+import 'package:peak_risk/widgets/searchable_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -157,6 +157,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                   padding: EdgeInsets.all(8),
                   child: WorkoutTimer(stopwatch: _stopwatch),
                 ),
+                color: theme.colorScheme.onPrimary,
               ),
             ),
           ],
@@ -165,7 +166,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
           onPressed: _toggleStopwatch,
           child: Icon(_stopwatch.isRunning ? Icons.pause : Icons.play_arrow),
           splashColor: theme.colorScheme.primary,
-          backgroundColor: theme.colorScheme.secondary,
+          backgroundColor: theme.colorScheme.tertiary,
         ));
   }
 
@@ -188,10 +189,14 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
+        ThemeData theme = Theme.of(context);
         return AlertDialog(
-          title: const Text('Complete Workout'),
-          content: const Text(
-              'Are you sure you want to complete this workout session?'),
+          backgroundColor: theme.colorScheme.surface,
+          title: Text('Complete Workout',
+              style: TextStyle(color: theme.colorScheme.onSurface)),
+          content: Text(
+              'Are you sure you want to complete this workout session?',
+              style: TextStyle(color: theme.colorScheme.onSurface)),
           actions: <Widget>[
             TextButton(
                 child: const Text('Cancel'),
@@ -279,9 +284,14 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
     showDialog<void>(
       context: context,
       builder: (BuildContext context) {
+        ThemeData theme = Theme.of(context);
+
         return AlertDialog(
-          title: const Text('Are you sure?'),
-          content: const Text('Do you want to cancel the workout and go back?'),
+          backgroundColor: theme.colorScheme.surface,
+          title: Text('Are you sure?',
+              style: TextStyle(color: theme.colorScheme.onSurface)),
+          content: Text('Do you want to cancel the workout and go back?',
+              style: TextStyle(color: theme.colorScheme.onSurface)),
           actions: <Widget>[
             TextButton(
                 child: const Text('No'),
@@ -357,8 +367,8 @@ class _ExerciseCardState extends State<ExerciseCard> {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           color: allSetsCompleted
-              ? Colors.lightGreen[300]
-              : Colors.white, // Change color based on completion
+              ? Color(0xFF25B904)
+              : theme.colorScheme.secondary,
           child: ExpansionTile(
             title: Text(
               exercise.name,
@@ -394,7 +404,7 @@ class _ExerciseCardState extends State<ExerciseCard> {
                   }),
                   child: Text('Add Set'),
                   style: TextButton.styleFrom(
-                    foregroundColor: theme.colorScheme.secondary,
+                    foregroundColor: theme.colorScheme.onSecondary,
                     textStyle: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -532,12 +542,15 @@ class _SetInputState extends State<SetInput> {
                 decoration: InputDecoration(
                   labelText: 'Reps',
                   labelStyle: TextStyle(color: theme.colorScheme.onSurface),
-                  border: OutlineInputBorder(),
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: Colors.grey, width: 2.0),
+                  ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                        color: theme.colorScheme.secondary, width: 2.0),
+                        color: theme.colorScheme.tertiary, width: 2.0),
                   ),
-                  fillColor: theme.colorScheme.surface,
+                  fillColor: theme.colorScheme.secondary,
                   filled: true,
                 ),
                 keyboardType: TextInputType.number,
@@ -553,12 +566,15 @@ class _SetInputState extends State<SetInput> {
                 decoration: InputDecoration(
                   labelText: 'Weight',
                   labelStyle: TextStyle(color: theme.colorScheme.onSurface),
-                  border: OutlineInputBorder(),
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: Colors.grey, width: 2.0),
+                  ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                        color: theme.colorScheme.secondary, width: 2.0),
+                        color: theme.colorScheme.tertiary, width: 2.0),
                   ),
-                  fillColor: theme.colorScheme.surface,
+                  fillColor: theme.colorScheme.secondary,
                   filled: true,
                 ),
                 keyboardType: TextInputType.number,
@@ -573,7 +589,7 @@ class _SetInputState extends State<SetInput> {
                     ? Icons.check_circle
                     : Icons.check_circle_outline,
                 color: widget.set.isCompleted
-                    ? theme.colorScheme.secondary
+                    ? theme.colorScheme.onSecondary
                     : theme.colorScheme.onSurface,
               ),
               onPressed: () {

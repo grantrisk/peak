@@ -1,4 +1,4 @@
-import 'package:fitness_app/screens/setting_screen.dart';
+import 'package:peak_risk/screens/setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -13,12 +13,15 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppHeader(
         title: 'Summary',
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.electric_bolt),
+            color: theme.colorScheme.secondary,
             onPressed: () {
               HapticFeedback.heavyImpact();
               showWorkoutOptions(context);
@@ -26,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           IconButton(
             icon: Icon(Icons.settings),
+            color: theme.colorScheme.secondary,
             onPressed: () {
               HapticFeedback.heavyImpact();
               Navigator.of(context).push(
@@ -80,7 +84,10 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             Text(
               title,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: ThemeData.light().colorScheme.secondaryContainer),
             ),
             SizedBox(height: 10),
             child,

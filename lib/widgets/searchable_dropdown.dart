@@ -49,17 +49,21 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
           onChanged: _filterItems,
           decoration: InputDecoration(
             labelText: 'Search',
-            labelStyle: TextStyle(color: theme.colorScheme.onSurface),
-            border: OutlineInputBorder(),
+            labelStyle: TextStyle(color: theme.colorScheme.onPrimary),
+            enabledBorder: const OutlineInputBorder(
+              borderSide: const BorderSide(color: Colors.grey, width: 0.5),
+            ),
             focusedBorder: OutlineInputBorder(
               borderSide:
                   BorderSide(color: theme.colorScheme.secondary, width: 2.0),
             ),
-            fillColor: theme.colorScheme.surface,
+            fillColor: theme.colorScheme.primary,
             filled: true,
             suffixIcon: Icon(Icons.search),
           ),
-          cursorColor: theme.colorScheme.secondary,
+          style: TextStyle(
+              color: theme.colorScheme.onSecondary), // Text color when typing
+          cursorColor: theme.colorScheme.onPrimary, // Cursor color
         ),
         Flexible(
           child: ListView.builder(
@@ -67,7 +71,8 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
             itemCount: _filteredItems.length,
             itemBuilder: (context, index) {
               return ListTile(
-                title: Text(_filteredItems[index]['name']),
+                title: Text(_filteredItems[index]['name'],
+                    style: TextStyle(color: theme.colorScheme.onPrimary)),
                 onTap: () {
                   widget.onItemSelect(_filteredItems[index]);
                   _controller.clear();

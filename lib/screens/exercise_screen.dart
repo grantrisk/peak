@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:fitness_app/screens/setting_screen.dart';
+import 'package:peak_risk/screens/setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:uuid/uuid.dart';
@@ -19,12 +19,15 @@ class ExerciseScreen extends StatefulWidget {
 class _ExerciseScreenState extends State<ExerciseScreen> {
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppHeader(
         title: 'Workouts',
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add_circle_outline),
+            color: theme.colorScheme.secondary,
             onPressed: () async {
               HapticFeedback.heavyImpact();
               _showCreationOptions(context);
@@ -32,6 +35,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
           ),
           IconButton(
             icon: Icon(Icons.electric_bolt),
+            color: theme.colorScheme.secondary,
             onPressed: () {
               HapticFeedback.heavyImpact();
               showWorkoutOptions(context);
@@ -39,6 +43,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
           ),
           IconButton(
             icon: Icon(Icons.settings),
+            color: theme.colorScheme.secondary,
             onPressed: () {
               HapticFeedback.heavyImpact();
               Navigator.of(context).push(
@@ -101,7 +106,10 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
           children: <Widget>[
             Text(
               title,
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: ThemeData.light().colorScheme.secondaryContainer),
             ),
             SizedBox(height: 10),
             child,
@@ -125,9 +133,12 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   }
 
   void _showCreationOptions(BuildContext context) async {
+    ThemeData theme = Theme.of(context);
+
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
+      backgroundColor: Theme.of(context).colorScheme.background,
       builder: (BuildContext context) {
         return SafeArea(
           child: SingleChildScrollView(
@@ -139,15 +150,19 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
                     'Workout Tools',
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleLarge, // Styling for the header
+                    style: TextStyle(
+                      color: theme.colorScheme.onPrimary,
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
                 Divider(),
                 ListTile(
-                  leading: Icon(Icons.shuffle),
-                  title: Text('Random Workout Generator'),
+                  leading:
+                      Icon(Icons.shuffle, color: theme.colorScheme.onPrimary),
+                  title: Text('Random Workout Generator',
+                      style: TextStyle(color: theme.colorScheme.onPrimary)),
                   onTap: () async {
                     HapticFeedback.heavyImpact();
                     Future.delayed(Duration(milliseconds: 100), () {
@@ -165,56 +180,69 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.format_list_numbered),
-                  title: Text('Routine Template'),
+                  leading: Icon(Icons.format_list_numbered,
+                      color: theme.colorScheme.onPrimary),
+                  title: Text('Routine Template',
+                      style: TextStyle(color: theme.colorScheme.onPrimary)),
                   onTap: () {
                     HapticFeedback.heavyImpact();
                     // Handle other option tap
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.build),
-                  title: Text('Exercise Customization'),
+                  leading:
+                      Icon(Icons.build, color: theme.colorScheme.onPrimary),
+                  title: Text('Exercise Customization',
+                      style: TextStyle(color: theme.colorScheme.onPrimary)),
                   onTap: () {
                     HapticFeedback.heavyImpact();
                     // Handle other option tap
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.autorenew),
-                  title: Text('Workout Program Generator'),
+                  leading:
+                      Icon(Icons.autorenew, color: theme.colorScheme.onPrimary),
+                  title: Text('Workout Program Generator',
+                      style: TextStyle(color: theme.colorScheme.onPrimary)),
                   onTap: () {
                     HapticFeedback.heavyImpact();
                     // Handle other option tap
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.file_download),
-                  title: Text('Import Workout Routine'),
+                  leading: Icon(Icons.file_download,
+                      color: theme.colorScheme.onPrimary),
+                  title: Text('Import Workout Routine',
+                      style: TextStyle(color: theme.colorScheme.onPrimary)),
                   onTap: () {
                     HapticFeedback.heavyImpact();
                     // Handle other option tap
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.flag),
-                  title: Text('Create Custom Challenge'),
+                  leading: Icon(Icons.flag, color: theme.colorScheme.onPrimary),
+                  title: Text('Create Custom Challenge',
+                      style: TextStyle(color: theme.colorScheme.onPrimary)),
                   onTap: () {
                     HapticFeedback.heavyImpact();
                     // Handle other option tap
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.trending_up),
-                  title: Text('Set Goals'),
+                  leading: Icon(Icons.trending_up,
+                      color: theme.colorScheme.onPrimary),
+                  title: Text('Set Goals',
+                      style: TextStyle(color: theme.colorScheme.onPrimary)),
                   onTap: () {
                     HapticFeedback.heavyImpact();
                     // Handle other option tap
                   },
                 ),
                 ListTile(
-                  leading: Icon(Icons.calendar_today),
-                  title: Text('Schedule Workouts'),
+                  leading: Icon(Icons.calendar_today,
+                      color: theme.colorScheme.onPrimary),
+                  title: Text('Schedule Workouts',
+                      style: TextStyle(color: theme.colorScheme.onPrimary)),
                   onTap: () {
                     HapticFeedback.heavyImpact(); // Handle other option tap
                   },

@@ -37,6 +37,8 @@ class _WorkoutTimerState extends State<WorkoutTimer> {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     String formattedTime = _formatDuration(widget.stopwatch.elapsed);
     return Text(
       'Timer: $formattedTime',

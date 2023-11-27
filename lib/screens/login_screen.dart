@@ -16,7 +16,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        backgroundColor: theme.colorScheme.background,
+        // backgroundColor: theme.colorScheme.background,
         title: Text('Login',
             style: TextStyle(color: theme.colorScheme.onBackground)),
       ),
@@ -34,39 +34,48 @@ class _LoginScreenState extends State<LoginScreen> {
               TextField(
                 decoration: InputDecoration(
                   labelText: 'Email',
-                  labelStyle: TextStyle(color: theme.colorScheme.onSurface),
-                  border: OutlineInputBorder(),
+                  labelStyle: TextStyle(color: theme.colorScheme.onPrimary),
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: Colors.grey, width: 0.5),
+                  ),
                   focusedBorder: OutlineInputBorder(
-                    // Define the border when the TextField is focused
                     borderSide: BorderSide(
                         color: theme.colorScheme.secondary, width: 2.0),
                   ),
-                  fillColor: theme.colorScheme.surface,
+                  fillColor:
+                      theme.colorScheme.primary, // Primary color for the fill
                   filled: true,
                 ),
                 keyboardType: TextInputType.emailAddress,
                 style: TextStyle(
-                    color: theme.colorScheme.onSurface), // Set the text color
-                cursorColor: theme.colorScheme.onPrimary,
+                    color: theme
+                        .colorScheme.onSecondary), // Text color when typing
+                cursorColor: theme.colorScheme.onPrimary, // Cursor color
               ),
               SizedBox(height: 16.0),
               TextField(
                 decoration: InputDecoration(
                   labelText: 'Password',
-                  labelStyle: TextStyle(color: theme.colorScheme.onSurface),
-                  border: OutlineInputBorder(),
+                  labelStyle: TextStyle(color: theme.colorScheme.onPrimary),
+                  enabledBorder: const OutlineInputBorder(
+                    borderSide:
+                        const BorderSide(color: Colors.grey, width: 0.5),
+                  ),
                   focusedBorder: OutlineInputBorder(
-                    // Define the border when the TextField is focused
                     borderSide: BorderSide(
                         color: theme.colorScheme.secondary, width: 2.0),
                   ),
-                  fillColor: theme.colorScheme.surface,
+                  fillColor:
+                      theme.colorScheme.primary, // Primary color for the fill
                   filled: true,
                 ),
                 obscureText: true,
+                keyboardType: TextInputType.emailAddress,
                 style: TextStyle(
-                    color: theme.colorScheme.onSurface), // Set the text color
-                cursorColor: theme.colorScheme.onPrimary,
+                    color: theme
+                        .colorScheme.onSecondary), // Text color when typing
+                cursorColor: theme.colorScheme.onPrimary, // Cursor color
               ),
               SizedBox(height: 24.0),
               ElevatedButton(

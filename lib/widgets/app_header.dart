@@ -25,27 +25,37 @@ class AppHeader extends StatelessWidget implements PreferredSizeWidget {
 }
 
 void showWorkoutOptions(BuildContext context) {
+  ThemeData theme = Theme.of(context);
+
   showModalBottomSheet(
     context: context,
+    backgroundColor: theme.colorScheme.background,
     builder: (BuildContext context) {
       return SafeArea(
         child: Column(
-          mainAxisSize:
-              MainAxisSize.min, // To make the sheet only as tall as its content
+          mainAxisSize: MainAxisSize.min,
           children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Text(
-                'Quick Start',
-                style: Theme.of(context)
-                    .textTheme
-                    .titleLarge, // Styling for the header
+            Container(
+              color: theme.colorScheme.primary,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  'Quick Start',
+                  style: TextStyle(
+                    color: theme.colorScheme.onPrimary,
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ),
-            Divider(), // Optional: adds a divider for better visual separation
+            Divider(),
             ListTile(
-              leading: Icon(Icons.fitness_center),
-              title: Text('Weightlift'),
+              style: ListTileStyle.drawer,
+              leading: Icon(Icons.fitness_center,
+                  color: theme.colorScheme.onPrimary),
+              title: Text('Weightlift',
+                  style: TextStyle(color: theme.colorScheme.onPrimary)),
               onTap: () {
                 HapticFeedback.heavyImpact();
                 Navigator.of(context).pop(); // Close the bottom sheet
@@ -55,16 +65,21 @@ void showWorkoutOptions(BuildContext context) {
               },
             ),
             ListTile(
-              leading: Icon(Icons.directions_run),
-              title: Text('Run'), // Replace with other options as needed
+              style: ListTileStyle.drawer,
+              leading: Icon(Icons.directions_run,
+                  color: theme.colorScheme.onPrimary),
+              title: Text('Run',
+                  style: TextStyle(color: theme.colorScheme.onPrimary)),
               onTap: () {
                 // Handle other option tap
                 HapticFeedback.heavyImpact();
               },
             ),
             ListTile(
-              leading: Icon(Icons.sports),
-              title: Text('Other'), // Replace with other options as needed
+              style: ListTileStyle.drawer,
+              leading: Icon(Icons.sports, color: theme.colorScheme.onPrimary),
+              title: Text('Other',
+                  style: TextStyle(color: theme.colorScheme.onPrimary)),
               onTap: () {
                 // Handle other option tap
                 HapticFeedback.heavyImpact();

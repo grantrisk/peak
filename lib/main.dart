@@ -1,5 +1,5 @@
-import 'package:fitness_app/providers/workout_session_provider.dart';
-import 'package:fitness_app/screens/login_screen.dart';
+import 'package:peak_risk/providers/workout_session_provider.dart';
+import 'package:peak_risk/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/services.dart';
@@ -28,23 +28,25 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: _createMaterialColor(Color(0xffedfdfe)),
+          primarySwatch: _createMaterialColor(Color(0xFF01092D)),
         ).copyWith(
-          secondary: Color(0xff00a5c5),
-          background: Color(0xffedfdfe),
-          onPrimary: Colors.black,
-          onSecondary: Colors.white,
+          secondary: Color(0xFF3685B5), // Adjusted for complementary color
+          tertiary: Color(0xFF3155fa), // Adjusted for background color
+          background: Color(0xFF01092D), // Updated background color
+          onPrimary: Colors.white, // For text/icons on primary color
+          onSecondary: Colors.white, // For text/icons on secondary color
           error: Color(0xffb00020),
           onError: Colors.white,
           brightness: Brightness.light,
         ),
         textTheme: const TextTheme(
-          titleLarge: TextStyle(color: Colors.black),
+          titleLarge: TextStyle(color: Colors.white), // Adjusted text color
           bodyMedium: TextStyle(color: Colors.black87),
         ),
-        iconTheme: const IconThemeData(color: Colors.black54),
+        iconTheme:
+            const IconThemeData(color: Colors.white), // Adjusted icon color
         buttonTheme: ButtonThemeData(
-          buttonColor: Color(0xff00a5c5),
+          buttonColor: Color(0xFF01092D), // Primary color for buttons
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(18.0),
           ),
@@ -53,17 +55,24 @@ class MyApp extends StatelessWidget {
           style: ElevatedButton.styleFrom(
             foregroundColor: Colors.white,
             backgroundColor:
-                Color(0xff00a5c5), // This is the color for text/iconography
+                Color(0xFF01092D), // Primary color for elevated buttons
           ),
         ),
         appBarTheme: const AppBarTheme(
           elevation: 0,
           titleTextStyle: TextStyle(
-            color: Colors.black,
+            color: Colors.white, // Adjusted title text color
             fontSize: 20,
             fontWeight: FontWeight.bold,
           ),
           shadowColor: Colors.grey,
+          iconTheme: IconThemeData(color: Colors.white),
+          backgroundColor: Color(0xFF01092D), // Primary color for appbar
+        ),
+        listTileTheme: ListTileThemeData(
+          iconColor: Color(0xFF01092D),
+          textColor: Color(0xFF01092D),
+          selectedColor: Color(0xFF01092D),
         ),
       ),
       home: LoginScreen(),
