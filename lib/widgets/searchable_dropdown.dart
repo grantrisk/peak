@@ -1,13 +1,33 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class SearchableDropdown extends StatefulWidget {
   final List<dynamic> items;
-  final Function(dynamic) onItemSelect;
+  final Function(Map<String, dynamic>) onItemSelect; // Updated type here
 
   SearchableDropdown({required this.items, required this.onItemSelect});
 
   @override
   _SearchableDropdownState createState() => _SearchableDropdownState();
+
+  static void show(BuildContext context, List<dynamic> items,
+      Function(Map<String, dynamic>) onItemSelect) {
+    showModalBottomSheet(
+      context: context,
+      backgroundColor: Color(0xFFFFFFFF),
+      builder: (BuildContext context) {
+        return SearchableDropdown(
+          items: items,
+          onItemSelect: (selectedItem) {
+            HapticFeedback.heavyImpact();
+            onItemSelect(selectedItem); // Ensure this matches the expected type
+            Navigator.pop(context);
+          },
+        );
+      },
+    );
+  }
 }
 
 class _SearchableDropdownState extends State<SearchableDropdown> {
@@ -17,13 +37,13 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
   @override
   void initState() {
     super.initState();
-    _filteredItems = [];
+    _filteredItems = widget.items;
   }
 
   void _filterItems(String enteredKeyword) {
     List<dynamic> results = [];
     if (enteredKeyword.isEmpty) {
-      results = [];
+      results = widget.items;
     } else {
       results = widget.items
           .where((item) => item['name']
@@ -39,44 +59,31 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-
     return Column(
-      mainAxisSize: MainAxisSize.min,
       children: [
-        TextField(
-          controller: _controller,
-          onChanged: _filterItems,
-          decoration: InputDecoration(
-            labelText: 'Search',
-            labelStyle: TextStyle(color: theme.colorScheme.onPrimary),
-            enabledBorder: const OutlineInputBorder(
-              borderSide: const BorderSide(color: Colors.grey, width: 0.5),
+        Padding(
+          padding: EdgeInsets.all(16.0),
+          child: TextField(
+            controller: _controller,
+            onChanged: _filterItems,
+            decoration: InputDecoration(
+              labelText: 'Search',
+              suffixIcon: Icon(Icons.search),
             ),
-            focusedBorder: OutlineInputBorder(
-              borderSide:
-                  BorderSide(color: theme.colorScheme.secondary, width: 2.0),
-            ),
-            fillColor: theme.colorScheme.primary,
-            filled: true,
-            suffixIcon: Icon(Icons.search),
+            autofocus: true,
           ),
-          style: TextStyle(
-              color: theme.colorScheme.onSecondary), // Text color when typing
-          cursorColor: theme.colorScheme.onPrimary, // Cursor color
         ),
-        Flexible(
+        Expanded(
           child: ListView.builder(
-            shrinkWrap: true,
             itemCount: _filteredItems.length,
             itemBuilder: (context, index) {
               return ListTile(
-                title: Text(_filteredItems[index]['name'],
-                    style: TextStyle(color: theme.colorScheme.onPrimary)),
+                style: ListTileStyle.drawer,
+                title: Text(
+                  _filteredItems[index]['name'],
+                ),
                 onTap: () {
                   widget.onItemSelect(_filteredItems[index]);
-                  _controller.clear();
-                  _filterItems('');
                 },
               );
             },

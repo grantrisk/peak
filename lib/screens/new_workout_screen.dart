@@ -95,6 +95,11 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
           title: Text('Active Workout'),
           actions: [
             IconButton(
+              icon: Icon(Icons.search),
+              onPressed: () => SearchableDropdown.show(
+                  context, _allExercises, _selectExercise),
+            ),
+            IconButton(
               icon: Icon(Icons.done),
               color: theme.colorScheme.secondary,
               onPressed: _submitWorkout,
@@ -135,13 +140,6 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                           );
                         },
                       ),
-                      SearchableDropdown(
-                          items: _allExercises,
-                          onItemSelect: (exercise) {
-                            HapticFeedback.heavyImpact();
-                            _selectExercise(exercise);
-                          }),
-                      SizedBox(height: 20),
                     ],
                   ),
                 ),
