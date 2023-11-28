@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../models/exercise_model.dart';
 import '../models/exercise_set_model.dart';
@@ -126,15 +127,20 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                         builder: (context, provider, child) {
                           return Column(
                             children: provider.workoutSession.exercises
-                                .map((exercise) => ExerciseCard(
-                                      key: Key(exercise.id),
-                                      exercise: exercise,
-                                      onDelete: () {
-                                        HapticFeedback.heavyImpact();
-                                        provider.removeExercise(exercise);
-                                      },
-                                      onSetDeleted: (set) => provider
-                                          .removeSetFromExercise(exercise, set),
+                                .map((exercise) => Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 16.0),
+                                      child: ExerciseCard(
+                                        key: Key(exercise.id),
+                                        exercise: exercise,
+                                        onDelete: () {
+                                          HapticFeedback.heavyImpact();
+                                          provider.removeExercise(exercise);
+                                        },
+                                        onSetDeleted: (set) =>
+                                            provider.removeSetFromExercise(
+                                                exercise, set),
+                                      ),
                                     ))
                                 .toList(),
                           );
@@ -359,66 +365,78 @@ class _ExerciseCardState extends State<ExerciseCard> {
         // Check if all sets are completed
         bool allSetsCompleted = exercise.sets.every((set) => set.isCompleted);
 
-        return Card(
-          elevation: 4,
-          margin: EdgeInsets.only(bottom: 16.0),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          color: allSetsCompleted
-              ? Color(0xFF25B904)
-              : theme.colorScheme.secondary,
-          child: ExpansionTile(
-            title: Text(
-              exercise.name,
-              style: theme.textTheme.titleLarge,
-              // overflow: TextOverflow.ellipsis, // TODO: Fix overflow
-            ),
-            subtitle: _buildMusclesText(exercise),
-            initiallyExpanded: false,
+        return Slidable(
+          key: Key(exercise.id),
+          endActionPane: ActionPane(
+            motion: ScrollMotion(),
             children: [
-              for (int i = 0; i < exercise.sets.length; i++)
-                SetInput(
-                  set: exercise.sets[i],
-                  index: i, // Pass the index here
-                  onRepsChanged: (reps) =>
-                      setState(() => exercise.sets[i].reps = reps),
-                  onWeightChanged: onWeightChanged, // Pass the method reference
-                  onSetCompleted: () {
-                    setState(() {
-                      exercise.sets[i].isCompleted =
-                          !exercise.sets[i].isCompleted;
-                    });
-                  },
-                  onDeleted: () {
-                    widget.onSetDeleted(exercise.sets[i]);
-                  },
-                ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: TextButton(
-                  onPressed: () => setState(() {
-                    HapticFeedback.heavyImpact();
-                    exercise.sets.add(ExerciseSet(reps: 10, weight: 0));
-                  }),
-                  child: Text('Add Set'),
-                  style: TextButton.styleFrom(
-                    foregroundColor: theme.colorScheme.onSecondary,
-                    textStyle: TextStyle(fontWeight: FontWeight.bold),
-                  ),
+              SlidableAction(
+                onPressed: (context) => widget.onDelete(),
+                backgroundColor: Color(0xFFFE4A49),
+                foregroundColor: Colors.white,
+                icon: Icons.delete,
+                label: 'Delete',
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  bottomLeft: Radius.circular(12),
+                  topRight: Radius.circular(4),
+                  bottomRight: Radius.circular(4),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                child: TextButton(
-                  onPressed: widget.onDelete,
-                  child: Text('Delete Exercise'),
-                  style: TextButton.styleFrom(
-                    foregroundColor: Colors.red,
-                    textStyle: TextStyle(fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
+              // Add more actions if needed
             ],
+          ),
+          child: Card(
+            elevation: 4,
+            margin: EdgeInsets.only(bottom: 0.0),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            color: allSetsCompleted
+                ? Color(0xFF25B904)
+                : theme.colorScheme.secondary,
+            child: ExpansionTile(
+              title: Text(
+                exercise.name,
+                style: theme.textTheme.titleLarge,
+              ),
+              subtitle: _buildMusclesText(exercise),
+              initiallyExpanded: false,
+              children: [
+                for (int i = 0; i < exercise.sets.length; i++)
+                  SetInput(
+                    set: exercise.sets[i],
+                    index: i, // Pass the index here
+                    onRepsChanged: (reps) =>
+                        setState(() => exercise.sets[i].reps = reps),
+                    onWeightChanged:
+                        onWeightChanged, // Pass the method reference
+                    onSetCompleted: () {
+                      setState(() {
+                        exercise.sets[i].isCompleted =
+                            !exercise.sets[i].isCompleted;
+                      });
+                    },
+                    onDeleted: () {
+                      widget.onSetDeleted(exercise.sets[i]);
+                    },
+                  ),
+                Padding(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                  child: TextButton(
+                    onPressed: () => setState(() {
+                      HapticFeedback.heavyImpact();
+                      exercise.sets.add(ExerciseSet(reps: 10, weight: 0));
+                    }),
+                    child: Text('Add Set'),
+                    style: TextButton.styleFrom(
+                      foregroundColor: theme.colorScheme.onSecondary,
+                      textStyle: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         );
       },
@@ -528,81 +546,92 @@ class _SetInputState extends State<SetInput> {
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
-    return Opacity(
-      opacity: widget.set.isCompleted ? 0.5 : 1.0, // Gray out if completed
-      child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-        child: Row(
-          children: [
-            Expanded(
-              child: TextFormField(
-                controller: _repsController,
-                decoration: InputDecoration(
-                  labelText: 'Reps',
-                  labelStyle: TextStyle(color: theme.colorScheme.onSurface),
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: Colors.grey, width: 2.0),
+    return Slidable(
+      key: ValueKey(widget.set),
+      endActionPane: ActionPane(
+        motion: ScrollMotion(),
+        children: [
+          SlidableAction(
+            onPressed: (context) {
+              HapticFeedback.heavyImpact();
+              widget.onDeleted();
+            },
+            backgroundColor: Color(0xFFFE4A49),
+            foregroundColor: Colors.white,
+            icon: Icons.delete,
+            label: 'Delete',
+          ),
+        ],
+      ),
+      child: Opacity(
+        opacity: widget.set.isCompleted ? 0.5 : 1.0, // Gray out if completed
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: TextFormField(
+                  controller: _repsController,
+                  decoration: InputDecoration(
+                    labelText: 'Reps',
+                    labelStyle: TextStyle(color: theme.colorScheme.onSurface),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: Colors.grey, width: 2.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: theme.colorScheme.tertiary, width: 2.0),
+                    ),
+                    fillColor: theme.colorScheme.secondary,
+                    filled: true,
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: theme.colorScheme.tertiary, width: 2.0),
-                  ),
-                  fillColor: theme.colorScheme.secondary,
-                  filled: true,
+                  keyboardType: TextInputType.number,
+                  focusNode: _repsFocusNode,
+                  style: TextStyle(color: theme.colorScheme.onSurface),
+                  cursorColor: theme.colorScheme.onPrimary,
                 ),
-                keyboardType: TextInputType.number,
-                focusNode: _repsFocusNode,
-                style: TextStyle(color: theme.colorScheme.onSurface),
-                cursorColor: theme.colorScheme.onPrimary,
               ),
-            ),
-            SizedBox(width: 16.0),
-            Expanded(
-              child: TextFormField(
-                controller: _weightController,
-                decoration: InputDecoration(
-                  labelText: 'Weight',
-                  labelStyle: TextStyle(color: theme.colorScheme.onSurface),
-                  enabledBorder: const OutlineInputBorder(
-                    borderSide:
-                        const BorderSide(color: Colors.grey, width: 2.0),
+              SizedBox(width: 16.0),
+              Expanded(
+                child: TextFormField(
+                  controller: _weightController,
+                  decoration: InputDecoration(
+                    labelText: 'Weight',
+                    labelStyle: TextStyle(color: theme.colorScheme.onSurface),
+                    enabledBorder: const OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: Colors.grey, width: 2.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(
+                          color: theme.colorScheme.tertiary, width: 2.0),
+                    ),
+                    fillColor: theme.colorScheme.secondary,
+                    filled: true,
                   ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: theme.colorScheme.tertiary, width: 2.0),
-                  ),
-                  fillColor: theme.colorScheme.secondary,
-                  filled: true,
+                  keyboardType: TextInputType.number,
+                  focusNode: _weightFocusNode,
+                  style: TextStyle(color: theme.colorScheme.onSurface),
+                  cursorColor: theme.colorScheme.onPrimary,
                 ),
-                keyboardType: TextInputType.number,
-                focusNode: _weightFocusNode,
-                style: TextStyle(color: theme.colorScheme.onSurface),
-                cursorColor: theme.colorScheme.onPrimary,
               ),
-            ),
-            IconButton(
-              icon: Icon(
-                widget.set.isCompleted
-                    ? Icons.check_circle
-                    : Icons.check_circle_outline,
-                color: widget.set.isCompleted
-                    ? theme.colorScheme.onSecondary
-                    : theme.colorScheme.onSurface,
+              IconButton(
+                icon: Icon(
+                  widget.set.isCompleted
+                      ? Icons.check_circle
+                      : Icons.check_circle_outline,
+                  color: widget.set.isCompleted
+                      ? theme.colorScheme.onSecondary
+                      : theme.colorScheme.onSurface,
+                ),
+                onPressed: () {
+                  HapticFeedback.heavyImpact();
+                  widget.onSetCompleted();
+                },
               ),
-              onPressed: () {
-                HapticFeedback.heavyImpact();
-                widget.onSetCompleted();
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.delete, color: theme.colorScheme.error),
-              onPressed: () {
-                HapticFeedback.heavyImpact();
-                widget.onDeleted();
-              },
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
