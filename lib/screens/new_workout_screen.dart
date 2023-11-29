@@ -92,86 +92,86 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
     ThemeData theme = Theme.of(context);
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text('Active Workout'),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () => SearchableDropdown.show(
-                  context, _allExercises, _selectExercise),
-            ),
-            IconButton(
-              icon: Icon(Icons.done),
-              color: theme.colorScheme.secondary,
-              onPressed: _submitWorkout,
-            ),
-          ],
-        ),
-        body: Stack(
-          children: [
-            PopScope(
-              canPop: false,
-              onPopInvoked: (bool didPop) {
-                if (didPop) {
-                  return;
-                }
-                _showBackDialog();
+      appBar: AppBar(
+        title: Text('Active Workout'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () => SearchableDropdown.show(
+                context, _allExercises, _selectExercise),
+          ),
+          IconButton(
+            icon: Icon(Icons.done),
+            color: theme.colorScheme.secondary,
+            onPressed: _submitWorkout,
+          ),
+        ],
+      ),
+      body: Stack(
+        children: [
+          PopScope(
+            canPop: false,
+            onPopInvoked: (bool didPop) {
+              if (didPop) {
+                return;
+              }
+              _showBackDialog();
+            },
+            child: Consumer<WorkoutSessionProvider>(
+              builder: (context, provider, child) {
+                return ReorderableListView(
+                  padding: EdgeInsets.all(16.0),
+                  onReorder: (int oldIndex, int newIndex) {
+                    setState(() {
+                      if (newIndex > oldIndex) {
+                        newIndex -= 1;
+                      }
+                      final Exercise item =
+                          provider.workoutSession.exercises.removeAt(oldIndex);
+                      provider.workoutSession.exercises.insert(newIndex, item);
+                    });
+                  },
+                  children: provider.workoutSession.exercises
+                      .map((exercise) => Padding(
+                            padding: const EdgeInsets.only(bottom: 16.0),
+                            key: Key(exercise.id),
+                            child: ExerciseCard(
+                              key: Key(exercise.id),
+                              exercise: exercise,
+                              onDelete: () {
+                                HapticFeedback.heavyImpact();
+                                provider.removeExercise(exercise);
+                              },
+                              onSetDeleted: (set) =>
+                                  provider.removeSetFromExercise(exercise, set),
+                            ),
+                          ))
+                      .toList(),
+                );
               },
-              child: Column(children: [
-                Expanded(
-                  child: ListView(
-                    padding: EdgeInsets.all(16.0),
-                    children: <Widget>[
-                      SizedBox(height: 35),
-                      Consumer<WorkoutSessionProvider>(
-                        builder: (context, provider, child) {
-                          return Column(
-                            children: provider.workoutSession.exercises
-                                .map((exercise) => Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 16.0),
-                                      child: ExerciseCard(
-                                        key: Key(exercise.id),
-                                        exercise: exercise,
-                                        onDelete: () {
-                                          HapticFeedback.heavyImpact();
-                                          provider.removeExercise(exercise);
-                                        },
-                                        onSetDeleted: (set) =>
-                                            provider.removeSetFromExercise(
-                                                exercise, set),
-                                      ),
-                                    ))
-                                .toList(),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ]),
             ),
-            // Replace existing timer display in Stack
-            Positioned(
-              top: 0,
-              right: 16,
-              child: Card(
-                elevation: 4,
-                child: Padding(
-                  padding: EdgeInsets.all(8),
-                  child: WorkoutTimer(stopwatch: _stopwatch),
-                ),
-                color: theme.colorScheme.onPrimary,
+          ),
+          Positioned(
+            top: 0,
+            right: 16,
+            child: Card(
+              elevation: 4,
+              child: Padding(
+                padding: EdgeInsets.all(8),
+                child: WorkoutTimer(stopwatch: _stopwatch),
               ),
+              color: theme.colorScheme.onPrimary,
             ),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: _toggleStopwatch,
-          child: Icon(_stopwatch.isRunning ? Icons.pause : Icons.play_arrow),
-          splashColor: theme.colorScheme.primary,
-          backgroundColor: theme.colorScheme.tertiary,
-        ));
+          ),
+        ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _toggleStopwatch,
+        child: Icon(_stopwatch.isRunning ? Icons.pause : Icons.play_arrow),
+        splashColor: theme.colorScheme.primary,
+        backgroundColor: theme.colorScheme.tertiary,
+      ),
+    );
   }
 
   void _selectExercise(Map<String, dynamic> exerciseData) {

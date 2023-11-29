@@ -264,6 +264,8 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     List<Exercise> exercises = [];
     for (var exerciseJson in jsonResponse.values) {
       for (var e in exerciseJson) {
+        // if exercise is already in the list, skip it
+        if (exercises.any((element) => element.name == e['name'])) continue;
         exercises.add(Exercise(
             id: Uuid().v4(),
             name: e['name'],
