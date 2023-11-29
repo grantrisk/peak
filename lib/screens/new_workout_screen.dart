@@ -586,7 +586,11 @@ class _SetInputState extends State<SetInput> {
                     fillColor: theme.colorScheme.secondary,
                     filled: true,
                   ),
-                  keyboardType: TextInputType.number,
+                  // TODO: this is temporary until the number keyboard is fixed
+                  keyboardType: TextInputType.numberWithOptions(signed: true),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                   focusNode: _repsFocusNode,
                   style: TextStyle(color: theme.colorScheme.onSurface),
                   cursorColor: theme.colorScheme.onPrimary,
@@ -610,7 +614,11 @@ class _SetInputState extends State<SetInput> {
                     fillColor: theme.colorScheme.secondary,
                     filled: true,
                   ),
-                  keyboardType: TextInputType.number,
+                  // TODO: this is temporary until the number keyboard is fixed
+                  keyboardType: TextInputType.numberWithOptions(signed: true),
+                  inputFormatters: [
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                   focusNode: _weightFocusNode,
                   style: TextStyle(color: theme.colorScheme.onSurface),
                   cursorColor: theme.colorScheme.onPrimary,
