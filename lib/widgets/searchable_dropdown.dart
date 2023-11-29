@@ -102,7 +102,6 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
               labelText: 'Search',
               suffixIcon: Icon(Icons.search),
             ),
-            autofocus: true,
           ),
         ),
         Expanded(

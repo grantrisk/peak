@@ -563,83 +563,88 @@ class _SetInputState extends State<SetInput> {
           ),
         ],
       ),
-      child: Opacity(
-        opacity: widget.set.isCompleted ? 0.5 : 1.0, // Gray out if completed
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-          child: Row(
-            children: [
-              Expanded(
-                child: TextFormField(
-                  controller: _repsController,
-                  decoration: InputDecoration(
-                    labelText: 'Reps',
-                    labelStyle: TextStyle(color: theme.colorScheme.onSurface),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: Colors.grey, width: 2.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: theme.colorScheme.tertiary, width: 2.0),
-                    ),
-                    fillColor: theme.colorScheme.secondary,
-                    filled: true,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        child: Row(
+          children: [
+            Expanded(
+              child: TextFormField(
+                controller: _repsController,
+                decoration: InputDecoration(
+                  labelText: 'Reps',
+                  labelStyle: TextStyle(color: theme.colorScheme.onSurface),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color:
+                            widget.set.isCompleted ? Colors.green : Colors.grey,
+                        width: 2.0),
                   ),
-                  // TODO: this is temporary until the number keyboard is fixed
-                  keyboardType: TextInputType.numberWithOptions(signed: true),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                  focusNode: _repsFocusNode,
-                  style: TextStyle(color: theme.colorScheme.onSurface),
-                  cursorColor: theme.colorScheme.onPrimary,
-                ),
-              ),
-              SizedBox(width: 16.0),
-              Expanded(
-                child: TextFormField(
-                  controller: _weightController,
-                  decoration: InputDecoration(
-                    labelText: 'Weight',
-                    labelStyle: TextStyle(color: theme.colorScheme.onSurface),
-                    enabledBorder: const OutlineInputBorder(
-                      borderSide:
-                          const BorderSide(color: Colors.grey, width: 2.0),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderSide: BorderSide(
-                          color: theme.colorScheme.tertiary, width: 2.0),
-                    ),
-                    fillColor: theme.colorScheme.secondary,
-                    filled: true,
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: theme.colorScheme.tertiary, width: 2.0),
                   ),
-                  // TODO: this is temporary until the number keyboard is fixed
-                  keyboardType: TextInputType.numberWithOptions(signed: true),
-                  inputFormatters: [
-                    FilteringTextInputFormatter.digitsOnly,
-                  ],
-                  focusNode: _weightFocusNode,
-                  style: TextStyle(color: theme.colorScheme.onSurface),
-                  cursorColor: theme.colorScheme.onPrimary,
+                  fillColor: widget.set.isCompleted
+                      ? Colors.green
+                      : theme.colorScheme.secondary,
+                  filled: true,
                 ),
+                // TODO: this is temporary until the number keyboard is fixed on ios
+                keyboardType: TextInputType.numberWithOptions(signed: true),
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                focusNode: _repsFocusNode,
+                style: TextStyle(color: theme.colorScheme.onSurface),
+                cursorColor: theme.colorScheme.onPrimary,
               ),
-              IconButton(
-                icon: Icon(
-                  widget.set.isCompleted
-                      ? Icons.check_circle
-                      : Icons.check_circle_outline,
-                  color: widget.set.isCompleted
-                      ? theme.colorScheme.onSecondary
-                      : theme.colorScheme.onSurface,
+            ),
+            SizedBox(width: 16.0),
+            Expanded(
+              child: TextFormField(
+                controller: _weightController,
+                decoration: InputDecoration(
+                  labelText: 'Weight',
+                  labelStyle: TextStyle(color: theme.colorScheme.onSurface),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color:
+                            widget.set.isCompleted ? Colors.green : Colors.grey,
+                        width: 2.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                        color: theme.colorScheme.tertiary, width: 2.0),
+                  ),
+                  fillColor: widget.set.isCompleted
+                      ? Colors.green
+                      : theme.colorScheme.secondary,
+                  filled: true,
                 ),
-                onPressed: () {
-                  HapticFeedback.heavyImpact();
-                  widget.onSetCompleted();
-                },
+                // TODO: this is temporary until the number keyboard is fixed on ios
+                keyboardType: TextInputType.numberWithOptions(signed: true),
+                inputFormatters: [
+                  FilteringTextInputFormatter.digitsOnly,
+                ],
+                focusNode: _weightFocusNode,
+                style: TextStyle(color: theme.colorScheme.onSurface),
+                cursorColor: theme.colorScheme.onPrimary,
               ),
-            ],
-          ),
+            ),
+            IconButton(
+              icon: Icon(
+                widget.set.isCompleted
+                    ? Icons.check_circle
+                    : Icons.check_circle_outline,
+                color: widget.set.isCompleted
+                    ? theme.colorScheme.onSecondary
+                    : theme.colorScheme.onSurface,
+              ),
+              onPressed: () {
+                HapticFeedback.heavyImpact();
+                widget.onSetCompleted();
+              },
+            ),
+          ],
         ),
       ),
     );
