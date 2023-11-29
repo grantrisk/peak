@@ -1,4 +1,6 @@
 import 'dart:async';
+
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 
 class RestTimerWidget extends StatefulWidget {
@@ -13,6 +15,7 @@ class RestTimerWidget extends StatefulWidget {
 class _RestTimerWidgetState extends State<RestTimerWidget> {
   late int _remainingTime;
   Timer? _timer;
+  AudioPlayer audioPlayer = AudioPlayer();
 
   @override
   void initState() {
@@ -27,15 +30,24 @@ class _RestTimerWidgetState extends State<RestTimerWidget> {
         if (_remainingTime > 0) {
           _remainingTime--;
         } else {
+          _playAlarm();
           _timer?.cancel();
         }
       });
     });
   }
 
+  void _playAlarm() async {
+    // TODO: will throw an error if the stopwatch is stopped during the playing of the audio
+    await audioPlayer.play(AssetSource('audio/ping_ping.wav'));
+    await Future.delayed(Duration(seconds: 3));
+    await audioPlayer.stop();
+  }
+
   @override
   void dispose() {
     _timer?.cancel();
+    audioPlayer.dispose();
     super.dispose();
   }
 

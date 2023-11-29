@@ -1,18 +1,18 @@
 import 'dart:convert';
 
-import 'package:peak/widgets/searchable_dropdown.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:peak/widgets/searchable_dropdown.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 
 import '../models/exercise_model.dart';
 import '../models/exercise_set_model.dart';
 import '../models/workout_session_model.dart';
 import '../providers/workout_session_provider.dart';
-import '../widgets/workout_timer.dart';
 import '../widgets/rest_timer_widget.dart';
+import '../widgets/workout_timer.dart';
 
 class NewWorkoutScreen extends StatefulWidget {
   final List<Exercise>? initialExercises;
@@ -195,6 +195,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
             onPressed:
                 _toggleRestTimer, // Add your rest timer toggle function here
             child: Icon(_isRestTimerVisible ? Icons.timer_off : Icons.timer),
+            splashColor: theme.colorScheme.primary,
             backgroundColor: theme.colorScheme.tertiary,
           ),
         ],
