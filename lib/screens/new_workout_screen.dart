@@ -12,6 +12,7 @@ import '../models/exercise_set_model.dart';
 import '../models/workout_session_model.dart';
 import '../providers/workout_session_provider.dart';
 import '../widgets/workout_timer.dart';
+import '../widgets/rest_timer_widget.dart';
 
 class NewWorkoutScreen extends StatefulWidget {
   final List<Exercise>? initialExercises;
@@ -26,6 +27,8 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
   final TextEditingController _exerciseNameController = TextEditingController();
   final Stopwatch _stopwatch = Stopwatch();
   List<dynamic> _allExercises = []; // This will hold all exercises
+  bool _isRestTimerVisible = false;
+  int _restTimeInSeconds = 60; // Default rest time in seconds
 
   @override
   void initState() {
@@ -85,6 +88,12 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
 
     // refresh the UI
     setState(() {});
+  }
+
+  void _toggleRestTimer() {
+    setState(() {
+      _isRestTimerVisible = !_isRestTimerVisible;
+    });
   }
 
   @override
@@ -163,13 +172,32 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
               color: theme.colorScheme.onPrimary,
             ),
           ),
+          Positioned(
+            bottom: 20,
+            left: 20,
+            child: _isRestTimerVisible
+                ? RestTimerWidget(durationInSeconds: _restTimeInSeconds)
+                : Container(),
+          ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _toggleStopwatch,
-        child: Icon(_stopwatch.isRunning ? Icons.pause : Icons.play_arrow),
-        splashColor: theme.colorScheme.primary,
-        backgroundColor: theme.colorScheme.tertiary,
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          FloatingActionButton(
+            onPressed: _toggleStopwatch,
+            child: Icon(_stopwatch.isRunning ? Icons.pause : Icons.play_arrow),
+            splashColor: theme.colorScheme.primary,
+            backgroundColor: theme.colorScheme.tertiary,
+          ),
+          SizedBox(height: 10), // Space between buttons
+          FloatingActionButton(
+            onPressed:
+                _toggleRestTimer, // Add your rest timer toggle function here
+            child: Icon(_isRestTimerVisible ? Icons.timer_off : Icons.timer),
+            backgroundColor: theme.colorScheme.tertiary,
+          ),
+        ],
       ),
     );
   }
