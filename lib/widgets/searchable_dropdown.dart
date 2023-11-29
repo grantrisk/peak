@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 
 class SearchableDropdown extends StatefulWidget {
   final List<dynamic> items;
-  final Function(Map<String, dynamic>) onItemSelect; // Updated type here
+  final Function(Map<String, dynamic>) onItemSelect;
 
   SearchableDropdown({required this.items, required this.onItemSelect});
 
@@ -21,7 +21,7 @@ class SearchableDropdown extends StatefulWidget {
           items: items,
           onItemSelect: (selectedItem) {
             HapticFeedback.heavyImpact();
-            onItemSelect(selectedItem); // Ensure this matches the expected type
+            onItemSelect(selectedItem);
             Navigator.pop(context);
           },
         );
@@ -52,6 +52,19 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
               .contains(enteredKeyword.toLowerCase()))
           .toList();
     }
+
+    // Add new item when search keyword not found.
+    if (results.isEmpty) {
+      results.add({
+        "id": enteredKeyword.toLowerCase().replaceAll(' ', '-'),
+        "name": enteredKeyword,
+        "muscles_worked": {
+          "primary": "Unknown",
+          "secondary": ["Unknown"]
+        }
+      });
+    }
+
     setState(() {
       _filteredItems = results;
     });
