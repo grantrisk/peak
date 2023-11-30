@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:peak/screens/setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:peak/widgets/quick_start_widget.dart';
 import 'package:uuid/uuid.dart';
 
 import '../models/exercise_model.dart';
@@ -31,24 +31,6 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
             onPressed: () async {
               HapticFeedback.heavyImpact();
               _showCreationOptions(context);
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.electric_bolt),
-            color: theme.colorScheme.secondary,
-            onPressed: () {
-              HapticFeedback.heavyImpact();
-              showWorkoutOptions(context);
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.settings),
-            color: theme.colorScheme.secondary,
-            onPressed: () {
-              HapticFeedback.heavyImpact();
-              Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => SettingsScreen()),
-              );
             },
           ),
         ],
@@ -86,6 +68,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
       bottomNavigationBar: BottomNavigation(
         selectedIndex: 1,
       ),
+      floatingActionButton: QuickStartFAB(),
     );
   }
 

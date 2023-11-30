@@ -45,7 +45,7 @@ class _WorkoutTimerState extends State<WorkoutTimer> {
       style: TextStyle(
         fontSize: 16,
         fontWeight: FontWeight.bold,
-        color: widget.stopwatch.isRunning ? Colors.green : Colors.red,
+        color: widget.stopwatch.isRunning ? Colors.white : Colors.red,
       ),
     );
   }

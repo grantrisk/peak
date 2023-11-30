@@ -140,7 +140,13 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                       provider.workoutSession.exercises.insert(newIndex, item);
                     });
                   },
-                  children: provider.workoutSession.exercises
+                  children: [
+                    // Adding Container as spacer
+                    Container(
+                      key: Key('spacer'),
+                      height: 40, // Update the height for your own needs
+                    ),
+                  ]..addAll(provider.workoutSession.exercises
                       .map((exercise) => Padding(
                             padding: const EdgeInsets.only(bottom: 16.0),
                             key: Key(exercise.id),
@@ -155,7 +161,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                                   provider.removeSetFromExercise(exercise, set),
                             ),
                           ))
-                      .toList(),
+                      .toList()),
                 );
               },
             ),
@@ -169,7 +175,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                 padding: EdgeInsets.all(8),
                 child: WorkoutTimer(stopwatch: _stopwatch),
               ),
-              color: theme.colorScheme.onPrimary,
+              color: Colors.amber,
             ),
           ),
           Positioned(
@@ -181,22 +187,28 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
           ),
         ],
       ),
-      floatingActionButton: Column(
+      floatingActionButton: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
           FloatingActionButton(
+            heroTag: 'restTimer',
+            onPressed: _toggleRestTimer,
+            // Add your rest timer toggle function here
+            child: Icon(_isRestTimerVisible ? Icons.timer_off : Icons.timer),
+            splashColor: theme.colorScheme.primary,
+            // backgroundColor: theme.colorScheme.tertiary,
+            backgroundColor: Colors.amber,
+            mini: true,
+          ),
+          SizedBox(width: 10),
+          FloatingActionButton(
+            heroTag: 'stopwatch',
             onPressed: _toggleStopwatch,
             child: Icon(_stopwatch.isRunning ? Icons.pause : Icons.play_arrow),
             splashColor: theme.colorScheme.primary,
-            backgroundColor: theme.colorScheme.tertiary,
-          ),
-          SizedBox(height: 10), // Space between buttons
-          FloatingActionButton(
-            onPressed:
-                _toggleRestTimer, // Add your rest timer toggle function here
-            child: Icon(_isRestTimerVisible ? Icons.timer_off : Icons.timer),
-            splashColor: theme.colorScheme.primary,
-            backgroundColor: theme.colorScheme.tertiary,
+            // backgroundColor: theme.colorScheme.tertiary,
+            backgroundColor: Colors.amber,
+            mini: true,
           ),
         ],
       ),

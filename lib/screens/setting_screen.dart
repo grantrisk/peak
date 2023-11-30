@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../widgets/app_header.dart';
 import 'login_screen.dart';
@@ -14,6 +15,7 @@ class SettingsScreen extends StatelessWidget {
             icon: Icons.account_circle,
             title: 'Account Information',
             onTap: () {
+              HapticFeedback.heavyImpact();
               // Handle Account Information tap
             },
           ),
@@ -21,6 +23,7 @@ class SettingsScreen extends StatelessWidget {
             icon: Icons.notifications,
             title: 'Notifications',
             onTap: () {
+              HapticFeedback.heavyImpact();
               // Handle Notifications tap
             },
           ),
@@ -28,6 +31,7 @@ class SettingsScreen extends StatelessWidget {
             icon: Icons.lock,
             title: 'Privacy Settings',
             onTap: () {
+              HapticFeedback.heavyImpact();
               // Handle Privacy Settings tap
             },
           ),
@@ -35,6 +39,7 @@ class SettingsScreen extends StatelessWidget {
             icon: Icons.settings,
             title: 'App Preferences',
             onTap: () {
+              HapticFeedback.heavyImpact();
               // Handle App Preferences tap
             },
           ),
@@ -43,6 +48,7 @@ class SettingsScreen extends StatelessWidget {
             title: 'Log Out',
             color: Colors.red,
             onTap: () {
+              HapticFeedback.heavyImpact();
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -79,6 +85,7 @@ class SettingsScreen extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () {
+                          HapticFeedback.heavyImpact();
                           Navigator.of(context).pushAndRemoveUntil(
                             _createFadeRoute(),
                             (Route<dynamic> route) => false,

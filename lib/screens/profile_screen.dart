@@ -1,49 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:peak/widgets/quick_start_widget.dart';
+import 'package:flutter/services.dart';
+import 'package:peak/screens/setting_screen.dart';
 
 import '../widgets/app_header.dart';
 import '../widgets/bottom_navigation.dart';
 
-class HomeScreen extends StatefulWidget {
+class ProfileScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _ProfileScreenState createState() => _ProfileScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppHeader(
-        title: 'Summary',
+        title: 'Profile',
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.settings),
+            color: theme.colorScheme.secondary,
+            onPressed: () {
+              HapticFeedback.heavyImpact();
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => SettingsScreen()),
+              );
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(
             children: <Widget>[
-              // _logWorkoutButton(context),
               _sectionCard(
-                  title: 'Today\'s Workout',
-                  child: _placeholderWidget('Workout List Placeholder')),
+                  title: 'Fitness Goals',
+                  child: _placeholderWidget('Fitness Goals Placeholder')),
               _sectionCard(
-                  title: 'Recent Activity',
-                  child: _placeholderWidget('Recent Activity Placeholder')),
+                  title: 'Personal Information',
+                  child:
+                      _placeholderWidget('Personal Information Placeholder')),
               _sectionCard(
-                  title: 'Your Progress',
-                  child: _placeholderWidget('Progress Graph Placeholder')),
+                  title: 'Activity Settings',
+                  child: _placeholderWidget('Activity Settings Placeholder')),
               _sectionCard(
-                  title: 'Health Tips',
-                  child: _placeholderWidget('Health Tips Placeholder')),
+                  title: 'Health Data',
+                  child: _placeholderWidget('Health Data Placeholder')),
             ],
           ),
         ),
       ),
       bottomNavigationBar: BottomNavigation(
-        selectedIndex: 0,
+        selectedIndex: 4, //Index for profile in your BottomNavigation
       ),
-      floatingActionButton: QuickStartFAB(),
     );
   }
 
@@ -54,7 +66,6 @@ class _HomeScreenState extends State<HomeScreen> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
-      // TODO: is it possible to remove the shadow of the card?
       color: Colors.transparent,
       shadowColor: Colors.transparent,
       child: Padding(

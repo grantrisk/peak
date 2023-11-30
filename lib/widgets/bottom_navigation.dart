@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import '../screens/exercise_screen.dart';
 import '../screens/home_screen.dart';
+import '../screens/profile_screen.dart';
 
 class BottomNavigation extends StatefulWidget {
   final int selectedIndex;
@@ -57,7 +58,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
       case 1:
         _navigateToScreen(ExerciseScreen());
         break;
-      // Add more cases for other navigation items if necessary
+      case 4:
+        _navigateToScreen(ProfileScreen());
+        break;
+      default:
+        break;
     }
   }
 
@@ -91,6 +96,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
           BottomNavigationBarItem(
             icon: Icon(Icons.draw_outlined, color: disabledColor),
             label: 'Logs',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person_2_outlined),
+            activeIcon: Icon(Icons.person),
+            label: 'Profile',
           ),
         ],
         currentIndex: _selectedIndex,
