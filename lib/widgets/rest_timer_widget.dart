@@ -29,12 +29,18 @@ class _RestTimerWidgetState extends State<RestTimerWidget> {
       setState(() {
         if (_remainingTime > 0) {
           _remainingTime--;
+          _playTick(); // Play the ticking sound on each second
         } else {
           _playAlarm();
           _timer?.cancel();
         }
       });
     });
+  }
+
+  // The new function to play tick sound
+  void _playTick() async {
+    await audioPlayer.play(AssetSource('audio/clock_tick.wav'));
   }
 
   void _playAlarm() async {
