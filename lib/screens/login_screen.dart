@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+
 import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -27,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               Image.asset(
-                'assets/images/fitness_app_logo.png',
+                'assets/images/peak_logo.png',
                 height: 400, // Size of the image
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.05),

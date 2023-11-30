@@ -43,7 +43,7 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "icons/fitness_app_logo.png"
+  image_path: "icons/peak_logo_background.png"
   remove_alpha_ios: true
 
 
