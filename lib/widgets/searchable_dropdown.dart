@@ -31,12 +31,23 @@ class SearchableDropdown extends StatefulWidget {
 
 class _SearchableDropdownState extends State<SearchableDropdown> {
   TextEditingController _controller = TextEditingController();
+  String? _selectedPrimaryMuscle;
   List<dynamic> _filteredItems = [];
+  List<String> primaryMuscles = [];
 
   @override
   void initState() {
     super.initState();
     _filteredItems = widget.items;
+    _initPrimaryMuscles();
+  }
+
+  void _initPrimaryMuscles() {
+    primaryMuscles = widget.items
+        .map<String>((item) => item['muscles_worked']['primary'].toString())
+        .toSet()
+        .toList();
+    primaryMuscles.insert(0, 'All');
   }
 
   void _filterItems(String enteredKeyword) {
@@ -50,18 +61,24 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
               .toLowerCase()
               .contains(enteredKeyword.toLowerCase()))
           .toList();
+    }
 
-      // Add new item when search keyword not found.
-      if (results.isEmpty) {
-        results.add({
-          "id": enteredKeyword.toLowerCase().replaceAll(' ', '-'),
-          "name": enteredKeyword,
-          "muscles_worked": {
-            "primary": "Undefined",
-            "secondary": ["Undefined"]
-          }
-        });
-      }
+    if (_selectedPrimaryMuscle != null && _selectedPrimaryMuscle != 'All') {
+      results = results
+          .where((item) =>
+              item['muscles_worked']['primary'] == _selectedPrimaryMuscle)
+          .toList();
+    }
+
+    // Add new item if it doesn't exist in the list
+    if (results.isEmpty && enteredKeyword.isNotEmpty) {
+      results.add({
+        "name": enteredKeyword,
+        "muscles_worked": {
+          "primary": "Undefined",
+          "secondary": ["Undefined"]
+        }
+      });
     }
 
     setState(() {
@@ -69,23 +86,11 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
     });
   }
 
-  Future<void> _promptMuscleGroup(
-      BuildContext context, Map<String, dynamic> item) async {
-    // Implement your SelectMuscleGroupDialog return selected muscle group (primary and secondary should be List<String>)
-    final muscles = await showDialog<Map<String, Object?>>(
-        context: context, builder: (context) => SelectMuscleGroupDialog());
-
-    if (muscles?["primary"] == null) {
-      item["muscles_worked"]["primary"] = "Undefined";
-    } else {
-      item["muscles_worked"]["primary"] = muscles?["primary"];
-    }
-
-    if (muscles?["secondary"] == null) {
-      item["muscles_worked"]["secondary"] = ["Undefined"];
-    } else {
-      item["muscles_worked"]["secondary"] = muscles?["secondary"];
-    }
+  void _onPrimaryMuscleChanged(String? newValue) {
+    setState(() {
+      _selectedPrimaryMuscle = newValue;
+      _filterItems(_controller.text);
+    });
   }
 
   @override
@@ -103,16 +108,37 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
             ),
           ),
         ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          child: Row(
+            children: [
+              Expanded(
+                child: DropdownButton<String>(
+                  isExpanded: true,
+                  value: _selectedPrimaryMuscle,
+                  hint: Text('Primary Muscle'),
+                  dropdownColor: Theme.of(context).colorScheme.surface,
+                  onChanged: _onPrimaryMuscleChanged,
+                  items: primaryMuscles
+                      .map<DropdownMenuItem<String>>((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    );
+                  }).toList(),
+                ),
+              ),
+            ],
+          ),
+        ),
         Expanded(
           child: ListView.builder(
             itemCount: _filteredItems.length,
             itemBuilder: (context, index) {
               return ListTile(
-                style: ListTileStyle.drawer,
-                title: Text(
-                  _filteredItems[index]['name'],
-                ),
+                title: Text(_filteredItems[index]['name']),
                 onTap: () async {
+                  // Check if primary muscle is undefined and prompt for muscle groups
                   if (_filteredItems[index]["muscles_worked"]["primary"] ==
                       "Undefined") {
                     await _promptMuscleGroup(context, _filteredItems[index]);
@@ -125,6 +151,20 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
         ),
       ],
     );
+  }
+
+  Future<void> _promptMuscleGroup(
+      BuildContext context, Map<String, dynamic> item) async {
+    // Show your SelectMuscleGroupDialog and get the result
+    final muscles = await showDialog<Map<String, dynamic>>(
+      context: context,
+      builder: (BuildContext context) => SelectMuscleGroupDialog(),
+    );
+
+    // Update the item with the selected muscle groups
+    if (muscles != null) {
+      item["muscles_worked"] = muscles;
+    }
   }
 }
 
@@ -161,85 +201,82 @@ class _SelectMuscleGroupDialogState extends State<SelectMuscleGroupDialog> {
     ThemeData theme = Theme.of(context);
     return SimpleDialog(
       backgroundColor: theme.colorScheme.surface,
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Select Muscles',
-                  style: TextStyle(color: theme.primaryColor)),
-              Spacer(),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: theme.colorScheme.onPrimary,
-                  backgroundColor: theme.colorScheme.surface,
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop({
-                    'primary': primaryMuscle,
-                    'secondary': selectedSecondaryMuscles
-                  });
-                },
-                child: Text('Done',
-                    style: TextStyle(color: theme.colorScheme.onSurface)),
-              ),
-            ],
-          ),
-          Divider(color: Colors.black),
-        ],
-      ),
+      titlePadding: EdgeInsets.all(16.0),
+      contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+      title: Text('Select Muscles',
+          style:
+              theme.textTheme.headline6?.copyWith(color: theme.primaryColor)),
       children: [
-        // Primary Muscle Picklist
-        Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: DropdownButton<String>(
-                style: TextStyle(color: theme.colorScheme.onSurface),
-                dropdownColor: theme.colorScheme.surface,
-                hint: Text('Choose Primary Muscle',
-                    style: TextStyle(color: theme.colorScheme.onSurface)),
-                value: primaryMuscle,
-                items: List<DropdownMenuItem<String>>.generate(
-                  muscles.length,
-                  (int index) {
-                    return DropdownMenuItem<String>(
-                      value: muscles[index],
-                      child: Text(muscles[index],
-                          style: TextStyle(color: theme.colorScheme.onSurface)),
-                    );
-                  },
-                ),
-                onChanged: (newVal) {
-                  setState(() {
-                    primaryMuscle = newVal ?? "";
-                  });
-                },
-              ),
-            ),
-          ],
-        ),
-        // Secondary Muscles Checkbox
-        ...muscles.map<Widget>((e) {
-          return CheckboxListTile(
-            title:
-                Text(e, style: TextStyle(color: theme.colorScheme.onSurface)),
-            value: selectedSecondaryMuscles.contains(e),
-            onChanged: (bool? value) {
-              setState(() {
-                if (value == true) {
-                  selectedSecondaryMuscles.add(e);
-                } else {
-                  selectedSecondaryMuscles.remove(e);
-                }
-              });
-            },
-            fillColor: MaterialStateProperty.all(theme.colorScheme.surface),
-            checkColor: theme.colorScheme.primary,
-          );
-        }).toList(),
+        _buildPrimaryMusclePicker(theme),
+        Divider(color: Colors.grey.shade300, thickness: 1),
+        _buildSecondaryMuscleCheckboxes(theme),
+        _buildDoneButton(theme),
       ],
+    );
+  }
+
+  Widget _buildPrimaryMusclePicker(ThemeData theme) {
+    return DropdownButton<String>(
+      isExpanded: true,
+      style: theme.textTheme.subtitle1,
+      dropdownColor: theme.colorScheme.surface,
+      hint: Text('Choose Primary Muscle',
+          style: TextStyle(color: theme.hintColor)),
+      value: primaryMuscle,
+      items: muscles.map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value,
+              style: TextStyle(color: theme.textTheme.subtitle1?.color)),
+        );
+      }).toList(),
+      onChanged: (newVal) {
+        setState(() {
+          primaryMuscle = newVal ?? "";
+        });
+      },
+    );
+  }
+
+  Widget _buildSecondaryMuscleCheckboxes(ThemeData theme) {
+    return Column(
+      children: muscles.map<Widget>((e) {
+        return CheckboxListTile(
+          title: Text(e, style: theme.textTheme.bodyText2),
+          value: selectedSecondaryMuscles.contains(e),
+          onChanged: (bool? value) {
+            setState(() {
+              if (value == true) {
+                selectedSecondaryMuscles.add(e);
+              } else {
+                selectedSecondaryMuscles.remove(e);
+              }
+            });
+          },
+          checkColor: theme.colorScheme.onSecondary,
+          activeColor: theme.colorScheme.secondary,
+        );
+      }).toList(),
+    );
+  }
+
+  Widget _buildDoneButton(ThemeData theme) {
+    return Align(
+      alignment: Alignment.center,
+      child: Container(
+        width: double.infinity,
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(primary: theme.primaryColor),
+          onPressed: () {
+            Navigator.of(context).pop({
+              'primary': primaryMuscle,
+              'secondary': selectedSecondaryMuscles
+            });
+          },
+          child: Text('Done',
+              style: TextStyle(color: theme.colorScheme.onPrimary)),
+        ),
+      ),
     );
   }
 }
