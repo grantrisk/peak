@@ -14,14 +14,28 @@ class SearchableDropdown extends StatefulWidget {
       Function(Map<String, dynamic>) onItemSelect) {
     showModalBottomSheet(
       context: context,
-      backgroundColor: Color(0xFFFFFFFF),
+      backgroundColor: Colors.transparent,
+      isScrollControlled: true, // Allows the sheet to expand to full screen
       builder: (BuildContext context) {
-        return SearchableDropdown(
-          items: items,
-          onItemSelect: (selectedItem) {
-            HapticFeedback.heavyImpact();
-            onItemSelect(selectedItem);
-            Navigator.pop(context);
+        return DraggableScrollableSheet(
+          initialChildSize: 0.8, // Start fully expanded
+          maxChildSize: 1.0, // Can expand to full screen
+          minChildSize: 0.5, // Minimum size when collapsed
+          builder: (_, scrollController) {
+            return Container(
+              decoration: BoxDecoration(
+                  color: Color(0xFFFFFFFF),
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(16))),
+              child: SearchableDropdown(
+                items: items,
+                onItemSelect: (selectedItem) {
+                  HapticFeedback.heavyImpact();
+                  onItemSelect(selectedItem);
+                  Navigator.pop(context);
+                },
+              ),
+            );
           },
         );
       },
