@@ -16,6 +16,15 @@ class WorkoutSessionProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void reorderExercises(int oldIndex, int newIndex) {
+    if (newIndex > oldIndex) {
+      newIndex -= 1;
+    }
+    final Exercise item = _workoutSession.exercises.removeAt(oldIndex);
+    _workoutSession.exercises.insert(newIndex, item);
+    notifyListeners();
+  }
+
   void addExercise(Exercise exercise) {
     _workoutSession.exercises.add(exercise);
     notifyListeners();
@@ -54,17 +63,32 @@ class WorkoutSessionProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  void updateReps(String exerciseId, int setIndex, int reps) {
+    int exerciseIndex =
+        _workoutSession.exercises.indexWhere((e) => e.id == exerciseId);
+    if (exerciseIndex != -1) {
+      Exercise exercise = _workoutSession.exercises[exerciseIndex];
+
+      // Directly update the reps of the specified set
+      exercise.sets[setIndex].reps = reps;
+      // Set userModified to true for the set that was changed
+      exercise.sets[setIndex].userModified = true;
+
+      // Propagate the reps to subsequent sets only if they haven't been user modified
+      for (int i = setIndex + 1; i < exercise.sets.length; i++) {
+        if (!exercise.sets[i].userModified) {
+          exercise.sets[i].reps = reps;
+          // Do not change the userModified flag for subsequent sets
+        }
+      }
+
+      notifyListeners();
+    }
+  }
+
   void clearWorkoutSession() {
     _workoutSession = WorkoutSession(date: DateTime.now());
     notifyListeners();
-  }
-
-  getWeightForExercise(String id) {
-    int exerciseIndex = _workoutSession.exercises.indexWhere((e) => e.id == id);
-    if (exerciseIndex != -1) {
-      Exercise exercise = _workoutSession.exercises[exerciseIndex];
-      return exercise.sets[0].weight;
-    }
   }
 
   Exercise getExerciseById(String id) {
@@ -77,5 +101,15 @@ class WorkoutSessionProvider with ChangeNotifier {
         name: 'Exercise not found',
         primaryMuscle: '',
         secondaryMuscles: []);
+  }
+
+  void toggleSetCompletion(String exerciseId, int index) {
+    int exerciseIndex =
+        _workoutSession.exercises.indexWhere((e) => e.id == exerciseId);
+    if (exerciseIndex != -1) {
+      Exercise exercise = _workoutSession.exercises[exerciseIndex];
+      exercise.sets[index].isCompleted = !exercise.sets[index].isCompleted;
+      notifyListeners();
+    }
   }
 }

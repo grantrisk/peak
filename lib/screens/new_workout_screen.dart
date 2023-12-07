@@ -131,14 +131,10 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                 return ReorderableListView(
                   padding: EdgeInsets.all(16.0),
                   onReorder: (int oldIndex, int newIndex) {
-                    setState(() {
-                      if (newIndex > oldIndex) {
-                        newIndex -= 1;
-                      }
-                      final Exercise item =
-                          provider.workoutSession.exercises.removeAt(oldIndex);
-                      provider.workoutSession.exercises.insert(newIndex, item);
-                    });
+                    // For some reason the first index is 0, but selecting the
+                    // first item returns 1. This is a workaround to fix that.
+                    Provider.of<WorkoutSessionProvider>(context, listen: false)
+                        .reorderExercises(oldIndex - 1, newIndex - 1);
                   },
                   children: [
                     // Adding Container as spacer
@@ -153,12 +149,6 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
                             child: ExerciseCard(
                               key: Key(exercise.id),
                               exercise: exercise,
-                              onDelete: () {
-                                HapticFeedback.heavyImpact();
-                                provider.removeExercise(exercise);
-                              },
-                              onSetDeleted: (set) =>
-                                  provider.removeSetFromExercise(exercise, set),
                             ),
                           ))
                       .toList()),
@@ -318,11 +308,11 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
       }
     }
 
-    // clear the provider
+    /*// clear the provider
     Provider.of<WorkoutSessionProvider>(context, listen: false)
         .clearWorkoutSession();
 
-    Navigator.of(context).pop(); // Pop the current screen
+    Navigator.of(context).pop(); // Pop the current screen*/
   }
 
   void _showBackDialog() {
@@ -374,13 +364,9 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
 
 class ExerciseCard extends StatefulWidget {
   final Exercise exercise;
-  final VoidCallback onDelete;
-  final Function(ExerciseSet) onSetDeleted;
 
   ExerciseCard({
     required this.exercise,
-    required this.onDelete,
-    required this.onSetDeleted,
     required Key key,
   }) : super(key: key);
 
@@ -389,11 +375,6 @@ class ExerciseCard extends StatefulWidget {
 }
 
 class _ExerciseCardState extends State<ExerciseCard> {
-  void onWeightChanged(int index, double weight) {
-    var provider = Provider.of<WorkoutSessionProvider>(context, listen: false);
-    provider.updateWeight(widget.exercise.id, index, weight);
-  }
-
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -412,7 +393,11 @@ class _ExerciseCardState extends State<ExerciseCard> {
             motion: ScrollMotion(),
             children: [
               SlidableAction(
-                onPressed: (context) => widget.onDelete(),
+                onPressed: (context) => {
+                  HapticFeedback.heavyImpact(),
+                  Provider.of<WorkoutSessionProvider>(context, listen: false)
+                      .removeExercise(exercise),
+                },
                 backgroundColor: Color(0xFFFE4A49),
                 foregroundColor: Colors.white,
                 icon: Icons.delete,
@@ -446,20 +431,8 @@ class _ExerciseCardState extends State<ExerciseCard> {
                 for (int i = 0; i < exercise.sets.length; i++)
                   SetInput(
                     set: exercise.sets[i],
-                    index: i, // Pass the index here
-                    onRepsChanged: (reps) =>
-                        setState(() => exercise.sets[i].reps = reps),
-                    onWeightChanged:
-                        onWeightChanged, // Pass the method reference
-                    onSetCompleted: () {
-                      setState(() {
-                        exercise.sets[i].isCompleted =
-                            !exercise.sets[i].isCompleted;
-                      });
-                    },
-                    onDeleted: () {
-                      widget.onSetDeleted(exercise.sets[i]);
-                    },
+                    index: i,
+                    exerciseId: exercise.id,
                   ),
                 Padding(
                   padding:
@@ -500,18 +473,12 @@ class _ExerciseCardState extends State<ExerciseCard> {
 class SetInput extends StatefulWidget {
   final ExerciseSet set;
   final int index;
-  final Function(int) onRepsChanged;
-  final Function(int, double) onWeightChanged;
-  final VoidCallback onDeleted;
-  final VoidCallback onSetCompleted;
+  final String exerciseId;
 
   SetInput({
     required this.set,
     required this.index,
-    required this.onRepsChanged,
-    required this.onWeightChanged,
-    required this.onDeleted,
-    required this.onSetCompleted,
+    required this.exerciseId,
     Key? key,
   }) : super(key: key ?? UniqueKey());
 
@@ -550,15 +517,30 @@ class _SetInputState extends State<SetInput> {
   void _updateWeight() {
     double? weight = double.tryParse(_weightController.text);
     if (weight != null && weight != widget.set.weight) {
-      widget.onWeightChanged(widget.index, weight);
+      Provider.of<WorkoutSessionProvider>(context, listen: false)
+          .updateWeight(widget.exerciseId, widget.index, weight);
     }
   }
 
   void _updateReps() {
     int? reps = int.tryParse(_repsController.text);
     if (reps != null && reps != widget.set.reps) {
-      widget.onRepsChanged(reps);
+      Provider.of<WorkoutSessionProvider>(context, listen: false)
+          .updateReps(widget.exerciseId, widget.index, reps);
     }
+  }
+
+  void _deleteSet() {
+    Exercise exercise =
+        Provider.of<WorkoutSessionProvider>(context, listen: false)
+            .getExerciseById(widget.exerciseId);
+    Provider.of<WorkoutSessionProvider>(context, listen: false)
+        .removeSetFromExercise(exercise, widget.set);
+  }
+
+  void _toggleSetCompleted() {
+    Provider.of<WorkoutSessionProvider>(context, listen: false)
+        .toggleSetCompletion(widget.exerciseId, widget.index);
   }
 
   @override
@@ -593,10 +575,7 @@ class _SetInputState extends State<SetInput> {
         motion: ScrollMotion(),
         children: [
           SlidableAction(
-            onPressed: (context) {
-              HapticFeedback.heavyImpact();
-              widget.onDeleted();
-            },
+            onPressed: (context) => _deleteSet(),
             backgroundColor: Color(0xFFFE4A49),
             foregroundColor: Colors.white,
             icon: Icons.delete,
@@ -680,10 +659,7 @@ class _SetInputState extends State<SetInput> {
                     ? theme.colorScheme.onSecondary
                     : theme.colorScheme.onSurface,
               ),
-              onPressed: () {
-                HapticFeedback.heavyImpact();
-                widget.onSetCompleted();
-              },
+              onPressed: _toggleSetCompleted,
             ),
           ],
         ),

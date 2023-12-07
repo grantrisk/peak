@@ -32,6 +32,6 @@ class Exercise {
 
   @override
   String toString() {
-    return 'Exercise{id: $id, name: $name, primaryMuscle: $primaryMuscle, secondaryMuscles: $secondaryMuscles}';
+    return '$name';
   }
 }
