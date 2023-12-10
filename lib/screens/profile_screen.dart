@@ -54,7 +54,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigation(
-        selectedIndex: 4, //Index for profile in your BottomNavigation
+        selectedIndex: 3, //Index for profile in your BottomNavigation
       ),
     );
   }

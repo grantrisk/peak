@@ -58,7 +58,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       case 1:
         _navigateToScreen(ExerciseScreen());
         break;
-      case 4:
+      case 3:
         _navigateToScreen(ProfileScreen());
         break;
       default:
@@ -109,7 +109,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
         unselectedItemColor: Colors.grey[600],
         onTap: (index) {
           // TODO: remove disabled navigation for items
-          if (index != 2 && index != 3) {
+          if (index != 2) {
             _onItemTapped(index);
           }
         },
