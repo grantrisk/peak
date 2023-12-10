@@ -89,10 +89,11 @@ class _BottomNavigationState extends State<BottomNavigation> {
             icon: Icon(Icons.fitness_center),
             label: 'Workouts',
           ),
-          BottomNavigationBarItem(
+          // TODO: add meals functionality
+          /*BottomNavigationBarItem(
             icon: Icon(Icons.restaurant, color: disabledColor),
             label: 'Meals',
-          ),
+          ),*/
           BottomNavigationBarItem(
             icon: Icon(Icons.draw_outlined, color: disabledColor),
             label: 'Logs',

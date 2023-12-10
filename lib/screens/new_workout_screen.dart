@@ -12,6 +12,7 @@ import '../models/exercise_model.dart';
 import '../models/exercise_set_model.dart';
 import '../models/workout_session_model.dart';
 import '../providers/workout_session_provider.dart';
+import '../widgets/plate_loader_widget.dart';
 import '../widgets/rest_timer_widget.dart';
 import '../widgets/workout_timer.dart';
 
@@ -612,6 +613,26 @@ class _SetInputState extends State<SetInput> {
       endActionPane: ActionPane(
         motion: ScrollMotion(),
         children: [
+          SlidableAction(
+            onPressed: (context) => {
+              HapticFeedback.heavyImpact(),
+              showModalBottomSheet(
+                context: context,
+                builder: (_) => PlateLoaderWidget(
+                  exerciseId: widget.exerciseId,
+                  setIndex: widget.index,
+                ),
+              )
+            },
+            backgroundColor: Colors.amber,
+            foregroundColor: Colors.white,
+            icon: Icons.add_circle_outline,
+            label: 'Plates',
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(12),
+              bottomLeft: Radius.circular(12),
+            ),
+          ),
           SlidableAction(
             onPressed: (context) => _deleteSet(),
             backgroundColor: Color(0xFFFE4A49),

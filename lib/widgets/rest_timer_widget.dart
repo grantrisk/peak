@@ -53,7 +53,6 @@ class _RestTimerWidgetState extends State<RestTimerWidget> {
   @override
   void dispose() {
     _timer?.cancel();
-    audioPlayer.dispose();
     super.dispose();
   }
 
