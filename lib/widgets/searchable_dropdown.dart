@@ -219,7 +219,7 @@ class _SelectMuscleGroupDialogState extends State<SelectMuscleGroupDialog> {
       contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       title: Text('Select Muscles',
           style:
-              theme.textTheme.headline6?.copyWith(color: theme.primaryColor)),
+              theme.textTheme.titleLarge?.copyWith(color: theme.primaryColor)),
       children: [
         _buildPrimaryMusclePicker(theme),
         Divider(color: Colors.grey.shade300, thickness: 1),
@@ -232,7 +232,7 @@ class _SelectMuscleGroupDialogState extends State<SelectMuscleGroupDialog> {
   Widget _buildPrimaryMusclePicker(ThemeData theme) {
     return DropdownButton<String>(
       isExpanded: true,
-      style: theme.textTheme.subtitle1,
+      style: theme.textTheme.titleMedium,
       dropdownColor: theme.colorScheme.surface,
       hint: Text('Choose Primary Muscle',
           style: TextStyle(color: theme.hintColor)),
@@ -241,7 +241,7 @@ class _SelectMuscleGroupDialogState extends State<SelectMuscleGroupDialog> {
         return DropdownMenuItem<String>(
           value: value,
           child: Text(value,
-              style: TextStyle(color: theme.textTheme.subtitle1?.color)),
+              style: TextStyle(color: theme.textTheme.titleMedium?.color)),
         );
       }).toList(),
       onChanged: (newVal) {
@@ -256,7 +256,7 @@ class _SelectMuscleGroupDialogState extends State<SelectMuscleGroupDialog> {
     return Column(
       children: muscles.map<Widget>((e) {
         return CheckboxListTile(
-          title: Text(e, style: theme.textTheme.bodyText2),
+          title: Text(e, style: theme.textTheme.bodyMedium),
           value: selectedSecondaryMuscles.contains(e),
           onChanged: (bool? value) {
             setState(() {
@@ -280,7 +280,7 @@ class _SelectMuscleGroupDialogState extends State<SelectMuscleGroupDialog> {
       child: Container(
         width: double.infinity,
         child: ElevatedButton(
-          style: ElevatedButton.styleFrom(primary: theme.primaryColor),
+          style: ElevatedButton.styleFrom(backgroundColor: theme.primaryColor),
           onPressed: () {
             Navigator.of(context).pop({
               'primary': primaryMuscle,

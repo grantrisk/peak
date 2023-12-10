@@ -108,7 +108,8 @@ class WorkoutSessionProvider with ChangeNotifier {
         _workoutSession.exercises.indexWhere((e) => e.id == exerciseId);
     if (exerciseIndex != -1) {
       Exercise exercise = _workoutSession.exercises[exerciseIndex];
-      exercise.sets[index].isCompleted = !exercise.sets[index].isCompleted;
+      bool wasCompleted = exercise.sets[index].isCompleted;
+      exercise.sets[index].isCompleted = !wasCompleted;
       notifyListeners();
     }
   }

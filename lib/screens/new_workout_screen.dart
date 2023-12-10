@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
@@ -28,7 +29,9 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
   final Stopwatch _stopwatch = Stopwatch();
   List<dynamic> _allExercises = []; // This will hold all exercises
   bool _isRestTimerVisible = false;
+  Timer? _restTimer;
   int _restTimeInSeconds = 60; // Default rest time in seconds
+  int _restTimeBuffer = 4; // Buffer time in seconds
 
   @override
   void initState() {
@@ -75,6 +78,12 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
   @override
   void dispose() {
     _stopwatch.stop();
+
+    // Cancel the rest timer if it's active
+    if (_restTimer != null && _restTimer!.isActive) {
+      _restTimer!.cancel();
+    }
+
     super.dispose();
   }
 
@@ -90,10 +99,30 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
     setState(() {});
   }
 
-  void _toggleRestTimer() {
+  void _startRestTimer() {
     setState(() {
-      _isRestTimerVisible = !_isRestTimerVisible;
+      _isRestTimerVisible = true;
     });
+
+    // Start a new timer
+    _restTimer =
+        Timer(Duration(seconds: (_restTimeInSeconds + _restTimeBuffer)), () {
+      // This block will be executed after the timer completes
+      setState(() {
+        _isRestTimerVisible = false;
+      });
+    });
+  }
+
+  void _toggleRestTimer() {
+    if (_isRestTimerVisible && _restTimer != null && _restTimer!.isActive) {
+      _restTimer!.cancel();
+      setState(() {
+        _isRestTimerVisible = false;
+      });
+    } else {
+      _startRestTimer();
+    }
   }
 
   @override
@@ -183,10 +212,8 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
           FloatingActionButton(
             heroTag: 'restTimer',
             onPressed: _toggleRestTimer,
-            // Add your rest timer toggle function here
             child: Icon(_isRestTimerVisible ? Icons.timer_off : Icons.timer),
             splashColor: theme.colorScheme.primary,
-            // backgroundColor: theme.colorScheme.tertiary,
             backgroundColor: Colors.amber,
             mini: true,
           ),
@@ -308,11 +335,11 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
       }
     }
 
-    /*// clear the provider
+    // clear the provider
     Provider.of<WorkoutSessionProvider>(context, listen: false)
         .clearWorkoutSession();
 
-    Navigator.of(context).pop(); // Pop the current screen*/
+    Navigator.of(context).pop(); // Pop the current screen
   }
 
   void _showBackDialog() {
@@ -541,6 +568,17 @@ class _SetInputState extends State<SetInput> {
   void _toggleSetCompleted() {
     Provider.of<WorkoutSessionProvider>(context, listen: false)
         .toggleSetCompletion(widget.exerciseId, widget.index);
+
+    // Check if the rest timer is not visible before starting it and only start
+    // it if the set is completed
+    if (!context
+            .findAncestorStateOfType<_NewWorkoutScreenState>()!
+            ._isRestTimerVisible &&
+        widget.set.isCompleted) {
+      context
+          .findAncestorStateOfType<_NewWorkoutScreenState>()
+          ?._startRestTimer();
+    }
   }
 
   @override
