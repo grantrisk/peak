@@ -1,10 +1,54 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:peak/providers/workout_session_provider.dart';
 import 'package:peak/screens/login_screen.dart';
-import 'package:flutter/material.dart';
+import 'package:peak/services/database_service/database_service.dart';
+import 'package:peak/services/logger/logger.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter/services.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+Future<void> main() async {
+  // Ensure Flutter binding is initialized
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Initialize logger
+  final config = LoggerConfig(
+      logLevel: LogLevel.debug, destination: LogDestination.console);
+  final Logger logger =
+      LoggerServiceFactory.create(LoggerType.defaultLogger, config);
+
+  // Initialize Firebase
+  logger.info('Initializing Firebase');
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  logger.info('Initialized Firebase');
+
+  // Create the database service
+  AbstractDatabaseService service = DatabaseServiceFactory.create(
+    DatabaseType.firebase,
+    logger,
+  );
+
+  // Get the current date and time
+  final now = DateTime.now();
+  final utc = now.toUtc();
+
+  // Format the date and time
+  final formattedDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(now);
+  final formattedUtcDate = DateFormat('yyyy-MM-dd HH:mm:ss').format(utc);
+
+  logger.info('Starting app', metadata: {
+    'device': 'mobile',
+    'app': 'Peak',
+    'version': '1.0.0',
+    'localDate': formattedDate,
+    'utc': formattedUtcDate,
+  });
+
   runApp(
     ChangeNotifierProvider(
       create: (context) => WorkoutSessionProvider(),

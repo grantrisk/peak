@@ -57,7 +57,7 @@ class _PlateLoaderWidgetState extends State<PlateLoaderWidget> {
           ),
           Text(
             '$weight lbs (${plateCounts[weight]})',
-            style: theme.textTheme.bodyText1,
+            style: theme.textTheme.bodyLarge,
           ),
           IconButton(
             icon: Icon(Icons.add_circle_outline,
