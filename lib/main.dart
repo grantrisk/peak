@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:peak/providers/workout_session_provider.dart';
+import 'package:peak/screens/home_screen.dart';
 import 'package:peak/screens/login_screen.dart';
 import 'package:peak/services/database_service/database_service.dart';
 import 'package:peak/services/logger/logger.dart';
@@ -10,15 +12,14 @@ import 'package:provider/provider.dart';
 
 import 'firebase_options.dart';
 
+final Logger logger = LoggerServiceFactory.create(
+    LoggerType.defaultLogger,
+    LoggerConfig(
+        logLevel: LogLevel.debug, destination: LogDestination.console));
+
 Future<void> main() async {
   // Ensure Flutter binding is initialized
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Initialize logger
-  final config = LoggerConfig(
-      logLevel: LogLevel.debug, destination: LogDestination.console);
-  final Logger logger =
-      LoggerServiceFactory.create(LoggerType.defaultLogger, config);
 
   // Initialize Firebase
   logger.info('Initializing Firebase');
@@ -67,7 +68,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     return MaterialApp(
-      title: 'Fitness App',
+      title: 'Peak Fitness App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         useMaterial3: true,
@@ -119,7 +120,26 @@ class MyApp extends StatelessWidget {
           selectedColor: Color(0xFF01092D),
         ),
       ),
-      home: LoginScreen(),
+      home: StreamBuilder<User?>(
+        stream: FirebaseAuth.instance.authStateChanges(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.active) {
+            User? user = snapshot.data;
+            if (user == null) {
+              logger.info('Not Logged In');
+              return LoginScreen();
+            }
+
+            logger.info('Already Logged In');
+            return HomeScreen(); // Replace with your authenticated home screen
+          }
+          return Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        },
+      ),
     );
   }
 }

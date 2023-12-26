@@ -2,55 +2,30 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:peak/main.dart';
-import 'package:peak/screens/sign_up_screen.dart';
 
 import 'home_screen.dart';
 
-class LoginScreen extends StatefulWidget {
+class SignUpScreen extends StatefulWidget {
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignUpScreenState createState() => _SignUpScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
+class _SignUpScreenState extends State<SignUpScreen> {
   final _auth = FirebaseAuth.instance;
+  String _email = '';
+  String _password = '';
 
-  Future<void> _login() async {
+  Future<void> _signUp() async {
     try {
-      await _auth.signInWithEmailAndPassword(
-          email: _emailController.text, password: _passwordController.text);
-      logger.info('User logged in with email: ${_emailController.text}');
+      await _auth.createUserWithEmailAndPassword(
+          email: _email, password: _password);
+      logger.info('User created with email: $_email');
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => HomeScreen()));
-    } on FirebaseAuthException catch (_) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content:
-              Text('Login failed. Please check your email and password.')));
-    }
-  }
-
-  Future<void> _resetPassword() async {
-    if (_emailController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Please enter your email to reset password.')));
-      return;
-    }
-    try {
-      await _auth.sendPasswordResetEmail(email: _emailController.text);
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Password reset email sent. Check your inbox.')));
-    } on FirebaseAuthException catch (_) {
+    } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error sending password reset email.')));
+          SnackBar(content: Text(e.message ?? 'An unknown error occurred')));
     }
-  }
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
   }
 
   @override
@@ -60,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text('Login',
+        title: Text('Sign Up',
             style: TextStyle(color: theme.colorScheme.onBackground)),
       ),
       body: SingleChildScrollView(
@@ -75,7 +50,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: MediaQuery.of(context).size.height * 0.05),
               TextField(
-                controller: _emailController,
                 decoration: InputDecoration(
                   labelText: 'Email',
                   labelStyle: TextStyle(color: theme.colorScheme.onPrimary),
@@ -92,10 +66,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 keyboardType: TextInputType.emailAddress,
                 style: TextStyle(color: theme.colorScheme.onSecondary),
                 cursorColor: theme.colorScheme.onPrimary,
+                onChanged: (value) => _email = value,
               ),
               SizedBox(height: 16.0),
               TextField(
-                controller: _passwordController,
                 decoration: InputDecoration(
                   labelText: 'Password',
                   labelStyle: TextStyle(color: theme.colorScheme.onPrimary),
@@ -112,6 +86,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 obscureText: true,
                 style: TextStyle(color: theme.colorScheme.onSecondary),
                 cursorColor: theme.colorScheme.onPrimary,
+                onChanged: (value) => _password = value,
               ),
               SizedBox(height: 24.0),
               ElevatedButton(
@@ -119,22 +94,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   foregroundColor: theme.colorScheme.onSecondary,
                   backgroundColor: theme.colorScheme.secondary,
                 ),
-                onPressed: _login,
-                child: Text('Login'),
-              ),
-              TextButton(
-                onPressed: _resetPassword,
-                child: Text('Forgot Password?',
-                    style: TextStyle(color: theme.colorScheme.secondary)),
+                onPressed: _signUp,
+                child: Text('Sign Up'),
               ),
               TextButton(
                 onPressed: () {
                   HapticFeedback.heavyImpact();
-                  Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => SignUpScreen()),
-                  );
+                  Navigator.of(context).pop();
                 },
-                child: Text('Sign Up',
+                child: Text('Already have an account? Log in',
                     style: TextStyle(color: theme.colorScheme.secondary)),
               ),
             ],
