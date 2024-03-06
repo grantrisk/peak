@@ -9,9 +9,13 @@ Peak is a comprehensive fitness tracking app tailored for fitness professionals.
 - **Metrics Dashboard:** Visualize your progress with customizable dashboards showing key fitness metrics.
 - **Exercise Database:** A vast library of exercises, catering to all types of fitness routines.
 
-## Screenshots
+[//]: # (TODO: Add screenshots of the app)
 
-(Place your app screenshots here)
+[//]: # (## Screenshots)
+
+[//]: # ()
+
+[//]: # (&#40;Place your app screenshots here&#41;)
 
 ## Getting Started
 

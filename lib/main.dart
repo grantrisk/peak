@@ -22,11 +22,15 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Initialize Firebase
-  logger.info('Initializing Firebase');
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  logger.info('Initialized Firebase');
+  if (Firebase.apps.isEmpty) {
+    logger.info('Initializing Firebase');
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    logger.info('Initialized Firebase');
+  } else {
+    logger.info('Firebase already initialized');
+  }
 
   // Create the database service
   AbstractDatabaseService service = DatabaseServiceFactory.create(
@@ -131,7 +135,7 @@ class MyApp extends StatelessWidget {
             }
 
             logger.info('Already Logged In');
-            return HomeScreen(); // Replace with your authenticated home screen
+            return HomeScreen();
           }
           return Scaffold(
             body: Center(
