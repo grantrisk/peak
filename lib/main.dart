@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:peak/providers/workout_session_provider.dart';
 import 'package:peak/screens/home_screen.dart';
@@ -9,8 +12,6 @@ import 'package:peak/screens/login_screen.dart';
 import 'package:peak/services/database_service/database_service.dart';
 import 'package:peak/services/logger/logger.dart';
 import 'package:provider/provider.dart';
-
-import 'firebase_options.dart';
 
 final Logger logger = LoggerServiceFactory.create(
     LoggerType.defaultLogger,
@@ -21,11 +22,30 @@ Future<void> main() async {
   // Ensure Flutter binding is initialized
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Load the environment variables
+  await dotenv.load(fileName: ".env");
+
+  // Configure Firebase
+  FirebaseOptions firebaseOptions = FirebaseOptions(
+    apiKey: Platform.isIOS
+        ? dotenv.env['IOS_FIREBASE_API_KEY'] ?? "default_value"
+        : dotenv.env['ANDROID_FIREBASE_API_KEY'] ?? "default_value",
+    appId: Platform.isIOS
+        ? dotenv.env['IOS_FIREBASE_APP_ID'] ?? "default_value"
+        : dotenv.env['ANDROID_FIREBASE_APP_ID'] ?? "default_value",
+    messagingSenderId:
+        dotenv.env['FIREBASE_MESSAGING_SENDER_ID'] ?? "default_value",
+    projectId: dotenv.env['FIREBASE_PROJECT_ID'] ?? "default_value",
+    storageBucket: dotenv.env['FIREBASE_STORAGE_BUCKET'],
+    iosBundleId:
+        Platform.isIOS ? dotenv.env['IOS_BUNDLE_ID'] ?? "com.peak" : null,
+  );
+
   // Initialize Firebase
   if (Firebase.apps.isEmpty) {
     logger.info('Initializing Firebase');
     await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
+      options: firebaseOptions,
     );
     logger.info('Initialized Firebase');
   } else {
