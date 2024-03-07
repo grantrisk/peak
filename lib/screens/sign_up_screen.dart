@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:peak/main.dart';
+import 'package:peak/services/database_service/firebase_db_service.dart';
 
 import 'home_screen.dart';
 
@@ -12,13 +14,28 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final _auth = FirebaseAuth.instance;
+  final _dbs = FirebaseDatabaseService.getInstance(logger);
   String _email = '';
   String _password = '';
 
   Future<void> _signUp() async {
     try {
-      await _auth.createUserWithEmailAndPassword(
+      UserCredential userCreds = await _auth.createUserWithEmailAndPassword(
           email: _email, password: _password);
+
+      // The "!" tells the interpreter that we know this cannot be null.
+      final newUser = userCreds.user!;
+
+      final userInfo = {
+        'docId': newUser.uid,
+        'email': _email,
+        'createdAt': Timestamp.now(),
+        'lastLogin': Timestamp.now(),
+        'preferences': {'example': 1234},
+      };
+
+      await _dbs.insert('users', newUser.uid, userInfo);
+
       logger.info('User created with email: $_email');
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => HomeScreen()));
