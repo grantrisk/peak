@@ -1,5 +1,5 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:peak/main.dart';
@@ -30,7 +30,22 @@ class _LoginScreenState extends State<LoginScreen> {
 
       final criteria = {'docId': user.uid};
 
-      await _dbs.update('users', updatedInfo, criteria);
+      try {
+        await _dbs.update('users', updatedInfo, criteria);
+      } on FirebaseException catch (e) {
+        // If the update fails, then there is no document for this user. Create one.
+        // TODO: need to abstract this somehow so that we can use it in other places
+        //  and not have to duplicate the code.
+        final userInfo = {
+          'docId': user.uid,
+          'email': user.email,
+          'createdAt': Timestamp.now(),
+          'lastLogin': Timestamp.now(),
+          'preferences': {'example': 1234},
+        };
+
+        await _dbs.insert('users', user.uid, userInfo);
+      }
 
       logger.info('User logged in with email: ${_emailController.text}');
       Navigator.of(context).pushReplacement(
