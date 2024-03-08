@@ -45,6 +45,7 @@ class _LoginScreenState extends State<LoginScreen> {
         };
 
         await _dbs.insert('users', user.uid, userInfo);
+        logger.info('User document created for user with email: ${user.email}');
       }
 
       logger.info('User logged in with email: ${_emailController.text}');

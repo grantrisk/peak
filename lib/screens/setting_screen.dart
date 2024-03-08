@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:peak/main.dart';
 
+import '../services/database_service/firebase_db_service.dart';
 import '../widgets/app_header.dart';
 import 'login_screen.dart';
 
@@ -157,14 +158,32 @@ class SettingsScreen extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () async {
-                          HapticFeedback.heavyImpact();
-                          await FirebaseAuth.instance.currentUser!
-                              .delete(); // Delete the user
-                          logger.info('User account deleted');
-                          Navigator.of(context).pushAndRemoveUntil(
-                            _createFadeRoute(),
-                            (Route<dynamic> route) => false,
-                          );
+                          try {
+                            // TODO: Need to figure out how to reverse the delete if one of the operations fails
+                            HapticFeedback.heavyImpact();
+                            // Delete the users document in the database
+                            final _dbs =
+                                FirebaseDatabaseService.getInstance(logger);
+                            await _dbs.delete('users',
+                                FirebaseAuth.instance.currentUser!.uid, {});
+
+                            // Delete the user's account
+                            await FirebaseAuth.instance.currentUser!
+                                .delete(); // Delete the user
+
+                            logger.info('User account deleted');
+
+                            // Navigate to the login screen
+                            Navigator.of(context).pushAndRemoveUntil(
+                              _createFadeRoute(),
+                              (Route<dynamic> route) => false,
+                            );
+                          } catch (e) {
+                            logger.error('Error deleting user account: $e');
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    'Error deleting account. Please try again.')));
+                          }
                         },
                         child: Text('Delete Account',
                             style: TextStyle(

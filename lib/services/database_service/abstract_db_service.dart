@@ -20,7 +20,8 @@ abstract class AbstractDatabaseService {
       Map<String, dynamic> criteria);
 
   // Delete a document from the database
-  Future<void> delete(String collection, Map<String, dynamic> criteria);
+  Future<void> delete(
+      String collection, String docId, Map<String, dynamic> criteria);
 
   // Delete all documents from the database
   Future<void> deleteAll(String collection);
