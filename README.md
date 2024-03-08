@@ -9,13 +9,13 @@ Peak is a comprehensive fitness tracking app tailored for fitness professionals.
 - **Metrics Dashboard:** Visualize your progress with customizable dashboards showing key fitness metrics.
 - **Exercise Database:** A vast library of exercises, catering to all types of fitness routines.
 
-[//]: # (TODO: Add screenshots of the app)
+[//]: # "TODO: Add screenshots of the app"
 
-[//]: # (## Screenshots)
+[//]: # "## Screenshots"
 
-[//]: # ()
+[//]: #
 
-[//]: # (&#40;Place your app screenshots here&#41;)
+[//]: # "(Place your app screenshots here)"
 
 ## Getting Started
 
@@ -34,12 +34,12 @@ Ensure you have Flutter installed on your system. If not, follow the [Flutter In
 2. Navigate to the project directory:
    ```sh
     cd Peak
-    ```
+   ```
 3. Install dependencies:
-    ```sh
+   ```sh
    flutter pub get
    ```
 4. Run the app:
-    ```sh
-    flutter run
-    ```
+   ```sh
+   flutter run
+   ```
