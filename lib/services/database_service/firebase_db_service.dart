@@ -22,9 +22,10 @@ class FirebaseDatabaseService extends AbstractDatabaseService {
   }
 
   @override
-  Future<void> insert(String collection, Map<String, dynamic> data) async {
-    await _firestore.collection(collection).add(data);
-    logger.info('Inserted document into $collection');
+  Future<void> insert(
+      String collection, String docId, Map<String, dynamic> data) async {
+    await _firestore.collection(collection).doc(docId).set(data);
+    logger.info('Inserted document with ID $docId into $collection');
   }
 
   @override

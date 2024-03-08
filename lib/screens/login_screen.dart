@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:peak/main.dart';
 import 'package:peak/screens/sign_up_screen.dart';
+import 'package:peak/services/database_service/firebase_db_service.dart';
 
 import 'home_screen.dart';
 
@@ -12,14 +14,24 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  final _dbs = FirebaseDatabaseService.getInstance(logger);
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _auth = FirebaseAuth.instance;
 
   Future<void> _login() async {
     try {
-      await _auth.signInWithEmailAndPassword(
+      UserCredential userCreds = await _auth.signInWithEmailAndPassword(
           email: _emailController.text, password: _passwordController.text);
+
+      final user = userCreds.user!;
+
+      final updatedInfo = {'lastLogin': Timestamp.now()};
+
+      final criteria = {'docId': user.uid};
+
+      await _dbs.update('users', updatedInfo, criteria);
+
       logger.info('User logged in with email: ${_emailController.text}');
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => HomeScreen()));

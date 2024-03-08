@@ -12,7 +12,8 @@ abstract class AbstractDatabaseService {
   Future<void> disconnect();
 
   // Insert a new document into the database
-  Future<void> insert(String collection, Map<String, dynamic> data);
+  Future<void> insert(
+      String collection, String docId, Map<String, dynamic> data);
 
   // Update a document in the database
   Future<void> update(String collection, Map<String, dynamic> data,
