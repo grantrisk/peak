@@ -1,0 +1,38 @@
+name: Format Code
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  format-and-commit:
+    runs-on: ubuntu-latest
+
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }} # Check out the branch that triggered the workflow
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16" # Match with your project's required Node.js version
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Setup Dart
+        uses: dart-lang/setup-dart@v1.2
+
+      - name: Format code
+        run: npm run format
+
+      - name: Commit and push if there are changes
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add .
+          git diff --staged --quiet || (git commit -m "Format code" && git push)
