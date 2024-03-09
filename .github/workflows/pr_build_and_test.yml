@@ -1,36 +1,24 @@
 name: PR Build and Test
 
 on:
-  workflow_run:
-    workflows: ["Check Format"]
-    types:
-      - completed
+  pull_request:
+    branches:
+      - main
 
 jobs:
-  check-workflow-status:
+  wait-for-check-format:
     runs-on: ubuntu-latest
-    outputs:
-      should-run: ${{ steps.check-conclusion.outputs.should-run }}
     steps:
-      - name: Fetch the conclusion of Check Format workflow
-        id: check-conclusion
-        uses: actions/github-script@v5
+      - name: Wait for Check Format workflow to succeed
+        uses: explorium-ai/wait-github-status-action@v1
         with:
-          script: |
-            const { data: { workflow_runs } } = await github.actions.listWorkflowRuns({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              workflow_id: 'Check Format.yml', // Use the exact file name or ID of the Check Format workflow
-              branch: '${{ github.event.workflow_run.head_branch }}',
-              event: 'pull_request'
-            })
-            const conclusion = workflow_runs[0] ? workflow_runs[0].conclusion : 'failure'
-            const shouldRun = conclusion === 'success' ? 'true' : 'false'
-            core.setOutput('should-run', shouldRun)
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          check-name: "Check Format" # The name of the job or workflow you're waiting for
+          ref: "${{ github.event.pull_request.head.sha }}" # The commit SHA that triggered the workflow
+          conclusion: "success" # Wait for the workflow to succeed
 
   build-and-test-android:
-    needs: check-workflow-status
-    if: needs.check-workflow-status.outputs.should-run == 'true'
+    needs: wait-for-check-format
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
