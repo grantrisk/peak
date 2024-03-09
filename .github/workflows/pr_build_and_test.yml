@@ -7,7 +7,30 @@ on:
       - completed
 
 jobs:
+  check-workflow-status:
+    runs-on: ubuntu-latest
+    outputs:
+      should-run: ${{ steps.check-conclusion.outputs.should-run }}
+    steps:
+      - name: Fetch the conclusion of Check Format workflow
+        id: check-conclusion
+        uses: actions/github-script@v5
+        with:
+          script: |
+            const { data: { workflow_runs } } = await github.actions.listWorkflowRuns({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: 'Check Format.yml', // Use the exact file name or ID of the Check Format workflow
+              branch: '${{ github.event.workflow_run.head_branch }}',
+              event: 'pull_request'
+            })
+            const conclusion = workflow_runs[0] ? workflow_runs[0].conclusion : 'failure'
+            const shouldRun = conclusion === 'success' ? 'true' : 'false'
+            core.setOutput('should-run', shouldRun)
+
   build-and-test-android:
+    needs: check-workflow-status
+    if: needs.check-workflow-status.outputs.should-run == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
