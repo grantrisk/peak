@@ -16,6 +16,20 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+
+      # Copy .env.template to .env and replace placeholders
+      - name: Setup .env file
+        run: |
+          cp .env.template .env
+          sed -i 's/ANDROID_FIREBASE_API_KEY=/${{ secrets.ANDROID_FIREBASE_API_KEY }}/g' .env
+          sed -i 's/ANDROID_FIREBASE_APP_ID=/${{ secrets.ANDROID_FIREBASE_APP_ID }}/g' .env
+          sed -i 's/IOS_FIREBASE_API_KEY=/${{ secrets.IOS_FIREBASE_API_KEY }}/g' .env
+          sed -i 's/IOS_FIREBASE_APP_ID=/${{ secrets.IOS_FIREBASE_APP_ID }}/g' .env
+          sed -i 's/FIREBASE_MESSAGING_SENDER_ID=/${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}/g' .env
+          sed -i 's/FIREBASE_PROJECT_ID=/${{ secrets.FIREBASE_PROJECT_ID }}/g' .env
+          sed -i 's/FIREBASE_STORAGE_BUCKET=/${{ secrets.FIREBASE_STORAGE_BUCKET }}/g' .env
+          sed -i 's/IOS_BUNDLE_ID=/${{ secrets.IOS_BUNDLE_ID }}/g' .env
+
       - run: flutter pub get
       - run: flutter test
       - run: flutter build apk
@@ -27,6 +41,20 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: "stable"
+
+      # Copy .env.template to .env and replace placeholders
+      - name: Setup .env file
+        run: |
+          cp .env.template .env
+          sed -i '' 's/ANDROID_FIREBASE_API_KEY=/${{ secrets.ANDROID_FIREBASE_API_KEY }}/g' .env
+          sed -i '' 's/ANDROID_FIREBASE_APP_ID=/${{ secrets.ANDROID_FIREBASE_APP_ID }}/g' .env
+          sed -i '' 's/IOS_FIREBASE_API_KEY=/${{ secrets.IOS_FIREBASE_API_KEY }}/g' .env
+          sed -i '' 's/IOS_FIREBASE_APP_ID=/${{ secrets.IOS_FIREBASE_APP_ID }}/g' .env
+          sed -i '' 's/FIREBASE_MESSAGING_SENDER_ID=/${{ secrets.FIREBASE_MESSAGING_SENDER_ID }}/g' .env
+          sed -i '' 's/FIREBASE_PROJECT_ID=/${{ secrets.FIREBASE_PROJECT_ID }}/g' .env
+          sed -i '' 's/FIREBASE_STORAGE_BUCKET=/${{ secrets.FIREBASE_STORAGE_BUCKET }}/g' .env
+          sed -i '' 's/IOS_BUNDLE_ID=/${{ secrets.IOS_BUNDLE_ID }}/g' .env
+
       - run: flutter pub get
       - run: flutter test
       - run: flutter build ios --no-codesign
