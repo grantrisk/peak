@@ -2,7 +2,7 @@ name: PR Build and Test
 
 on:
   workflow_run:
-    workflows: [ "Check Format" ]
+    workflows: ["Check Format"]
     types:
       - completed
 

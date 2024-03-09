@@ -6,8 +6,8 @@ destinations. It's designed to be extensible and middleware-ready to accommodate
 ## Getting Started
 
 1. **Configuration**:
-    - Firstly, define your logging configuration using the `LoggerConfig` class. Specify the `logLevel`
-      and `destination` for your logs. Optionally, provide a `filePath` for file logging.
+   - Firstly, define your logging configuration using the `LoggerConfig` class. Specify the `logLevel`
+     and `destination` for your logs. Optionally, provide a `filePath` for file logging.
 
 ```dart
 final config = LoggerConfig(
@@ -18,15 +18,15 @@ final config = LoggerConfig(
 ```
 
 2. **Initialization**:
-    - To simplify the initialization, a factory class LoggerServiceFactory has been introduced. Utilize this factory to
-      create an instance of a logger with the specified configuration.
+   - To simplify the initialization, a factory class LoggerServiceFactory has been introduced. Utilize this factory to
+     create an instance of a logger with the specified configuration.
 
 ```dart
 final logger = DefaultLogger(config: config);
 ```
 
 3. **Logging**:
-    - Employ the logger instance to register messages at various levels.
+   - Employ the logger instance to register messages at various levels.
 
 ```dart
 logger.debug('This is a debug message');
@@ -37,7 +37,7 @@ logger.critical('This is a critical message');
 ```
 
 4. **Middleware Usage**:
-    - Utilize LoggerMiddleware to log service calls.
+   - Utilize LoggerMiddleware to log service calls.
 
 ```dart
 final middleware = LoggerMiddleware(logger);
