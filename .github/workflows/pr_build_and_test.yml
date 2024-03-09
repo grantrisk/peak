@@ -12,10 +12,9 @@ jobs:
       - name: Wait for Check Format workflow to succeed
         uses: explorium-ai/wait-github-status-action@v1.1.0
         with:
-          repo-token: "${{ secrets.GITHUB_TOKEN }}"
-          check-name: "Check Format" # The name of the job or workflow you're waiting for
-          ref: "${{ github.event.pull_request.head.sha }}" # The commit SHA that triggered the workflow
-          conclusion: "success" # Wait for the workflow to succeed
+          token: ${{ secrets.GITHUB_TOKEN }}
+          name: "Check Format" # The name of the job or workflow you're waiting for
+          sha: ${{ github.event.pull_request.head.sha }} # The commit SHA that triggered the workflow
 
   build-and-test-android:
     needs: wait-for-check-format
