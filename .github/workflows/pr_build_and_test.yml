@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Wait for Check Format workflow to succeed
-        uses: explorium-ai/wait-github-status-action@v1
+        uses: explorium-ai/wait-github-status-action@v1.1.0
         with:
           repo-token: "${{ secrets.GITHUB_TOKEN }}"
           check-name: "Check Format" # The name of the job or workflow you're waiting for
