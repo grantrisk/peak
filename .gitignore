@@ -50,3 +50,4 @@ app.*.map.json
 **/firebase_app_id_file.json
 .env
 
+/node_modules/

@@ -41,8 +41,8 @@ class FirebaseDatabaseService extends AbstractDatabaseService {
   }
 
   @override
-  Future<void> delete(String collection, Map<String, dynamic> criteria) async {
-    var docId = criteria['docId'];
+  Future<void> delete(
+      String collection, String docId, Map<String, dynamic> criteria) async {
     if (docId != null) {
       await _firestore.collection(collection).doc(docId).delete();
       logger.info('Deleted document from $collection');

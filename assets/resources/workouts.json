@@ -1,1817 +1,1817 @@
 {
-    "shoulders": [
-        {
-            "id": "seat-dumbbell-overhead-press",
-            "name": "Seated Dumbbell Overhead Press",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Triceps", "Traps"]
-            }
-        },
-        {
-            "id": "seat-dumbbell-overhead-press-single-arm",
-            "name": "Seated Dumbbell Overhead Press, Single Arm",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Triceps", "Traps"]
-            }
-        },
-        {
-            "id": "standing-dumbbell-overhead-press",
-            "name": "Standing Dumbbell Overhead Press",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Triceps", "Traps"]
-            }
-        },
-        {
-            "id": "standing-dumbbell-overhead-press-single-arm",
-            "name": "Standing Dumbbell Overhead Press, Single Arm",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Triceps", "Traps"]
-            }
-        },
-        {
-            "id": "seated-barbell-overhead-press",
-            "name": "Seated Barbell Overhead Press",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Triceps", "Traps"]
-            }
-        },
-        {
-            "id": "seated-barbell-behind-the-neck-press",
-            "name": "Seated Barbell Behind the Neck Press",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Triceps", "Traps"]
-            }
-        },
-        {
-            "id": "standing-barbell-overhead-press",
-            "name": "Standing Barbell Overhead Press",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Triceps", "Traps"]
-            }
-        },
-        {
-            "id": "standing-barbell-behind-the-neck-press",
-            "name": "Standing Barbell Behind the Neck Press",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Triceps", "Traps"]
-            }
-        },
-        {
-            "id": "smith-machine-overhead-press-seated",
-            "name": "Smith Machine Overhead Press, Seated",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Triceps", "Traps"]
-            }
-        },
-        {
-            "id": "smith-machine-overhead-press-seated-behind-the-neck",
-            "name": "Smith Machine Overhead Press, Seated Behind the Neck",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Triceps", "Traps"]
-            }
-        },
-        {
-            "id": "plate-loaded-machine-overhead-press",
-            "name": "Plate Loaded Machine Overhead Press",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Triceps", "Traps"]
-            }
-        },
-        {
-            "id": "plate-loaded-machine-overhead-press-single-arm",
-            "name": "Plate Loaded Machine Overhead Press, Single Arm",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Triceps", "Traps"]
-            }
-        },
-        {
-            "id": "selector-overhead-press-machine-wide",
-            "name": "Selector Overhead Press Machine, Wide",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Triceps", "Traps"]
-            }
-        },
-        {
-            "id": "selector-overhead-press-machine-narrow",
-            "name": "Selector Overhead Press Machine, Narrow",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Triceps", "Traps"]
-            }
-        },
-        {
-            "id": "barbell-upright-row",
-            "name": "Barbell Upright Row",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Biceps", "Traps"]
-            }
-        },
-        {
-            "id": "ez-bar-upright-row",
-            "name": "EZ Bar Upright Row",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Biceps", "Traps"]
-            }
-        },
-        {
-            "id": "cable-upright-row-rope",
-            "name": "Cable Upright Row, Rope",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Biceps", "Traps"]
-            }
-        },
-        {
-            "id": "dumbbell-upright-row",
-            "name": "Dumbbell Upright Row",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Biceps", "Traps"]
-            }
-        },
-        {
-            "id": "standing-dumbbell-lateral-raise",
-            "name": "Standing Dumbbell Lateral Raise",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Traps"]
-            }
-        },
-        {
-            "id": "seated-dumbbell-lateral-raise",
-            "name": "Seated Dumbbell Lateral Raise",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Traps"]
-            }
-        },
-        {
-            "id": "single-arm-cable-lateral-raise",
-            "name": "Single Arm Cable Lateral Raise",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Traps"]
-            }
-        },
-        {
-            "id": "standing-barbell-front-raise",
-            "name": "Standing Barbell Front Raise",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Chest"]
-            }
-        },
-        {
-            "id": "standing-dumbbell-front-raise",
-            "name": "Standing Dumbbell Front Raise",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Chest"]
-            }
-        },
-        {
-            "id": "seated-dumbbell-front-raise",
-            "name": "Seated Dumbbell Front Raise",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Chest"]
-            }
-        },
-        {
-            "id": "standing-cable-front-raise",
-            "name": "Standing Cable Front Raise",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Chest"]
-            }
-        },
-        {
-            "id": "rear-delt-machine",
-            "name": "Rear Delt Machine",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Traps"]
-            }
-        },
-        {
-            "id": "dumbbell-bent-over-reverse-fly",
-            "name": "Dumbbell Bent Over Reverse Fly",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Traps"]
-            }
-        },
-        {
-            "id": "dumbbell-incline-prone-reverse-fly",
-            "name": "Dumbbell Incline Prone Reverse Fly",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Traps"]
-            }
-        },
-        {
-            "id": "single-arm-cable-reverse-fly",
-            "name": "Single Arm Cable Reverse Fly",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Traps"]
-            }
-        },
-        {
-            "id": "cable-face-pull",
-            "name": "Cable Face Pull",
-            "muscles_worked": {
-                "primary": "Shoulders",
-                "secondary": ["Traps", "Biceps"]
-            }
-        }
-    ],
-    "traps": [
-        {
-            "id": "standing-barbell-shrugs",
-            "name": "Standing Barbell Shrugs",
-            "muscles_worked": {
-                "primary": "Traps"
-            }
-        },
-        {
-            "id": "standing-dumbbell-shrugs",
-            "name": "Standing Dumbbell Shrugs",
-            "muscles_worked": {
-                "primary": "Traps"
-            }
-        },
-        {
-            "id": "incline-prone-dubbell-shrugs",
-            "name": "Incline Prone Dumbbell Shrugs",
-            "muscles_worked": {
-                "primary": "Traps"
-            }
-        }
-    ],
-    "chest": [
-        {
-            "id": "barbell-bench-press",
-            "name": "Barbell Bench Press",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Triceps", "Shoulders"]
-            }
-        },
-        {
-            "id": "barbell-bench-press-close-grip",
-            "name": "Barbell Bench Press, Close Grip",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Triceps", "Shoulders"]
-            }
-        },
-        {
-            "id": "incline-barbell-bench-press",
-            "name": "Incline Barbell Bench Press",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Triceps", "Shoulders"]
-            }
-        },
-        {
-            "id": "incline-barbell-bench-press-close-grip",
-            "name": "Incline Barbell Bench Press, Close Grip",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Triceps", "Shoulders"]
-            }
-        },
-        {
-            "id": "decline-barbell-bench-press",
-            "name": "Decline Barbell Bench Press",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Triceps", "Shoulders"]
-            }
-        },
-        {
-            "id": "decline-barbell-bench-press-close-grip",
-            "name": "Decline Barbell Bench Press, Close Grip",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Triceps", "Shoulders"]
-            }
-        },
-        {
-            "id": "dumbbell-bench-press",
-            "name": "Dumbbell Bench Press",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Triceps", "Shoulders"]
-            }
-        },
-        {
-            "id": "dumbbell-fly",
-            "name": "Dumbbell Fly",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Shoulders"]
-            }
-        },
-        {
-            "id": "incline-dumbbell-bench-press",
-            "name": "Incline Dumbbell Bench Press",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Triceps", "Shoulders"]
-            }
-        },
-        {
-            "id": "incline-dumbbell-fly",
-            "name": "Incline Dumbbell Fly",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Shoulders"]
-            }
-        },
-        {
-            "id": "decline-dumbbell-fly",
-            "name": "Decline Dumbbell Fly",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Shoulders"]
-            }
-        },
-        {
-            "id": "smith-machine-bench-press",
-            "name": "Smith Machine Bench Press",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Triceps", "Shoulders"]
-            }
-        },
-        {
-            "id": "smith-machine-bench-press-close-grip",
-            "name": "Smith Machine Bench Press, Close Grip",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Triceps", "Shoulders"]
-            }
-        },
-        {
-            "id": "smith-machine-incline-bench-press",
-            "name": "Smith Machine Incline Bench Press",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Triceps", "Shoulders"]
-            }
-        },
-        {
-            "id": "smith-machine-incline-bench-press-close-grip",
-            "name": "Smith Machine Incline Bench Press, Close Grip",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Triceps", "Shoulders"]
-            }
-        },
-        {
-            "id": "smith-machine-incline-bench-press",
-            "name": "Smith Machine Incline Bench Press",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Triceps", "Shoulders"]
-            }
-        },
-        {
-            "id": "smith-machine-incline-bench-press-close-grip",
-            "name": "Smith Machine Incline Bench Press, Close Grip",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Triceps", "Shoulders"]
-            }
-        },
-        {
-            "id": "medium-cable-fly",
-            "name": "Medium Cable Fly",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Shoulders"]
-            }
-        },
-        {
-            "id": "high-cable-fly",
-            "name": "High Cable Fly",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Shoulders"]
-            }
-        },
-        {
-            "id": "low-cable-fly",
-            "name": "Low Cable Fly",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Shoulders"]
-            }
-        },
-        {
-            "id": "plate-loaded-chest-press-machine",
-            "name": "Plate Loaded Chest Press Machine",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Shoulders", "Triceps"]
-            }
-        },
-        {
-            "id": "selector-chest-press-machine",
-            "name": "Selector Chest Press Machine",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Shoulders", "Triceps"]
-            }
-        },
-        {
-            "id": "chest-fly-machine",
-            "name": "Chest Fly Machine",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Shoulders"]
-            }
-        },
-        {
-            "id": "push-up",
-            "name": "Push Up",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Shoulders", "Triceps"]
-            }
-        },
-        {
-            "id": "push-up-close-grip",
-            "name": "Push Up, Close Grip",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Shoulders", "Triceps"]
-            }
-        },
-        {
-            "id": "incline-push-up",
-            "name": "Incline Push Up",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Shoulders", "Triceps"]
-            }
-        },
-        {
-            "id": "incline-push-up-close-grip",
-            "name": "Incline Push Up, Close Grip",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Shoulders", "Triceps"]
-            }
-        },
-        {
-            "id": "dips",
-            "name": "Dips",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Shoulders", "Triceps"]
-            }
-        },
-        {
-            "id": "dips-weighted",
-            "name": "Dips, Weighted",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Shoulders", "Triceps"]
-            }
-        },
-        {
-            "id": "machine-supported-dips",
-            "name": "Machine Supported Dips",
-            "muscles_worked": {
-                "primary": "Chest",
-                "secondary": ["Shoulders", "Triceps"]
-            }
-        }
-    ],
-    "forearms": [
-        {
-            "id": "standing-behind-back-barbell-wrist-curl",
-            "name": "Standing Behind Back Barbell Wrist Curl",
-            "muscles_worked": {
-                "primary": "Forearms"
-            }
-        },
-        {
-            "id": "standing-dumbbell-wrist-curl",
-            "name": "Standing Dumbbell Wrist Curl",
-            "muscles_worked": {
-                "primary": "Forearms"
-            }
-        },
-        {
-            "id": "preacher-dumbbell-wrist-curl",
-            "name": "Preacher Dumbbell Wrist Curl",
-            "muscles_worked": {
-                "primary": "Forearms"
-            }
-        },
-        {
-            "id": "preacher-dumbbell-reverse-wrist-curl",
-            "name": "Preacher Dumbbell Reverse Wrist Curl",
-            "muscles_worked": {
-                "primary": "Forearms"
-            }
-        }
-    ],
-    "biceps": [
-        {
-            "id": "ez-bar-standing-barbell-curl-narrow-grip",
-            "name": "EZ Bar Standing Barbell Curl, Narrow Grip",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "ez-bar-standing-barbell-curl-wide-grip",
-            "name": "EZ Bar Standing Barbell Curl, Wide Grip",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "standing-straight-bar-barbell-curl",
-            "name": "Standing Straight Bar Barbell Curl",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "standing-barbell-curl-overhand-grip",
-            "name": "Standing Barbell Curl, Overhand Grip",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "standing-h-bar-barbell-curl",
-            "name": "Standing H Bar Barbell Curl",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "ez-bar-preacher-curl",
-            "name": "EZ Bar Preacher Curl",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "h-bar-preacher-curl",
-            "name": "H Bar Preacher Curl",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "overhand-grip-straight-bar-preacher-curl",
-            "name": "Overhand Grip Straight Bar Preacher Curl",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "standing-dumbbell-curl",
-            "name": "Standing Dumbbell Curl",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "standing-dumbbell-hammer-curl",
-            "name": "Standing Dumbbell Hammer Curl",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "seated-dumbbell-curl",
-            "name": "Seated Dumbbell Curl",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "seated-dumbbell-hammer-curl",
-            "name": "Seated Dumbbell Hammer Curl",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "incline-dumbbell-curl",
-            "name": "Incline Dumbbell Curl",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "incline-dumbbell-hammer-curl",
-            "name": "Incline Dumbbell Hammer Curl",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "dumbbell-preacher-curl",
-            "name": "Dumbbell Preacher Curl",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "dumbbell-hammer-preacher-curl",
-            "name": "Dumbbell Hammer Preacher Curl",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "dumbbell-preacher-curl-single-arm",
-            "name": "Dumbbell Preacher Curl, Single Arm",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "dumbbell-hammer-preacher-curl-single-arm",
-            "name": "Dumbbell Hammer Preacher Curl, Single Arm",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "concentration-curl",
-            "name": "Concentration Curl",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "standing-cable-curl",
-            "name": "Standing Cable Curl",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "standing-cable-hammer-curl",
-            "name": "Standing Cable Hammer Curl",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "standing-cable-curl-overhand-grip",
-            "name": "Standing Cable Curl, Overhand Grip",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "standing-cable-curl-single-arm",
-            "name": "Standing Cable Curl, Single Arm",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "standing-cable-hammer-curl-single-arm",
-            "name": "Standing Cable Hammer Curl, Single Arm",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "preacher-curl-machine",
-            "name": "Preacher Curl Machine",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "preacher-curl-machine-single-arm",
-            "name": "Preacher Curl Machine, Single Arm",
-            "muscles_worked": {
-                "primary": "Biceps",
-                "secondary": ["Forearms"]
-            }
-        }
-    ],
-    "triceps": [
-        {
-            "id": "standing-cable-tricep-pushdown-rope",
-            "name": "Standing Cable Tricep Pushdown, Rope",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "standing-cable-tricep-pushdown-straight-bar",
-            "name": "Standing Cable Tricep Pushdown, Straight Bar",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "standing-cable-tricep-pushdown-single-arm",
-            "name": "Standing Cable Tricep Pushdown, Single Arm",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "standing-cable-overhead-tricep-extension-rope",
-            "name": "Standing Cable Overhead Tricep Extension, Rope",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "standing-cable-overhead-tricep-extension-straight-bar",
-            "name": "Standing Cable Overhead Tricep Extension, Straight Bar",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "standing-cable-overhead-tricep-extension-single-arm",
-            "name": "Standing Cable Overhead Tricep Extension, Single Arm",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "cable-tricep-kick-back-single-arm",
-            "name": "Cable Tricep Kick Back, Single Arm",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "seated-dumbbell-overhead-tricep-extension",
-            "name": "Seated Dumbbell Overhead Tricep Extension",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "seated-dumbbell-overhead-tricep-extension-single-arm",
-            "name": "Seated Dumbbell Overhead Tricep Extension, Single Arm",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "standing-dumbbell-overhead-tricep-extension",
-            "name": "Standing Dumbbell Overhead Tricep Extension",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "standing-dumbbell-overhead-tricep-extension-single-arm",
-            "name": "Standing Dumbbell Overhead Tricep Extension, Single Arm",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "dumbbell-skull-crusher",
-            "name": "Dumbbell Skull Crusher",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "dumbbell-skull-crusher-behind-head",
-            "name": "Dumbbell Skull Crusher, Behind Head",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "dumbbell-skull-crusher-single-arm",
-            "name": "Dumbbell Skull Crusher, Single Arm",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "dumbbell-tricep-kick-back-incline-prone",
-            "name": "Dumbbell Tricep Kick Back, Incline Prone",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "dumbbell-tricep-kick-back-single-arm",
-            "name": "Dumbbell Tricep Kick Back, Single Arm",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "ez-bar-skull-crusher",
-            "name": "EZ Bar Skull Crusher",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "ez-bar-skull-crusher-behind-head",
-            "name": "EZ Bar Skull Crusher, Behind Head",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "h-bar-skull-crusher",
-            "name": "H Bar Skull Crusher",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "h-bar-skull-crusher-behind-head",
-            "name": "H Bar Skull Crusher, Behind Head",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "seated-ez-bar-overhead-tricep-extension",
-            "name": "Seated EZ Bar Overhead Tricep Extension",
-            "muscles_worked": {
-                "primary": "Triceps"
-            }
-        },
-        {
-            "id": "bench-dip",
-            "name": "Bench Dip",
-            "muscles_worked": {
-                "primary": "Triceps",
-                "secondary": ["Shoulders"]
-            }
-        }
-    ],
-    "lats": [
-        {
-            "id": "overhand-grip-pull-up",
-            "name": "Overhand Grip Pull Up",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "overhand-grip-pull-up-weighted",
-            "name": "Overhand Grip Pull Up, Weighted",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "wide-grip-pull-up",
-            "name": "Wide Grip Pull Up",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "wide-grip-pull-up-weighted",
-            "name": "Wide Grip Pull Up, Weighted",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "neutral-grip-pull-up",
-            "name": "Neutral Grip Pull Up",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "neutral-grip-pull-up-weighted",
-            "name": "Neutral Grip Pull Up, Weighted",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "underhand-grip-pull-up",
-            "name": "Underhand Grip Pull Up",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "underhand-grip-pull-up-weighted",
-            "name": "Underhand Grip Pull Up, Weighted",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "machine-supported-pull-up-overhand-grip",
-            "name": "Machine Supported Pull Up, Overhand Grip",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "machine-supported-pull-up-wide-grip",
-            "name": "Machine Supported Pull Up, Wide Grip",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "machine-supported-pull-up-neutral-grip",
-            "name": "Machine Supported Pull Up, Neutral Grip",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "overhand-grip-pull-up-with-band",
-            "name": "Overhand Grip Pull Up, With Band",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "neutral-grip-pull-up-with-band",
-            "name": "Neutral Grip Pull Up, With Band",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "underhand-grip-pull-up-with-band",
-            "name": "Underhand Grip Pull Up, With Band",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "overhand-grip-lat-pulldown",
-            "name": "Overhand Grip Lat Pulldown",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "underhand-grip-pull-up-with-band",
-            "name": "Underhand Grip Pull Up, With Band",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "overhand-grip-lat-pulldown",
-            "name": "Overhand Grip Lat Pulldown",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "wide-grip-lat-pulldown",
-            "name": "Wide Grip Lat Pulldown",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "neutral-grip-lat-pulldown",
-            "name": "Neutral Grip Lat Pulldown",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "underhand-grip-lat-pulldown",
-            "name": "Underhand Grip Lat Pulldown",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "behind-the-neck-lat-pulldown",
-            "name": "Behind The Neck Lat Pulldown",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Traps"]
-            }
-        },
-        {
-            "id": "lat-pulldown-single-arm",
-            "name": "Lat Pulldown, Single Arm",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "overhand-grip-plate-loaded-lat-pulldown",
-            "name": "Overhand Grip Plate Loaded Lat Pulldown",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "neutral-grip-plate-loaded-lat-pulldown",
-            "name": "Neutral Grip Plate Loaded Lat Pulldown",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "underhand-grip-plate-loaded-lat-pulldown",
-            "name": "Underhand Grip Plate Loaded Lat Pulldown",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "neutral-grip-plate-loaded-lat-pulldown-single-arm",
-            "name": "Neutral Grip Plate Loaded Lat Pulldown, Single Arm",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "underhand-grip-plate-loaded-lat-pulldown-single-arm",
-            "name": "Underhand Grip Plate Loaded Lat Pulldown, Single Arm",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps"]
-            }
-        },
-        {
-            "id": "seated-cable-row-overhand-grip",
-            "name": "Seated Cable Row, Overhand Grip",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Traps"]
-            }
-        },
-        {
-            "id": "seated-cable-row-underhand-grip",
-            "name": "Seated Cable Row, Underhand Grip",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Traps"]
-            }
-        },
-        {
-            "id": "seated-cable-row-neutral-grip",
-            "name": "Seated Cable Row, Neutral Grip",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Traps"]
-            }
-        },
-        {
-            "id": "seated-caple-row-wide-grip",
-            "name": "Seated Caple Row, Wide Grip",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Traps"]
-            }
-        },
-        {
-            "id": "seated-cable-row-single-arm",
-            "name": "Seated Cable Row, Single Arm",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Traps"]
-            }
-        },
-        {
-            "id": "bent-over-barbell-row-overhand-grip",
-            "name": "Bent Over Barbell Row, Overhand Grip",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Lower Back"]
-            }
-        },
-        {
-            "id": "bent-over-barbell-row-underhand-grip",
-            "name": "Bent Over Barbell Row, Underhand Grip",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Lower Back"]
-            }
-        },
-        {
-            "id": "tbar-row",
-            "name": "T-Bar Row",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Lower Back"]
-            }
-        },
-        {
-            "id": "single-arm-dumbbell-row",
-            "name": "Single Arm Dumbbell Row",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Obliques"]
-            }
-        },
-        {
-            "id": "chest-supported-dumbbell-row",
-            "name": "Chest Supported Dumbbell Row",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Traps"]
-            }
-        },
-        {
-            "id": "standing-cable-pullover-bar",
-            "name": "Standing Cable Pullover Bar",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Triceps", "Chest"]
-            }
-        },
-        {
-            "id": "standing-cable-pullover-rope",
-            "name": "Standing Cable Pullover Rope",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Triceps", "Chest"]
-            }
-        },
-        {
-            "id": "standing-cable-pullover-single-arm",
-            "name": "Standing Cable Pullover, Single Arm",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Triceps", "Chest"]
-            }
-        },
-        {
-            "id": "flat-dumbbell-pullover",
-            "name": "Flat Dumbbell Pullover",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Triceps", "Chest"]
-            }
-        },
-        {
-            "id": "decline-dumbbell-pullover",
-            "name": "Decline Dumbbell Pullover",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Triceps", "Chest"]
-            }
-        },
-        {
-            "id": "plate-loaded-chest-supported-row-machine-overhand-grip",
-            "name": "Plate Loaded Chest Supported Row Machine, Overhand Grip",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Traps"]
-            }
-        },
-        {
-            "id": "plate-loaded-chest-supported-row-machine-neutral-grip-narrow",
-            "name": "Plate Loaded Chest Supported Row Machine, Neutral Grip, Narrow",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Traps"]
-            }
-        },
-        {
-            "id": "plate-loaded-chest-supported-row-machine-overhand-wide",
-            "name": "Plate Loaded Chest Supported Row Machine, Overhand, Wide",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Shoulders"]
-            }
-        },
-        {
-            "id": "plate-loaded-chest-supported-row-machine-overhand-wide-single-arm",
-            "name": "Plate Loaded Chest Supported Row Machine, Overhand, Wide, Single Arm",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Shoulders"]
-            }
-        },
-        {
-            "id": "plate-loaded-single-arm-chest-supported-row-machine-overhand-grip-narrow",
-            "name": "Plate Loaded Single Arm Chest Supported Row Machine, Overhand Grip, Narrow",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Traps"]
-            }
-        },
-        {
-            "id": "plate-loaded-single-arm-chest-supported-low-row-machine-neutral-grip-narrow",
-            "name": "Plate Loaded Single Arm Chest Supported Low Row Machine, Neutral Grip, Narrow",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Traps"]
-            }
-        },
-        {
-            "id": "selector-chest-supported-row-machine-overhand-grip",
-            "name": "Selector Chest Supported Row Machine, Overhand Grip",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Traps"]
-            }
-        },
-        {
-            "id": "selector-chest-supported-row-machine-neutral-grip-narrow",
-            "name": "Selector Chest Supported Row Machine, Neutral Grip, Narrow",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Traps"]
-            }
-        },
-        {
-            "id": "selector-chest-supported-row-machine-single-arm",
-            "name": "Selector Chest Supported Row Machine, Single Arm",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Traps"]
-            }
-        },
-        {
-            "id": "inverted-row-overhand-grip",
-            "name": "Inverted Row, Overhand Grip",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Traps"]
-            }
-        },
-        {
-            "id": "inverted-row-underhand-grip",
-            "name": "Inverted Row, Underhand Grip",
-            "muscles_worked": {
-                "primary": "Lats",
-                "secondary": ["Biceps", "Traps"]
-            }
-        }
-    ],
-    "lower-back": [
-        {
-            "id": "floor-back-extension",
-            "name": "Floor Back Extension",
-            "muscles_worked": {
-                "primary": "Lower Back"
-            }
-        },
-        {
-            "id": "superman",
-            "name": "Superman",
-            "muscles_worked": {
-                "primary": "Lower Back",
-                "secondary": ["Glutes"]
-            }
-        }
-    ],
-    "abs": [
-        {
-            "id": "crunchs",
-            "name": "Crunchs",
-            "muscles_worked": {
-                "primary": "Abs"
-            }
-        },
-        {
-            "id": "situps",
-            "name": "Situps",
-            "muscles_worked": {
-                "primary": "Abs"
-            }
-        },
-        {
-            "id": "situps-weighted",
-            "name": "Situps, Weighted",
-            "muscles_worked": {
-                "primary": "Abs"
-            }
-        },
-        {
-            "id": "decline-crunchs",
-            "name": "Decline Crunchs",
-            "muscles_worked": {
-                "primary": "Abs"
-            }
-        },
-        {
-            "id": "decline-situps",
-            "name": "Decline Situps",
-            "muscles_worked": {
-                "primary": "Abs"
-            }
-        },
-        {
-            "id": "decline-situps-weighted",
-            "name": "Decline Situps, Weighted",
-            "muscles_worked": {
-                "primary": "Abs"
-            }
-        },
-        {
-            "id": "v-ups",
-            "name": "V-Ups",
-            "muscles_worked": {
-                "primary": "Abs"
-            }
-        },
-        {
-            "id": "v-situps",
-            "name": "V-Situps",
-            "muscles_worked": {
-                "primary": "Abs"
-            }
-        },
-        {
-            "id": "lying-reverse-crunch-up",
-            "name": "Lying Reverse Crunch Up",
-            "muscles_worked": {
-                "primary": "Abs"
-            }
-        },
-        {
-            "id": "hanging-knee-raises",
-            "name": "Hanging Knee Raises",
-            "muscles_worked": {
-                "primary": "Abs",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "hanging-knee-raises-weighted",
-            "name": "Hanging Knee Raises, Weighted",
-            "muscles_worked": {
-                "primary": "Abs",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "hanging-leg-raises",
-            "name": "Hanging Leg Raises",
-            "muscles_worked": {
-                "primary": "Abs",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "hanging-leg-raises-weighted",
-            "name": "Hanging Leg Raises, Weighted",
-            "muscles_worked": {
-                "primary": "Abs",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "toes-to-bar",
-            "name": "Toes To Bar",
-            "muscles_worked": {
-                "primary": "Abs",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "hanging-knee-raise-ab-station",
-            "name": "Hanging Knee Raise Ab Station",
-            "muscles_worked": {
-                "primary": "Abs",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "hanging-leg-raise-ab-station",
-            "name": "Hanging Leg Raise Ab Station",
-            "muscles_worked": {
-                "primary": "Abs",
-                "secondary": ["Forearms"]
-            }
-        },
-        {
-            "id": "seated-cable-crunch",
-            "name": "Seated Cable Crunch",
-            "muscles_worked": {
-                "primary": "Abs"
-            }
-        },
-        {
-            "id": "ab-machine",
-            "name": "Ab Machine",
-            "muscles_worked": {
-                "primary": "Abs"
-            }
-        },
-        {
-            "id": "plank",
-            "name": "Plank",
-            "muscles_worked": {
-                "primary": "Abs"
-            }
-        },
-        {
-            "id": "hollow",
-            "name": "Hollow",
-            "muscles_worked": {
-                "primary": "Abs"
-            }
-        },
-        {
-            "id": "tuck-hollow",
-            "name": "Tuck Hollow",
-            "muscles_worked": {
-                "primary": "Abs"
-            }
-        },
-        {
-            "id": "fitball-crunches",
-            "name": "Fitball Crunches",
-            "muscles_worked": {
-                "primary": "Abs"
-            }
-        },
-        {
-            "id": "kneeling-ab-wheel",
-            "name": "Kneeling Ab Wheel",
-            "muscles_worked": {
-                "primary": "Abs",
-                "secondary": ["Lats"]
-            }
-        }
-    ],
-    "glutes": [
-        {
-            "id": "barbell-hip-thrust",
-            "name": "Barbell Hip Thrust",
-            "muscles_worked": {
-                "primary": "Glutes",
-                "secondary": ["Hamstrings"]
-            }
-        },
-        {
-            "id": "barbell-hip-thrust-with-bands",
-            "name": "Barbell Hip Thrust, With Bands",
-            "muscles_worked": {
-                "primary": "Glutes",
-                "secondary": ["Hamstrings", "Abductors"]
-            }
-        },
-        {
-            "id": "barbell-glute-bridge",
-            "name": "Barbell Glute Bridge",
-            "muscles_worked": {
-                "primary": "Glutes",
-                "secondary": ["Hamstrings"]
-            }
-        },
-        {
-            "id": "barbell-glute-bridge-with-bands",
-            "name": "Barbell Glute Bridge, With Bands",
-            "muscles_worked": {
-                "primary": "Glutes",
-                "secondary": ["Hamstrings", "Abductors"]
-            }
-        },
-        {
-            "id": "dumbbell-hip-thrust",
-            "name": "Dumbbell Hip Thrust",
-            "muscles_worked": {
-                "primary": "Glutes",
-                "secondary": ["Hamstrings"]
-            }
-        },
-        {
-            "id": "dumbbell-hip-thrust-with-bands",
-            "name": "Dumbbell Hip Thrust, With Bands",
-            "muscles_worked": {
-                "primary": "Glutes",
-                "secondary": ["Hamstrings", "Abductors"]
-            }
-        },
-        {
-            "id": "dumbbell-glute-bridge",
-            "name": "Dumbbell Glute Bridge",
-            "muscles_worked": {
-                "primary": "Glutes",
-                "secondary": ["Hamstrings"]
-            }
-        },
-        {
-            "id": "dumbbell-glute-bridge-with-bands",
-            "name": "Dumbbell Glute Bridge, With Bands",
-            "muscles_worked": {
-                "primary": "Glutes",
-                "secondary": ["Hamstrings", "Abductors"]
-            }
-        },
-        {
-            "id": "hip-thrust-machine",
-            "name": "Hip Thrust Machine",
-            "muscles_worked": {
-                "primary": "Glutes",
-                "secondary": ["Hamstrings"]
-            }
-        },
-        {
-            "id": "standing-glute-kickback-machine",
-            "name": "Standing Glute Kickback Machine",
-            "muscles_worked": {
-                "primary": "Glutes",
-                "secondary": ["Hamstrings"]
-            }
-        },
-        {
-            "id": "standing-cable-hip-extension",
-            "name": "Standing Cable Hip Extension",
-            "muscles_worked": {
-                "primary": "Glutes",
-                "secondary": ["Hamstrings"]
-            }
-        },
-        {
-            "id": "hip-thrust-with-bands",
-            "name": "Hip Thrust, With Bands",
-            "muscles_worked": {
-                "primary": "Glutes",
-                "secondary": ["Hamstrings", "Abductors"]
-            }
-        },
-        {
-            "id": "single-leg-hip-thrust",
-            "name": "Single Leg Hip Thrust",
-            "muscles_worked": {
-                "primary": "Glutes",
-                "secondary": ["Hamstrings"]
-            }
-        },
-        {
-            "id": "single-leg-glute-bridge",
-            "name": "Single Leg Glute Bridge",
-            "muscles_worked": {
-                "primary": "Glutes",
-                "secondary": ["Hamstrings"]
-            }
-        },
-        {
-            "id": "bodyweight-quadruped-glute-kickback",
-            "name": "Bodyweight Quadruped Glute Kickback",
-            "muscles_worked": {
-                "primary": "Glutes",
-                "secondary": ["Hamstrings"]
-            }
-        },
-        {
-            "id": "lying-kickback",
-            "name": "Lying Kickback",
-            "muscles_worked": {
-                "primary": "Glutes",
-                "secondary": ["Hamstrings"]
-            }
-        }
-    ],
-    "quads": [
-        {
-            "id": "barbell-back-squat",
-            "name": "Barbell Back Squat",
-            "muscles_worked": {
-                "primary": "Quads",
-                "secondary": ["Adductors", "Glutes"]
-            }
-        },
-        {
-            "id": "barbell-back-squat-wide-stance",
-            "name": "Barbell Back Squat, Wide Stance",
-            "muscles_worked": {
-                "primary": "Quads",
-                "secondary": ["Adductors", "Glutes"]
-            }
-        },
-        {
-            "id": "barbell-front-squat",
-            "name": "Barbell Front Squat",
-            "muscles_worked": {
-                "primary": "Quads",
-                "secondary": ["Adductors", "Glutes"]
-            }
-        },
-        {
-            "id": "barbell-front-squat-wide-stance",
-            "name": "Barbell Front Squat, Wide Stance",
-            "muscles_worked": {
-                "primary": "Quads",
-                "secondary": ["Adductors", "Glutes"]
-            }
-        }
-    ],
-    "hamstrings": [
-        {
-            "id": "barbell-deadlift",
-            "name": "Barbell Deadlift",
-            "muscles_worked": {
-                "primary": "Hamstrings",
-                "secondary": ["Glutes", "Lower Back"]
-            }
-        },
-        {
-            "id": "trap-bar-deadlift",
-            "name": "Trap Bar Deadlift",
-            "muscles_worked": {
-                "primary": "Hamstrings",
-                "secondary": ["Glutes", "Quads"]
-            }
-        },
-        {
-            "id": "barbell-sumo-deadlift",
-            "name": "Barbell Sumo Deadlift",
-            "muscles_worked": {
-                "primary": "Hamstrings",
-                "secondary": ["Glutes", "Adductors"]
-            }
-        },
-        {
-            "id": "barbell-romanian-deadlift",
-            "name": "Barbell Romanian Deadlift",
-            "muscles_worked": {
-                "primary": "Hamstrings",
-                "secondary": ["Glutes", "Lower Back"]
-            }
-        }
-    ],
-    "obliques": [
-        {
-            "id": "russian-twist",
-            "name": "Russian Twist",
-            "muscles_worked": {
-                "primary": "Obliques"
-            }
-        },
-        {
-            "id": "decline-russian-twist",
-            "name": "Decline Russian Twist",
-            "muscles_worked": {
-                "primary": "Obliques"
-            }
-        },
-        {
-            "id": "side-plank",
-            "name": "Side Plank",
-            "muscles_worked": {
-                "primary": "Obliques"
-            }
-        },
-        {
-            "id": "hanging-leg-raise-windshield-wipers",
-            "name": "Hanging Leg Raise, Windshield Wipers",
-            "muscles_worked": {
-                "primary": "Obliques"
-            }
-        }
-    ],
-    "adductors": [
-        {
-            "id": "adduction-machine",
-            "name": "Adduction Machine",
-            "muscles_worked": {
-                "primary": "Adductors"
-            }
-        },
-        {
-            "id": "single-leg-cable-adduction",
-            "name": "Single Leg Cable Adduction",
-            "muscles_worked": {
-                "primary": "Adductors"
-            }
-        }
-    ],
-    "abductors": [
-        {
-            "id": "abduction-machine",
-            "name": "Abduction Machine",
-            "muscles_worked": {
-                "primary": "Abductors"
-            }
-        },
-        {
-            "id": "side-lying-hip-abduction",
-            "name": "Side Lying Hip Abduction",
-            "muscles_worked": {
-                "primary": "Abductors"
-            }
-        },
-        {
-            "id": "single-leg-cable-abduction",
-            "name": "Single Leg Cable Abduction",
-            "muscles_worked": {
-                "primary": "Abductors"
-            }
-        }
-    ],
-    "calves": [
-        {
-            "id": "standing-calf-raise",
-            "name": "Standing Calf Raise",
-            "muscles_worked": {
-                "primary": "Calves"
-            }
-        },
-        {
-            "id": "standing-calf-raise-weighted",
-            "name": "Standing Calf Raise, Weighted",
-            "muscles_worked": {
-                "primary": "Calves"
-            }
-        },
-        {
-            "id": "standing-calf-raise-single-leg",
-            "name": "Standing Calf Raise, Single Leg",
-            "muscles_worked": {
-                "primary": "Calves"
-            }
-        },
-        {
-            "id": "smith-machine-standing-calf-raise",
-            "name": "Smith Machine Standing Calf Raise",
-            "muscles_worked": {
-                "primary": "Calves"
-            }
-        }
-    ]
+  "shoulders": [
+    {
+      "id": "seat-dumbbell-overhead-press",
+      "name": "Seated Dumbbell Overhead Press",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Triceps", "Traps"]
+      }
+    },
+    {
+      "id": "seat-dumbbell-overhead-press-single-arm",
+      "name": "Seated Dumbbell Overhead Press, Single Arm",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Triceps", "Traps"]
+      }
+    },
+    {
+      "id": "standing-dumbbell-overhead-press",
+      "name": "Standing Dumbbell Overhead Press",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Triceps", "Traps"]
+      }
+    },
+    {
+      "id": "standing-dumbbell-overhead-press-single-arm",
+      "name": "Standing Dumbbell Overhead Press, Single Arm",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Triceps", "Traps"]
+      }
+    },
+    {
+      "id": "seated-barbell-overhead-press",
+      "name": "Seated Barbell Overhead Press",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Triceps", "Traps"]
+      }
+    },
+    {
+      "id": "seated-barbell-behind-the-neck-press",
+      "name": "Seated Barbell Behind the Neck Press",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Triceps", "Traps"]
+      }
+    },
+    {
+      "id": "standing-barbell-overhead-press",
+      "name": "Standing Barbell Overhead Press",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Triceps", "Traps"]
+      }
+    },
+    {
+      "id": "standing-barbell-behind-the-neck-press",
+      "name": "Standing Barbell Behind the Neck Press",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Triceps", "Traps"]
+      }
+    },
+    {
+      "id": "smith-machine-overhead-press-seated",
+      "name": "Smith Machine Overhead Press, Seated",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Triceps", "Traps"]
+      }
+    },
+    {
+      "id": "smith-machine-overhead-press-seated-behind-the-neck",
+      "name": "Smith Machine Overhead Press, Seated Behind the Neck",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Triceps", "Traps"]
+      }
+    },
+    {
+      "id": "plate-loaded-machine-overhead-press",
+      "name": "Plate Loaded Machine Overhead Press",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Triceps", "Traps"]
+      }
+    },
+    {
+      "id": "plate-loaded-machine-overhead-press-single-arm",
+      "name": "Plate Loaded Machine Overhead Press, Single Arm",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Triceps", "Traps"]
+      }
+    },
+    {
+      "id": "selector-overhead-press-machine-wide",
+      "name": "Selector Overhead Press Machine, Wide",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Triceps", "Traps"]
+      }
+    },
+    {
+      "id": "selector-overhead-press-machine-narrow",
+      "name": "Selector Overhead Press Machine, Narrow",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Triceps", "Traps"]
+      }
+    },
+    {
+      "id": "barbell-upright-row",
+      "name": "Barbell Upright Row",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Biceps", "Traps"]
+      }
+    },
+    {
+      "id": "ez-bar-upright-row",
+      "name": "EZ Bar Upright Row",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Biceps", "Traps"]
+      }
+    },
+    {
+      "id": "cable-upright-row-rope",
+      "name": "Cable Upright Row, Rope",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Biceps", "Traps"]
+      }
+    },
+    {
+      "id": "dumbbell-upright-row",
+      "name": "Dumbbell Upright Row",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Biceps", "Traps"]
+      }
+    },
+    {
+      "id": "standing-dumbbell-lateral-raise",
+      "name": "Standing Dumbbell Lateral Raise",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Traps"]
+      }
+    },
+    {
+      "id": "seated-dumbbell-lateral-raise",
+      "name": "Seated Dumbbell Lateral Raise",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Traps"]
+      }
+    },
+    {
+      "id": "single-arm-cable-lateral-raise",
+      "name": "Single Arm Cable Lateral Raise",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Traps"]
+      }
+    },
+    {
+      "id": "standing-barbell-front-raise",
+      "name": "Standing Barbell Front Raise",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Chest"]
+      }
+    },
+    {
+      "id": "standing-dumbbell-front-raise",
+      "name": "Standing Dumbbell Front Raise",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Chest"]
+      }
+    },
+    {
+      "id": "seated-dumbbell-front-raise",
+      "name": "Seated Dumbbell Front Raise",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Chest"]
+      }
+    },
+    {
+      "id": "standing-cable-front-raise",
+      "name": "Standing Cable Front Raise",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Chest"]
+      }
+    },
+    {
+      "id": "rear-delt-machine",
+      "name": "Rear Delt Machine",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Traps"]
+      }
+    },
+    {
+      "id": "dumbbell-bent-over-reverse-fly",
+      "name": "Dumbbell Bent Over Reverse Fly",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Traps"]
+      }
+    },
+    {
+      "id": "dumbbell-incline-prone-reverse-fly",
+      "name": "Dumbbell Incline Prone Reverse Fly",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Traps"]
+      }
+    },
+    {
+      "id": "single-arm-cable-reverse-fly",
+      "name": "Single Arm Cable Reverse Fly",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Traps"]
+      }
+    },
+    {
+      "id": "cable-face-pull",
+      "name": "Cable Face Pull",
+      "muscles_worked": {
+        "primary": "Shoulders",
+        "secondary": ["Traps", "Biceps"]
+      }
+    }
+  ],
+  "traps": [
+    {
+      "id": "standing-barbell-shrugs",
+      "name": "Standing Barbell Shrugs",
+      "muscles_worked": {
+        "primary": "Traps"
+      }
+    },
+    {
+      "id": "standing-dumbbell-shrugs",
+      "name": "Standing Dumbbell Shrugs",
+      "muscles_worked": {
+        "primary": "Traps"
+      }
+    },
+    {
+      "id": "incline-prone-dubbell-shrugs",
+      "name": "Incline Prone Dumbbell Shrugs",
+      "muscles_worked": {
+        "primary": "Traps"
+      }
+    }
+  ],
+  "chest": [
+    {
+      "id": "barbell-bench-press",
+      "name": "Barbell Bench Press",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Triceps", "Shoulders"]
+      }
+    },
+    {
+      "id": "barbell-bench-press-close-grip",
+      "name": "Barbell Bench Press, Close Grip",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Triceps", "Shoulders"]
+      }
+    },
+    {
+      "id": "incline-barbell-bench-press",
+      "name": "Incline Barbell Bench Press",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Triceps", "Shoulders"]
+      }
+    },
+    {
+      "id": "incline-barbell-bench-press-close-grip",
+      "name": "Incline Barbell Bench Press, Close Grip",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Triceps", "Shoulders"]
+      }
+    },
+    {
+      "id": "decline-barbell-bench-press",
+      "name": "Decline Barbell Bench Press",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Triceps", "Shoulders"]
+      }
+    },
+    {
+      "id": "decline-barbell-bench-press-close-grip",
+      "name": "Decline Barbell Bench Press, Close Grip",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Triceps", "Shoulders"]
+      }
+    },
+    {
+      "id": "dumbbell-bench-press",
+      "name": "Dumbbell Bench Press",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Triceps", "Shoulders"]
+      }
+    },
+    {
+      "id": "dumbbell-fly",
+      "name": "Dumbbell Fly",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Shoulders"]
+      }
+    },
+    {
+      "id": "incline-dumbbell-bench-press",
+      "name": "Incline Dumbbell Bench Press",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Triceps", "Shoulders"]
+      }
+    },
+    {
+      "id": "incline-dumbbell-fly",
+      "name": "Incline Dumbbell Fly",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Shoulders"]
+      }
+    },
+    {
+      "id": "decline-dumbbell-fly",
+      "name": "Decline Dumbbell Fly",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Shoulders"]
+      }
+    },
+    {
+      "id": "smith-machine-bench-press",
+      "name": "Smith Machine Bench Press",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Triceps", "Shoulders"]
+      }
+    },
+    {
+      "id": "smith-machine-bench-press-close-grip",
+      "name": "Smith Machine Bench Press, Close Grip",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Triceps", "Shoulders"]
+      }
+    },
+    {
+      "id": "smith-machine-incline-bench-press",
+      "name": "Smith Machine Incline Bench Press",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Triceps", "Shoulders"]
+      }
+    },
+    {
+      "id": "smith-machine-incline-bench-press-close-grip",
+      "name": "Smith Machine Incline Bench Press, Close Grip",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Triceps", "Shoulders"]
+      }
+    },
+    {
+      "id": "smith-machine-incline-bench-press",
+      "name": "Smith Machine Incline Bench Press",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Triceps", "Shoulders"]
+      }
+    },
+    {
+      "id": "smith-machine-incline-bench-press-close-grip",
+      "name": "Smith Machine Incline Bench Press, Close Grip",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Triceps", "Shoulders"]
+      }
+    },
+    {
+      "id": "medium-cable-fly",
+      "name": "Medium Cable Fly",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Shoulders"]
+      }
+    },
+    {
+      "id": "high-cable-fly",
+      "name": "High Cable Fly",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Shoulders"]
+      }
+    },
+    {
+      "id": "low-cable-fly",
+      "name": "Low Cable Fly",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Shoulders"]
+      }
+    },
+    {
+      "id": "plate-loaded-chest-press-machine",
+      "name": "Plate Loaded Chest Press Machine",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Shoulders", "Triceps"]
+      }
+    },
+    {
+      "id": "selector-chest-press-machine",
+      "name": "Selector Chest Press Machine",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Shoulders", "Triceps"]
+      }
+    },
+    {
+      "id": "chest-fly-machine",
+      "name": "Chest Fly Machine",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Shoulders"]
+      }
+    },
+    {
+      "id": "push-up",
+      "name": "Push Up",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Shoulders", "Triceps"]
+      }
+    },
+    {
+      "id": "push-up-close-grip",
+      "name": "Push Up, Close Grip",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Shoulders", "Triceps"]
+      }
+    },
+    {
+      "id": "incline-push-up",
+      "name": "Incline Push Up",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Shoulders", "Triceps"]
+      }
+    },
+    {
+      "id": "incline-push-up-close-grip",
+      "name": "Incline Push Up, Close Grip",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Shoulders", "Triceps"]
+      }
+    },
+    {
+      "id": "dips",
+      "name": "Dips",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Shoulders", "Triceps"]
+      }
+    },
+    {
+      "id": "dips-weighted",
+      "name": "Dips, Weighted",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Shoulders", "Triceps"]
+      }
+    },
+    {
+      "id": "machine-supported-dips",
+      "name": "Machine Supported Dips",
+      "muscles_worked": {
+        "primary": "Chest",
+        "secondary": ["Shoulders", "Triceps"]
+      }
+    }
+  ],
+  "forearms": [
+    {
+      "id": "standing-behind-back-barbell-wrist-curl",
+      "name": "Standing Behind Back Barbell Wrist Curl",
+      "muscles_worked": {
+        "primary": "Forearms"
+      }
+    },
+    {
+      "id": "standing-dumbbell-wrist-curl",
+      "name": "Standing Dumbbell Wrist Curl",
+      "muscles_worked": {
+        "primary": "Forearms"
+      }
+    },
+    {
+      "id": "preacher-dumbbell-wrist-curl",
+      "name": "Preacher Dumbbell Wrist Curl",
+      "muscles_worked": {
+        "primary": "Forearms"
+      }
+    },
+    {
+      "id": "preacher-dumbbell-reverse-wrist-curl",
+      "name": "Preacher Dumbbell Reverse Wrist Curl",
+      "muscles_worked": {
+        "primary": "Forearms"
+      }
+    }
+  ],
+  "biceps": [
+    {
+      "id": "ez-bar-standing-barbell-curl-narrow-grip",
+      "name": "EZ Bar Standing Barbell Curl, Narrow Grip",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "ez-bar-standing-barbell-curl-wide-grip",
+      "name": "EZ Bar Standing Barbell Curl, Wide Grip",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "standing-straight-bar-barbell-curl",
+      "name": "Standing Straight Bar Barbell Curl",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "standing-barbell-curl-overhand-grip",
+      "name": "Standing Barbell Curl, Overhand Grip",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "standing-h-bar-barbell-curl",
+      "name": "Standing H Bar Barbell Curl",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "ez-bar-preacher-curl",
+      "name": "EZ Bar Preacher Curl",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "h-bar-preacher-curl",
+      "name": "H Bar Preacher Curl",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "overhand-grip-straight-bar-preacher-curl",
+      "name": "Overhand Grip Straight Bar Preacher Curl",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "standing-dumbbell-curl",
+      "name": "Standing Dumbbell Curl",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "standing-dumbbell-hammer-curl",
+      "name": "Standing Dumbbell Hammer Curl",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "seated-dumbbell-curl",
+      "name": "Seated Dumbbell Curl",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "seated-dumbbell-hammer-curl",
+      "name": "Seated Dumbbell Hammer Curl",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "incline-dumbbell-curl",
+      "name": "Incline Dumbbell Curl",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "incline-dumbbell-hammer-curl",
+      "name": "Incline Dumbbell Hammer Curl",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "dumbbell-preacher-curl",
+      "name": "Dumbbell Preacher Curl",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "dumbbell-hammer-preacher-curl",
+      "name": "Dumbbell Hammer Preacher Curl",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "dumbbell-preacher-curl-single-arm",
+      "name": "Dumbbell Preacher Curl, Single Arm",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "dumbbell-hammer-preacher-curl-single-arm",
+      "name": "Dumbbell Hammer Preacher Curl, Single Arm",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "concentration-curl",
+      "name": "Concentration Curl",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "standing-cable-curl",
+      "name": "Standing Cable Curl",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "standing-cable-hammer-curl",
+      "name": "Standing Cable Hammer Curl",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "standing-cable-curl-overhand-grip",
+      "name": "Standing Cable Curl, Overhand Grip",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "standing-cable-curl-single-arm",
+      "name": "Standing Cable Curl, Single Arm",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "standing-cable-hammer-curl-single-arm",
+      "name": "Standing Cable Hammer Curl, Single Arm",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "preacher-curl-machine",
+      "name": "Preacher Curl Machine",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "preacher-curl-machine-single-arm",
+      "name": "Preacher Curl Machine, Single Arm",
+      "muscles_worked": {
+        "primary": "Biceps",
+        "secondary": ["Forearms"]
+      }
+    }
+  ],
+  "triceps": [
+    {
+      "id": "standing-cable-tricep-pushdown-rope",
+      "name": "Standing Cable Tricep Pushdown, Rope",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "standing-cable-tricep-pushdown-straight-bar",
+      "name": "Standing Cable Tricep Pushdown, Straight Bar",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "standing-cable-tricep-pushdown-single-arm",
+      "name": "Standing Cable Tricep Pushdown, Single Arm",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "standing-cable-overhead-tricep-extension-rope",
+      "name": "Standing Cable Overhead Tricep Extension, Rope",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "standing-cable-overhead-tricep-extension-straight-bar",
+      "name": "Standing Cable Overhead Tricep Extension, Straight Bar",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "standing-cable-overhead-tricep-extension-single-arm",
+      "name": "Standing Cable Overhead Tricep Extension, Single Arm",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "cable-tricep-kick-back-single-arm",
+      "name": "Cable Tricep Kick Back, Single Arm",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "seated-dumbbell-overhead-tricep-extension",
+      "name": "Seated Dumbbell Overhead Tricep Extension",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "seated-dumbbell-overhead-tricep-extension-single-arm",
+      "name": "Seated Dumbbell Overhead Tricep Extension, Single Arm",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "standing-dumbbell-overhead-tricep-extension",
+      "name": "Standing Dumbbell Overhead Tricep Extension",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "standing-dumbbell-overhead-tricep-extension-single-arm",
+      "name": "Standing Dumbbell Overhead Tricep Extension, Single Arm",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "dumbbell-skull-crusher",
+      "name": "Dumbbell Skull Crusher",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "dumbbell-skull-crusher-behind-head",
+      "name": "Dumbbell Skull Crusher, Behind Head",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "dumbbell-skull-crusher-single-arm",
+      "name": "Dumbbell Skull Crusher, Single Arm",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "dumbbell-tricep-kick-back-incline-prone",
+      "name": "Dumbbell Tricep Kick Back, Incline Prone",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "dumbbell-tricep-kick-back-single-arm",
+      "name": "Dumbbell Tricep Kick Back, Single Arm",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "ez-bar-skull-crusher",
+      "name": "EZ Bar Skull Crusher",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "ez-bar-skull-crusher-behind-head",
+      "name": "EZ Bar Skull Crusher, Behind Head",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "h-bar-skull-crusher",
+      "name": "H Bar Skull Crusher",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "h-bar-skull-crusher-behind-head",
+      "name": "H Bar Skull Crusher, Behind Head",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "seated-ez-bar-overhead-tricep-extension",
+      "name": "Seated EZ Bar Overhead Tricep Extension",
+      "muscles_worked": {
+        "primary": "Triceps"
+      }
+    },
+    {
+      "id": "bench-dip",
+      "name": "Bench Dip",
+      "muscles_worked": {
+        "primary": "Triceps",
+        "secondary": ["Shoulders"]
+      }
+    }
+  ],
+  "lats": [
+    {
+      "id": "overhand-grip-pull-up",
+      "name": "Overhand Grip Pull Up",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "overhand-grip-pull-up-weighted",
+      "name": "Overhand Grip Pull Up, Weighted",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "wide-grip-pull-up",
+      "name": "Wide Grip Pull Up",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "wide-grip-pull-up-weighted",
+      "name": "Wide Grip Pull Up, Weighted",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "neutral-grip-pull-up",
+      "name": "Neutral Grip Pull Up",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "neutral-grip-pull-up-weighted",
+      "name": "Neutral Grip Pull Up, Weighted",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "underhand-grip-pull-up",
+      "name": "Underhand Grip Pull Up",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "underhand-grip-pull-up-weighted",
+      "name": "Underhand Grip Pull Up, Weighted",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "machine-supported-pull-up-overhand-grip",
+      "name": "Machine Supported Pull Up, Overhand Grip",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "machine-supported-pull-up-wide-grip",
+      "name": "Machine Supported Pull Up, Wide Grip",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "machine-supported-pull-up-neutral-grip",
+      "name": "Machine Supported Pull Up, Neutral Grip",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "overhand-grip-pull-up-with-band",
+      "name": "Overhand Grip Pull Up, With Band",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "neutral-grip-pull-up-with-band",
+      "name": "Neutral Grip Pull Up, With Band",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "underhand-grip-pull-up-with-band",
+      "name": "Underhand Grip Pull Up, With Band",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "overhand-grip-lat-pulldown",
+      "name": "Overhand Grip Lat Pulldown",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "underhand-grip-pull-up-with-band",
+      "name": "Underhand Grip Pull Up, With Band",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "overhand-grip-lat-pulldown",
+      "name": "Overhand Grip Lat Pulldown",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "wide-grip-lat-pulldown",
+      "name": "Wide Grip Lat Pulldown",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "neutral-grip-lat-pulldown",
+      "name": "Neutral Grip Lat Pulldown",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "underhand-grip-lat-pulldown",
+      "name": "Underhand Grip Lat Pulldown",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "behind-the-neck-lat-pulldown",
+      "name": "Behind The Neck Lat Pulldown",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Traps"]
+      }
+    },
+    {
+      "id": "lat-pulldown-single-arm",
+      "name": "Lat Pulldown, Single Arm",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "overhand-grip-plate-loaded-lat-pulldown",
+      "name": "Overhand Grip Plate Loaded Lat Pulldown",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "neutral-grip-plate-loaded-lat-pulldown",
+      "name": "Neutral Grip Plate Loaded Lat Pulldown",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "underhand-grip-plate-loaded-lat-pulldown",
+      "name": "Underhand Grip Plate Loaded Lat Pulldown",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "neutral-grip-plate-loaded-lat-pulldown-single-arm",
+      "name": "Neutral Grip Plate Loaded Lat Pulldown, Single Arm",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "underhand-grip-plate-loaded-lat-pulldown-single-arm",
+      "name": "Underhand Grip Plate Loaded Lat Pulldown, Single Arm",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps"]
+      }
+    },
+    {
+      "id": "seated-cable-row-overhand-grip",
+      "name": "Seated Cable Row, Overhand Grip",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Traps"]
+      }
+    },
+    {
+      "id": "seated-cable-row-underhand-grip",
+      "name": "Seated Cable Row, Underhand Grip",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Traps"]
+      }
+    },
+    {
+      "id": "seated-cable-row-neutral-grip",
+      "name": "Seated Cable Row, Neutral Grip",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Traps"]
+      }
+    },
+    {
+      "id": "seated-caple-row-wide-grip",
+      "name": "Seated Caple Row, Wide Grip",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Traps"]
+      }
+    },
+    {
+      "id": "seated-cable-row-single-arm",
+      "name": "Seated Cable Row, Single Arm",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Traps"]
+      }
+    },
+    {
+      "id": "bent-over-barbell-row-overhand-grip",
+      "name": "Bent Over Barbell Row, Overhand Grip",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Lower Back"]
+      }
+    },
+    {
+      "id": "bent-over-barbell-row-underhand-grip",
+      "name": "Bent Over Barbell Row, Underhand Grip",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Lower Back"]
+      }
+    },
+    {
+      "id": "tbar-row",
+      "name": "T-Bar Row",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Lower Back"]
+      }
+    },
+    {
+      "id": "single-arm-dumbbell-row",
+      "name": "Single Arm Dumbbell Row",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Obliques"]
+      }
+    },
+    {
+      "id": "chest-supported-dumbbell-row",
+      "name": "Chest Supported Dumbbell Row",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Traps"]
+      }
+    },
+    {
+      "id": "standing-cable-pullover-bar",
+      "name": "Standing Cable Pullover Bar",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Triceps", "Chest"]
+      }
+    },
+    {
+      "id": "standing-cable-pullover-rope",
+      "name": "Standing Cable Pullover Rope",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Triceps", "Chest"]
+      }
+    },
+    {
+      "id": "standing-cable-pullover-single-arm",
+      "name": "Standing Cable Pullover, Single Arm",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Triceps", "Chest"]
+      }
+    },
+    {
+      "id": "flat-dumbbell-pullover",
+      "name": "Flat Dumbbell Pullover",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Triceps", "Chest"]
+      }
+    },
+    {
+      "id": "decline-dumbbell-pullover",
+      "name": "Decline Dumbbell Pullover",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Triceps", "Chest"]
+      }
+    },
+    {
+      "id": "plate-loaded-chest-supported-row-machine-overhand-grip",
+      "name": "Plate Loaded Chest Supported Row Machine, Overhand Grip",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Traps"]
+      }
+    },
+    {
+      "id": "plate-loaded-chest-supported-row-machine-neutral-grip-narrow",
+      "name": "Plate Loaded Chest Supported Row Machine, Neutral Grip, Narrow",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Traps"]
+      }
+    },
+    {
+      "id": "plate-loaded-chest-supported-row-machine-overhand-wide",
+      "name": "Plate Loaded Chest Supported Row Machine, Overhand, Wide",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Shoulders"]
+      }
+    },
+    {
+      "id": "plate-loaded-chest-supported-row-machine-overhand-wide-single-arm",
+      "name": "Plate Loaded Chest Supported Row Machine, Overhand, Wide, Single Arm",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Shoulders"]
+      }
+    },
+    {
+      "id": "plate-loaded-single-arm-chest-supported-row-machine-overhand-grip-narrow",
+      "name": "Plate Loaded Single Arm Chest Supported Row Machine, Overhand Grip, Narrow",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Traps"]
+      }
+    },
+    {
+      "id": "plate-loaded-single-arm-chest-supported-low-row-machine-neutral-grip-narrow",
+      "name": "Plate Loaded Single Arm Chest Supported Low Row Machine, Neutral Grip, Narrow",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Traps"]
+      }
+    },
+    {
+      "id": "selector-chest-supported-row-machine-overhand-grip",
+      "name": "Selector Chest Supported Row Machine, Overhand Grip",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Traps"]
+      }
+    },
+    {
+      "id": "selector-chest-supported-row-machine-neutral-grip-narrow",
+      "name": "Selector Chest Supported Row Machine, Neutral Grip, Narrow",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Traps"]
+      }
+    },
+    {
+      "id": "selector-chest-supported-row-machine-single-arm",
+      "name": "Selector Chest Supported Row Machine, Single Arm",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Traps"]
+      }
+    },
+    {
+      "id": "inverted-row-overhand-grip",
+      "name": "Inverted Row, Overhand Grip",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Traps"]
+      }
+    },
+    {
+      "id": "inverted-row-underhand-grip",
+      "name": "Inverted Row, Underhand Grip",
+      "muscles_worked": {
+        "primary": "Lats",
+        "secondary": ["Biceps", "Traps"]
+      }
+    }
+  ],
+  "lower-back": [
+    {
+      "id": "floor-back-extension",
+      "name": "Floor Back Extension",
+      "muscles_worked": {
+        "primary": "Lower Back"
+      }
+    },
+    {
+      "id": "superman",
+      "name": "Superman",
+      "muscles_worked": {
+        "primary": "Lower Back",
+        "secondary": ["Glutes"]
+      }
+    }
+  ],
+  "abs": [
+    {
+      "id": "crunchs",
+      "name": "Crunchs",
+      "muscles_worked": {
+        "primary": "Abs"
+      }
+    },
+    {
+      "id": "situps",
+      "name": "Situps",
+      "muscles_worked": {
+        "primary": "Abs"
+      }
+    },
+    {
+      "id": "situps-weighted",
+      "name": "Situps, Weighted",
+      "muscles_worked": {
+        "primary": "Abs"
+      }
+    },
+    {
+      "id": "decline-crunchs",
+      "name": "Decline Crunchs",
+      "muscles_worked": {
+        "primary": "Abs"
+      }
+    },
+    {
+      "id": "decline-situps",
+      "name": "Decline Situps",
+      "muscles_worked": {
+        "primary": "Abs"
+      }
+    },
+    {
+      "id": "decline-situps-weighted",
+      "name": "Decline Situps, Weighted",
+      "muscles_worked": {
+        "primary": "Abs"
+      }
+    },
+    {
+      "id": "v-ups",
+      "name": "V-Ups",
+      "muscles_worked": {
+        "primary": "Abs"
+      }
+    },
+    {
+      "id": "v-situps",
+      "name": "V-Situps",
+      "muscles_worked": {
+        "primary": "Abs"
+      }
+    },
+    {
+      "id": "lying-reverse-crunch-up",
+      "name": "Lying Reverse Crunch Up",
+      "muscles_worked": {
+        "primary": "Abs"
+      }
+    },
+    {
+      "id": "hanging-knee-raises",
+      "name": "Hanging Knee Raises",
+      "muscles_worked": {
+        "primary": "Abs",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "hanging-knee-raises-weighted",
+      "name": "Hanging Knee Raises, Weighted",
+      "muscles_worked": {
+        "primary": "Abs",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "hanging-leg-raises",
+      "name": "Hanging Leg Raises",
+      "muscles_worked": {
+        "primary": "Abs",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "hanging-leg-raises-weighted",
+      "name": "Hanging Leg Raises, Weighted",
+      "muscles_worked": {
+        "primary": "Abs",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "toes-to-bar",
+      "name": "Toes To Bar",
+      "muscles_worked": {
+        "primary": "Abs",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "hanging-knee-raise-ab-station",
+      "name": "Hanging Knee Raise Ab Station",
+      "muscles_worked": {
+        "primary": "Abs",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "hanging-leg-raise-ab-station",
+      "name": "Hanging Leg Raise Ab Station",
+      "muscles_worked": {
+        "primary": "Abs",
+        "secondary": ["Forearms"]
+      }
+    },
+    {
+      "id": "seated-cable-crunch",
+      "name": "Seated Cable Crunch",
+      "muscles_worked": {
+        "primary": "Abs"
+      }
+    },
+    {
+      "id": "ab-machine",
+      "name": "Ab Machine",
+      "muscles_worked": {
+        "primary": "Abs"
+      }
+    },
+    {
+      "id": "plank",
+      "name": "Plank",
+      "muscles_worked": {
+        "primary": "Abs"
+      }
+    },
+    {
+      "id": "hollow",
+      "name": "Hollow",
+      "muscles_worked": {
+        "primary": "Abs"
+      }
+    },
+    {
+      "id": "tuck-hollow",
+      "name": "Tuck Hollow",
+      "muscles_worked": {
+        "primary": "Abs"
+      }
+    },
+    {
+      "id": "fitball-crunches",
+      "name": "Fitball Crunches",
+      "muscles_worked": {
+        "primary": "Abs"
+      }
+    },
+    {
+      "id": "kneeling-ab-wheel",
+      "name": "Kneeling Ab Wheel",
+      "muscles_worked": {
+        "primary": "Abs",
+        "secondary": ["Lats"]
+      }
+    }
+  ],
+  "glutes": [
+    {
+      "id": "barbell-hip-thrust",
+      "name": "Barbell Hip Thrust",
+      "muscles_worked": {
+        "primary": "Glutes",
+        "secondary": ["Hamstrings"]
+      }
+    },
+    {
+      "id": "barbell-hip-thrust-with-bands",
+      "name": "Barbell Hip Thrust, With Bands",
+      "muscles_worked": {
+        "primary": "Glutes",
+        "secondary": ["Hamstrings", "Abductors"]
+      }
+    },
+    {
+      "id": "barbell-glute-bridge",
+      "name": "Barbell Glute Bridge",
+      "muscles_worked": {
+        "primary": "Glutes",
+        "secondary": ["Hamstrings"]
+      }
+    },
+    {
+      "id": "barbell-glute-bridge-with-bands",
+      "name": "Barbell Glute Bridge, With Bands",
+      "muscles_worked": {
+        "primary": "Glutes",
+        "secondary": ["Hamstrings", "Abductors"]
+      }
+    },
+    {
+      "id": "dumbbell-hip-thrust",
+      "name": "Dumbbell Hip Thrust",
+      "muscles_worked": {
+        "primary": "Glutes",
+        "secondary": ["Hamstrings"]
+      }
+    },
+    {
+      "id": "dumbbell-hip-thrust-with-bands",
+      "name": "Dumbbell Hip Thrust, With Bands",
+      "muscles_worked": {
+        "primary": "Glutes",
+        "secondary": ["Hamstrings", "Abductors"]
+      }
+    },
+    {
+      "id": "dumbbell-glute-bridge",
+      "name": "Dumbbell Glute Bridge",
+      "muscles_worked": {
+        "primary": "Glutes",
+        "secondary": ["Hamstrings"]
+      }
+    },
+    {
+      "id": "dumbbell-glute-bridge-with-bands",
+      "name": "Dumbbell Glute Bridge, With Bands",
+      "muscles_worked": {
+        "primary": "Glutes",
+        "secondary": ["Hamstrings", "Abductors"]
+      }
+    },
+    {
+      "id": "hip-thrust-machine",
+      "name": "Hip Thrust Machine",
+      "muscles_worked": {
+        "primary": "Glutes",
+        "secondary": ["Hamstrings"]
+      }
+    },
+    {
+      "id": "standing-glute-kickback-machine",
+      "name": "Standing Glute Kickback Machine",
+      "muscles_worked": {
+        "primary": "Glutes",
+        "secondary": ["Hamstrings"]
+      }
+    },
+    {
+      "id": "standing-cable-hip-extension",
+      "name": "Standing Cable Hip Extension",
+      "muscles_worked": {
+        "primary": "Glutes",
+        "secondary": ["Hamstrings"]
+      }
+    },
+    {
+      "id": "hip-thrust-with-bands",
+      "name": "Hip Thrust, With Bands",
+      "muscles_worked": {
+        "primary": "Glutes",
+        "secondary": ["Hamstrings", "Abductors"]
+      }
+    },
+    {
+      "id": "single-leg-hip-thrust",
+      "name": "Single Leg Hip Thrust",
+      "muscles_worked": {
+        "primary": "Glutes",
+        "secondary": ["Hamstrings"]
+      }
+    },
+    {
+      "id": "single-leg-glute-bridge",
+      "name": "Single Leg Glute Bridge",
+      "muscles_worked": {
+        "primary": "Glutes",
+        "secondary": ["Hamstrings"]
+      }
+    },
+    {
+      "id": "bodyweight-quadruped-glute-kickback",
+      "name": "Bodyweight Quadruped Glute Kickback",
+      "muscles_worked": {
+        "primary": "Glutes",
+        "secondary": ["Hamstrings"]
+      }
+    },
+    {
+      "id": "lying-kickback",
+      "name": "Lying Kickback",
+      "muscles_worked": {
+        "primary": "Glutes",
+        "secondary": ["Hamstrings"]
+      }
+    }
+  ],
+  "quads": [
+    {
+      "id": "barbell-back-squat",
+      "name": "Barbell Back Squat",
+      "muscles_worked": {
+        "primary": "Quads",
+        "secondary": ["Adductors", "Glutes"]
+      }
+    },
+    {
+      "id": "barbell-back-squat-wide-stance",
+      "name": "Barbell Back Squat, Wide Stance",
+      "muscles_worked": {
+        "primary": "Quads",
+        "secondary": ["Adductors", "Glutes"]
+      }
+    },
+    {
+      "id": "barbell-front-squat",
+      "name": "Barbell Front Squat",
+      "muscles_worked": {
+        "primary": "Quads",
+        "secondary": ["Adductors", "Glutes"]
+      }
+    },
+    {
+      "id": "barbell-front-squat-wide-stance",
+      "name": "Barbell Front Squat, Wide Stance",
+      "muscles_worked": {
+        "primary": "Quads",
+        "secondary": ["Adductors", "Glutes"]
+      }
+    }
+  ],
+  "hamstrings": [
+    {
+      "id": "barbell-deadlift",
+      "name": "Barbell Deadlift",
+      "muscles_worked": {
+        "primary": "Hamstrings",
+        "secondary": ["Glutes", "Lower Back"]
+      }
+    },
+    {
+      "id": "trap-bar-deadlift",
+      "name": "Trap Bar Deadlift",
+      "muscles_worked": {
+        "primary": "Hamstrings",
+        "secondary": ["Glutes", "Quads"]
+      }
+    },
+    {
+      "id": "barbell-sumo-deadlift",
+      "name": "Barbell Sumo Deadlift",
+      "muscles_worked": {
+        "primary": "Hamstrings",
+        "secondary": ["Glutes", "Adductors"]
+      }
+    },
+    {
+      "id": "barbell-romanian-deadlift",
+      "name": "Barbell Romanian Deadlift",
+      "muscles_worked": {
+        "primary": "Hamstrings",
+        "secondary": ["Glutes", "Lower Back"]
+      }
+    }
+  ],
+  "obliques": [
+    {
+      "id": "russian-twist",
+      "name": "Russian Twist",
+      "muscles_worked": {
+        "primary": "Obliques"
+      }
+    },
+    {
+      "id": "decline-russian-twist",
+      "name": "Decline Russian Twist",
+      "muscles_worked": {
+        "primary": "Obliques"
+      }
+    },
+    {
+      "id": "side-plank",
+      "name": "Side Plank",
+      "muscles_worked": {
+        "primary": "Obliques"
+      }
+    },
+    {
+      "id": "hanging-leg-raise-windshield-wipers",
+      "name": "Hanging Leg Raise, Windshield Wipers",
+      "muscles_worked": {
+        "primary": "Obliques"
+      }
+    }
+  ],
+  "adductors": [
+    {
+      "id": "adduction-machine",
+      "name": "Adduction Machine",
+      "muscles_worked": {
+        "primary": "Adductors"
+      }
+    },
+    {
+      "id": "single-leg-cable-adduction",
+      "name": "Single Leg Cable Adduction",
+      "muscles_worked": {
+        "primary": "Adductors"
+      }
+    }
+  ],
+  "abductors": [
+    {
+      "id": "abduction-machine",
+      "name": "Abduction Machine",
+      "muscles_worked": {
+        "primary": "Abductors"
+      }
+    },
+    {
+      "id": "side-lying-hip-abduction",
+      "name": "Side Lying Hip Abduction",
+      "muscles_worked": {
+        "primary": "Abductors"
+      }
+    },
+    {
+      "id": "single-leg-cable-abduction",
+      "name": "Single Leg Cable Abduction",
+      "muscles_worked": {
+        "primary": "Abductors"
+      }
+    }
+  ],
+  "calves": [
+    {
+      "id": "standing-calf-raise",
+      "name": "Standing Calf Raise",
+      "muscles_worked": {
+        "primary": "Calves"
+      }
+    },
+    {
+      "id": "standing-calf-raise-weighted",
+      "name": "Standing Calf Raise, Weighted",
+      "muscles_worked": {
+        "primary": "Calves"
+      }
+    },
+    {
+      "id": "standing-calf-raise-single-leg",
+      "name": "Standing Calf Raise, Single Leg",
+      "muscles_worked": {
+        "primary": "Calves"
+      }
+    },
+    {
+      "id": "smith-machine-standing-calf-raise",
+      "name": "Smith Machine Standing Calf Raise",
+      "muscles_worked": {
+        "primary": "Calves"
+      }
+    }
+  ]
 }
