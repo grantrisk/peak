@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import '../models/exercise_model.dart';
+
 class SearchableDropdown extends StatefulWidget {
-  final List<dynamic> items;
-  final Function(Map<String, dynamic>) onItemSelect;
+  final List<Exercise> items;
+  final Function(Exercise) onItemSelect;
 
   SearchableDropdown({required this.items, required this.onItemSelect});
 
   @override
   _SearchableDropdownState createState() => _SearchableDropdownState();
 
-  static void show(BuildContext context, List<dynamic> items,
-      Function(Map<String, dynamic>) onItemSelect) {
+  static void show(BuildContext context, List<Exercise> items,
+      Function(Exercise) onItemSelect) {
     showModalBottomSheet(
       context: context,
       backgroundColor: Colors.transparent,
@@ -46,7 +48,7 @@ class SearchableDropdown extends StatefulWidget {
 class _SearchableDropdownState extends State<SearchableDropdown> {
   TextEditingController _controller = TextEditingController();
   String? _selectedPrimaryMuscle;
-  List<dynamic> _filteredItems = [];
+  List<Exercise> _filteredItems = [];
   List<String> primaryMuscles = [];
 
   @override
@@ -58,19 +60,19 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
 
   void _initPrimaryMuscles() {
     primaryMuscles = widget.items
-        .map<String>((item) => item['muscles_worked']['primary'].toString())
+        .map<String>((item) => item.primaryMuscle.toString())
         .toSet()
         .toList();
     primaryMuscles.insert(0, 'All');
   }
 
   void _filterItems(String enteredKeyword) {
-    List<dynamic> results = [];
+    List<Exercise> results = [];
     if (enteredKeyword.isEmpty) {
       results = widget.items;
     } else {
       results = widget.items
-          .where((item) => item['name']
+          .where((item) => item.name
               .toString()
               .toLowerCase()
               .contains(enteredKeyword.toLowerCase()))
@@ -79,20 +81,19 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
 
     if (_selectedPrimaryMuscle != null && _selectedPrimaryMuscle != 'All') {
       results = results
-          .where((item) =>
-              item['muscles_worked']['primary'] == _selectedPrimaryMuscle)
+          .where((item) => item.primaryMuscle == _selectedPrimaryMuscle)
           .toList();
     }
 
     // Add new item if it doesn't exist in the list
     if (results.isEmpty && enteredKeyword.isNotEmpty) {
-      results.add({
+      /*results.add({
         "name": enteredKeyword,
         "muscles_worked": {
           "primary": "Undefined",
           "secondary": ["Undefined"]
         }
-      });
+      });*/
     }
 
     setState(() {
@@ -150,13 +151,13 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
             itemCount: _filteredItems.length,
             itemBuilder: (context, index) {
               return ListTile(
-                title: Text(_filteredItems[index]['name']),
+                title: Text(_filteredItems[index].name),
                 onTap: () async {
                   // Check if primary muscle is undefined and prompt for muscle groups
-                  if (_filteredItems[index]["muscles_worked"]["primary"] ==
+                  /*if (_filteredItems[index].primaryMuscle ==
                       "Undefined") {
                     await _promptMuscleGroup(context, _filteredItems[index]);
-                  }
+                  }*/
                   widget.onItemSelect(_filteredItems[index]);
                 },
               );
@@ -167,10 +168,11 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
     );
   }
 
-  Future<void> _promptMuscleGroup(
-      BuildContext context, Map<String, dynamic> item) async {
+  // TODO: come back and enable users to create custom workouts here
+  /*Future<void> _promptMuscleGroup(
+      BuildContext context, Map<String, Exercise> item) async {
     // Show your SelectMuscleGroupDialog and get the result
-    final muscles = await showDialog<Map<String, dynamic>>(
+    final muscles = await showDialog<Map<String, Exercise>>(
       context: context,
       builder: (BuildContext context) => SelectMuscleGroupDialog(),
     );
@@ -179,7 +181,7 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
     if (muscles != null) {
       item["muscles_worked"] = muscles;
     }
-  }
+  }*/
 }
 
 class SelectMuscleGroupDialog extends StatefulWidget {

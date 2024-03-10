@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,10 +7,12 @@ import 'package:peak/widgets/searchable_dropdown.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
+import '../main.dart';
 import '../models/exercise_model.dart';
 import '../models/exercise_set_model.dart';
 import '../models/workout_session_model.dart';
 import '../providers/workout_session_provider.dart';
+import '../repositories/ExerciseRepository.dart';
 import '../widgets/plate_loader_widget.dart';
 import '../widgets/rest_timer_widget.dart';
 import '../widgets/workout_timer.dart';
@@ -28,7 +29,7 @@ class NewWorkoutScreen extends StatefulWidget {
 class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
   final TextEditingController _exerciseNameController = TextEditingController();
   final Stopwatch _stopwatch = Stopwatch();
-  List<dynamic> _allExercises = []; // This will hold all exercises
+  List<Exercise> _allExercises = []; // This will hold all exercises
   bool _isRestTimerVisible = false;
   Timer? _restTimer;
   int _restTimeInSeconds = 60; // Default rest time in seconds
@@ -61,19 +62,17 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
   }
 
   void _loadExercises() async {
-    String jsonString =
-        await rootBundle.loadString('assets/resources/workouts.json');
-    Map<String, dynamic> jsonMap = json.decode(jsonString);
+    try {
+      ExerciseRepository repository = ExerciseRepository();
+      List<Exercise> exercises = await repository.fetchExercises();
 
-    List<dynamic> exercises = [];
-    jsonMap.forEach((key, value) {
-      exercises.addAll(
-          value); // Add all exercises from each muscle group to the list
-    });
-
-    setState(() {
-      _allExercises = exercises;
-    });
+      setState(() {
+        _allExercises = exercises; // Update the state with fetched exercises
+      });
+    } catch (error) {
+      // Handle any errors appropriately
+      logger.error('Error loading exercises: $error');
+    }
   }
 
   @override
@@ -233,17 +232,13 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
     );
   }
 
-  void _selectExercise(Map<String, dynamic> exerciseData) {
+  void _selectExercise(Exercise exercise) {
+    // Add sets to the selected exercise
+    exercise.sets = List.generate(3, (_) => ExerciseSet(reps: 10, weight: 0));
+
+    // Add the exercise to the workout session
     Provider.of<WorkoutSessionProvider>(context, listen: false)
-        .addExercise(Exercise(
-      id: Uuid().v4(),
-      name: exerciseData['name'],
-      sets: List.generate(3, (_) => ExerciseSet(reps: 10, weight: 0)),
-      primaryMuscle: exerciseData['muscles_worked']['primary'],
-      secondaryMuscles: exerciseData['muscles_worked']['secondary'] != null
-          ? List<String>.from(exerciseData['muscles_worked']['secondary'])
-          : [],
-    ));
+        .addExercise(exercise);
     _exerciseNameController.clear();
   }
 
@@ -316,6 +311,8 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
 
     // Stop the stopwatch
     _stopwatch.stop();
+
+    logger.info('Workout Session Completed: ${workoutSession.date}');
 
     print('');
     // Here, handle the actual submission logic, such as sending data to Firestore
