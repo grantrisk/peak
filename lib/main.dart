@@ -6,10 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
+import 'package:peak/providers/theme_provider.dart';
 import 'package:peak/providers/workout_session_provider.dart';
 import 'package:peak/screens/home_screen.dart';
 import 'package:peak/screens/login_screen.dart';
 import 'package:peak/services/logger/logger.dart';
+import 'package:peak/utils/themes.dart';
 import 'package:provider/provider.dart';
 
 final Logger logger = LoggerServiceFactory.create(
@@ -68,8 +70,13 @@ Future<void> main() async {
   });
 
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => WorkoutSessionProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => WorkoutSessionProvider()),
+        ChangeNotifierProvider(
+            create: (context) => ThemeProvider(Themes
+                .darkGreenTheme())), // Assuming Themes.defaultTheme() is your default theme
+      ],
       child: const MyApp(),
     ),
   );
@@ -84,59 +91,13 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
+
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return MaterialApp(
       title: 'Peak Fitness App',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: _createMaterialColor(Color(0xFF01092D)),
-        ).copyWith(
-          secondary: Color(0xFF3685B5), // Adjusted for complementary color
-          tertiary: Color(0xFF3155fa), // Adjusted for background color
-          background: Color(0xFF01092D), // Updated background color
-          onPrimary: Colors.white, // For text/icons on primary color
-          onSecondary: Colors.white, // For text/icons on secondary color
-          error: Color(0xffb00020),
-          onError: Colors.white,
-          brightness: Brightness.light,
-        ),
-        textTheme: const TextTheme(
-          titleLarge: TextStyle(color: Colors.white), // Adjusted text color
-          bodyMedium: TextStyle(color: Colors.black87),
-        ),
-        iconTheme:
-            const IconThemeData(color: Colors.white), // Adjusted icon color
-        buttonTheme: ButtonThemeData(
-          buttonColor: Color(0xFF01092D), // Primary color for buttons
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(18.0),
-          ),
-        ),
-        elevatedButtonTheme: ElevatedButtonThemeData(
-          style: ElevatedButton.styleFrom(
-            foregroundColor: Colors.white,
-            backgroundColor:
-                Color(0xFF01092D), // Primary color for elevated buttons
-          ),
-        ),
-        appBarTheme: const AppBarTheme(
-          elevation: 0,
-          titleTextStyle: TextStyle(
-            color: Colors.white, // Adjusted title text color
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-          ),
-          shadowColor: Colors.grey,
-          iconTheme: IconThemeData(color: Colors.white),
-          backgroundColor: Color(0xFF01092D), // Primary color for appbar
-        ),
-        listTileTheme: ListTileThemeData(
-          iconColor: Color(0xFF01092D),
-          textColor: Color(0xFF01092D),
-          selectedColor: Color(0xFF01092D),
-        ),
-      ),
+      theme: themeProvider.getTheme(),
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),
         builder: (context, snapshot) {

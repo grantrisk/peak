@@ -26,16 +26,22 @@ class _HomeScreenState extends State<HomeScreen> {
               // _logWorkoutButton(context),
               _sectionCard(
                   title: 'Today\'s Workout',
-                  child: _placeholderWidget('Workout List Placeholder')),
+                  child: _placeholderWidget('Workout List Placeholder', theme),
+                  theme: theme),
               _sectionCard(
                   title: 'Recent Activity',
-                  child: _placeholderWidget('Recent Activity Placeholder')),
+                  child:
+                      _placeholderWidget('Recent Activity Placeholder', theme),
+                  theme: theme),
               _sectionCard(
                   title: 'Your Progress',
-                  child: _placeholderWidget('Progress Graph Placeholder')),
+                  child:
+                      _placeholderWidget('Progress Graph Placeholder', theme),
+                  theme: theme),
               _sectionCard(
                   title: 'Health Tips',
-                  child: _placeholderWidget('Health Tips Placeholder')),
+                  child: _placeholderWidget('Health Tips Placeholder', theme),
+                  theme: theme),
             ],
           ),
         ),
@@ -47,7 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _sectionCard({required String title, required Widget child}) {
+  Widget _sectionCard(
+      {required String title,
+      required Widget child,
+      required ThemeData theme}) {
     return Card(
       elevation: 4,
       margin: EdgeInsets.only(top: 10, bottom: 10),
@@ -67,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: ThemeData.light().colorScheme.secondaryContainer),
+                  color: theme.colorScheme.onPrimary),
             ),
             SizedBox(height: 10),
             child,
@@ -77,14 +86,14 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _placeholderWidget(String text) {
+  Widget _placeholderWidget(String text, ThemeData theme) {
     return Container(
       height: 150,
       width: double.infinity,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: ThemeData.light().colorScheme.secondaryContainer,
+        color: theme.colorScheme.secondary,
       ),
       child: Text(text),
     );

@@ -41,26 +41,29 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
           child: Column(
             children: <Widget>[
               _sectionCard(
-                title: 'Custom Routine Creation',
-                child: _placeholderWidget(
-                    'Create, Save, Manage Routines Placeholder'),
-              ),
+                  title: 'Custom Routine Creation',
+                  child: _placeholderWidget(
+                      'Create, Save, Manage Routines Placeholder', theme),
+                  theme: theme),
               _sectionCard(
-                title: 'Workout Calendar',
-                child: _placeholderWidget('Workout Calendar Placeholder'),
-              ),
+                  title: 'Workout Calendar',
+                  child:
+                      _placeholderWidget('Workout Calendar Placeholder', theme),
+                  theme: theme),
               _sectionCard(
-                title: 'Progress Tracking Dashboard',
-                child: _placeholderWidget('Progress Dashboard Placeholder'),
-              ),
+                  title: 'Progress Tracking Dashboard',
+                  child: _placeholderWidget(
+                      'Progress Dashboard Placeholder', theme),
+                  theme: theme),
               _sectionCard(
-                title: 'Workout History and Logs',
-                child: _placeholderWidget('Workout Logs Placeholder'),
-              ),
+                  title: 'Workout History and Logs',
+                  child: _placeholderWidget('Workout Logs Placeholder', theme),
+                  theme: theme),
               _sectionCard(
-                title: 'Instructional Content and Tips',
-                child: _placeholderWidget('Instructional Content Placeholder'),
-              ),
+                  title: 'Instructional Content and Tips',
+                  child: _placeholderWidget(
+                      'Instructional Content Placeholder', theme),
+                  theme: theme),
             ],
           ),
         ),
@@ -72,7 +75,10 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     );
   }
 
-  Widget _sectionCard({required String title, required Widget child}) {
+  Widget _sectionCard(
+      {required String title,
+      required Widget child,
+      required ThemeData theme}) {
     return Card(
       elevation: 4,
       margin: EdgeInsets.only(top: 10, bottom: 10),
@@ -92,7 +98,7 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: ThemeData.light().colorScheme.secondaryContainer),
+                  color: theme.colorScheme.onPrimary),
             ),
             SizedBox(height: 10),
             child,
@@ -102,14 +108,14 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
     );
   }
 
-  Widget _placeholderWidget(String text) {
+  Widget _placeholderWidget(String text, ThemeData theme) {
     return Container(
       height: 150,
       width: double.infinity,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: ThemeData.light().colorScheme.secondaryContainer,
+        color: theme.colorScheme.secondary,
       ),
       child: Text(text),
     );
