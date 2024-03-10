@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -27,6 +29,8 @@ class NewWorkoutScreen extends StatefulWidget {
 }
 
 class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
   final TextEditingController _exerciseNameController = TextEditingController();
   final Stopwatch _stopwatch = Stopwatch();
   List<Exercise> _allExercises = []; // This will hold all exercises
@@ -44,7 +48,8 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
     // Schedule the initialization of the workout session provider after the build phase
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<WorkoutSessionProvider>(context, listen: false)
-          .initializeWorkoutSession(WorkoutSession(date: DateTime.now()));
+          .initializeWorkoutSession(WorkoutSession(
+              date: DateTime.now(), ownedBy: _auth.currentUser!.uid));
 
       if (widget.initialExercises != null) {
         for (var exercise in widget.initialExercises!) {
@@ -314,24 +319,14 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
 
     logger.info('Workout Session Completed: ${workoutSession.date}');
 
-    print('');
-    // Here, handle the actual submission logic, such as sending data to Firestore
-    // For now, let's print the workout session to the console
-    print('Workout Session: ${workoutSession.date}');
-    // print length of workout session in datetime
-    print('Workout Session Length: ${_stopwatch.elapsed}');
-
-    print('');
-
-    for (var exercise in workoutSession.exercises) {
-      print('');
-      print('Exercise: ${exercise.name}');
-      for (var set in exercise.sets) {
-        if (set.isCompleted) {
-          print('  ${set.reps} reps - ${set.weight} lbs');
-        }
-      }
-    }
+    // Add the workout session to Firestore
+    _firestore.collection('workout_sessions').add({
+      'date': workoutSession.date,
+      'exercises': workoutSession.exercises
+          .map((e) => e.toJson())
+          .toList(), // Convert exercises to JSON
+      'ownedBy': workoutSession.ownedBy, // Replace with actual user id
+    });
 
     // clear the provider
     Provider.of<WorkoutSessionProvider>(context, listen: false)

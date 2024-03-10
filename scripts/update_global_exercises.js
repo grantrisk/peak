@@ -25,15 +25,17 @@ async function deleteCustomExercises() {
 }
 
 async function recreateExercisesWithAdditionalFields() {
-  const exercisesData = JSON.parse(fs.readFileSync("./assets/resources/workouts.json", "utf8"));
+  const exercisesData = JSON.parse(
+    fs.readFileSync("./scripts/resources/workouts.json", "utf8"),
+  );
   const categories = Object.keys(exercisesData); // Get all categories (e.g., "shoulders")
 
-  const createPromises = categories.flatMap(category =>
-    exercisesData[category].map(exercise => {
+  const createPromises = categories.flatMap((category) =>
+    exercisesData[category].map((exercise) => {
       // Assuming 'sets' and 'custom' are not part of your JSON and need default values or computation
       const defaultSets = []; // Replace with default sets if any
       const defaultCustom = false; // Set a default value for 'custom'
-      const defaultCreatedBy = ''; // Set a default value for 'createdBy'
+      const defaultOwnedBy = ""; // Set a default value for 'ownedBy'
 
       // Mapping the JSON structure to the desired Firestore document structure
       const exerciseDoc = {
@@ -43,18 +45,20 @@ async function recreateExercisesWithAdditionalFields() {
         secondaryMuscles: exercise.muscles_worked.secondary || [],
         sets: defaultSets || [],
         custom: defaultCustom,
-        createdBy: defaultCreatedBy
+        ownedBy: defaultOwnedBy,
       };
 
       // Creating/updating the document in Firestore
-      return db.collection("default_exercises").doc(exercise.id).set(exerciseDoc);
-    })
+      return db
+        .collection("default_exercises")
+        .doc(exercise.id)
+        .set(exerciseDoc);
+    }),
   );
 
   await Promise.all(createPromises);
   console.log("Exercises with additional fields recreated from JSON.");
 }
-
 
 async function manageExercises() {
   await deleteCustomExercises();

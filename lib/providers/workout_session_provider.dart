@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../models/exercise_model.dart';
@@ -5,13 +6,15 @@ import '../models/exercise_set_model.dart';
 import '../models/workout_session_model.dart';
 
 class WorkoutSessionProvider with ChangeNotifier {
-  WorkoutSession _workoutSession = WorkoutSession(date: DateTime.now());
+  final _auth = FirebaseAuth.instance;
+  late WorkoutSession _workoutSession;
 
   WorkoutSession get workoutSession => _workoutSession;
 
   void initializeWorkoutSession(WorkoutSession workoutSession) {
     _workoutSession = WorkoutSession(
       date: workoutSession.date,
+      ownedBy: _auth.currentUser!.uid,
     );
     notifyListeners();
   }
@@ -87,7 +90,8 @@ class WorkoutSessionProvider with ChangeNotifier {
   }
 
   void clearWorkoutSession() {
-    _workoutSession = WorkoutSession(date: DateTime.now());
+    _workoutSession =
+        WorkoutSession(date: DateTime.now(), ownedBy: _auth.currentUser!.uid);
     notifyListeners();
   }
 

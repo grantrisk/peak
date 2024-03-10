@@ -7,7 +7,7 @@ class Exercise {
   List<String> secondaryMuscles;
   List<ExerciseSet> sets;
   bool custom;
-  String createdBy = '';
+  String ownedBy = '';
 
   Exercise({
     required this.id,
@@ -16,7 +16,7 @@ class Exercise {
     required this.secondaryMuscles,
     this.sets = const [],
     this.custom = false,
-    this.createdBy = '',
+    this.ownedBy = '',
   });
 
   factory Exercise.fromJson(Map<String, dynamic> json) {
@@ -29,7 +29,7 @@ class Exercise {
           ? List<String>.from(musclesWorked['secondary'])
           : [],
       custom: json['custom'] ?? false,
-      createdBy: json['created_by'] ?? '',
+      ownedBy: json['ownedBy'] ?? '',
     );
   }
 
@@ -47,7 +47,7 @@ class Exercise {
         'secondary': secondaryMuscles,
       },
       'custom': custom,
-      'created_by': createdBy,
+      'ownedBy': ownedBy,
     };
   }
 }
