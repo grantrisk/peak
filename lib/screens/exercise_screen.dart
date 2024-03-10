@@ -1,12 +1,12 @@
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:peak/widgets/quick_start_widget.dart';
-import 'package:uuid/uuid.dart';
 
+import '../main.dart';
 import '../models/exercise_model.dart';
+import '../repositories/ExerciseRepository.dart';
 import '../widgets/app_header.dart';
 import '../widgets/bottom_navigation.dart';
 import 'new_workout_screen.dart';
@@ -239,25 +239,10 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   }
 
   Future<List<Exercise>> _generateRandomWorkout() async {
-    final jsonString =
-        await rootBundle.loadString('assets/resources/workouts.json');
-    final jsonResponse = json.decode(jsonString) as Map<String, dynamic>;
-
-    // Assuming the JSON structure has a list of exercises with names
-    List<Exercise> exercises = [];
-    for (var exerciseJson in jsonResponse.values) {
-      for (var e in exerciseJson) {
-        // if exercise is already in the list, skip it
-        if (exercises.any((element) => element.name == e['name'])) continue;
-        exercises.add(Exercise(
-            id: Uuid().v4(),
-            name: e['name'],
-            primaryMuscle: e['muscles_worked']['primary'] ?? '',
-            secondaryMuscles: e['muscles_worked']['secondary'] == null
-                ? []
-                : List<String>.from(e['muscles_worked']['secondary'] ?? [])));
-      }
-    }
+    // TODO: need to figure out another way of importing the logger other than importing main.dart
+    logger.info('Generating random workout');
+    ExerciseRepository exerciseRepository = ExerciseRepository();
+    List<Exercise> exercises = await exerciseRepository.fetchExercises();
 
     Random random = Random();
     int exercisesPerDay = 6; // Example number of exercises per day

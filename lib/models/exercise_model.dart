@@ -6,6 +6,7 @@ class Exercise {
   String primaryMuscle;
   List<String> secondaryMuscles;
   List<ExerciseSet> sets;
+  String owner = '';
 
   Exercise({
     required this.id,
@@ -13,25 +14,36 @@ class Exercise {
     required this.primaryMuscle,
     required this.secondaryMuscles,
     this.sets = const [],
+    this.owner = '',
   });
 
   factory Exercise.fromJson(Map<String, dynamic> json) {
-    List<String> secondaryMusclesList = [];
-    if (json['muscles_worked']['secondary'] != null) {
-      secondaryMusclesList =
-          List<String>.from(json['muscles_worked']['secondary']);
-    }
-
+    var musclesWorked = json['muscles_worked'] ?? {};
     return Exercise(
-      id: json['id'],
-      name: json['name'],
-      primaryMuscle: json['muscles_worked']['primary'],
-      secondaryMuscles: secondaryMusclesList,
+      id: json['id'] ?? '',
+      name: json['name'] ?? '',
+      primaryMuscle: musclesWorked['primary'] ?? '',
+      secondaryMuscles: musclesWorked['secondary'] != null
+          ? List<String>.from(musclesWorked['secondary'])
+          : [],
+      owner: json['owner'] ?? '',
     );
   }
 
   @override
   String toString() {
     return '$name';
+  }
+
+  toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'muscles_worked': {
+        'primary': primaryMuscle,
+        'secondary': secondaryMuscles,
+      },
+      'owner': owner,
+    };
   }
 }

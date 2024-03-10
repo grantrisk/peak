@@ -1,6 +1,7 @@
 import 'dart:async';
-import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -8,10 +9,12 @@ import 'package:peak/widgets/searchable_dropdown.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
 
+import '../main.dart';
 import '../models/exercise_model.dart';
 import '../models/exercise_set_model.dart';
 import '../models/workout_session_model.dart';
 import '../providers/workout_session_provider.dart';
+import '../repositories/ExerciseRepository.dart';
 import '../widgets/plate_loader_widget.dart';
 import '../widgets/rest_timer_widget.dart';
 import '../widgets/workout_timer.dart';
@@ -26,9 +29,11 @@ class NewWorkoutScreen extends StatefulWidget {
 }
 
 class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
   final TextEditingController _exerciseNameController = TextEditingController();
   final Stopwatch _stopwatch = Stopwatch();
-  List<dynamic> _allExercises = []; // This will hold all exercises
+  List<Exercise> _allExercises = []; // This will hold all exercises
   bool _isRestTimerVisible = false;
   Timer? _restTimer;
   int _restTimeInSeconds = 60; // Default rest time in seconds
@@ -43,7 +48,8 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
     // Schedule the initialization of the workout session provider after the build phase
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<WorkoutSessionProvider>(context, listen: false)
-          .initializeWorkoutSession(WorkoutSession(date: DateTime.now()));
+          .initializeWorkoutSession(WorkoutSession(
+              date: DateTime.now(), owner: _auth.currentUser!.uid));
 
       if (widget.initialExercises != null) {
         for (var exercise in widget.initialExercises!) {
@@ -61,19 +67,17 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
   }
 
   void _loadExercises() async {
-    String jsonString =
-        await rootBundle.loadString('assets/resources/workouts.json');
-    Map<String, dynamic> jsonMap = json.decode(jsonString);
+    try {
+      ExerciseRepository repository = ExerciseRepository();
+      List<Exercise> exercises = await repository.fetchExercises();
 
-    List<dynamic> exercises = [];
-    jsonMap.forEach((key, value) {
-      exercises.addAll(
-          value); // Add all exercises from each muscle group to the list
-    });
-
-    setState(() {
-      _allExercises = exercises;
-    });
+      setState(() {
+        _allExercises = exercises; // Update the state with fetched exercises
+      });
+    } catch (error) {
+      // Handle any errors appropriately
+      logger.error('Error loading exercises: $error');
+    }
   }
 
   @override
@@ -233,17 +237,13 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
     );
   }
 
-  void _selectExercise(Map<String, dynamic> exerciseData) {
+  void _selectExercise(Exercise exercise) {
+    // Add sets to the selected exercise
+    exercise.sets = List.generate(3, (_) => ExerciseSet(reps: 10, weight: 0));
+
+    // Add the exercise to the workout session
     Provider.of<WorkoutSessionProvider>(context, listen: false)
-        .addExercise(Exercise(
-      id: Uuid().v4(),
-      name: exerciseData['name'],
-      sets: List.generate(3, (_) => ExerciseSet(reps: 10, weight: 0)),
-      primaryMuscle: exerciseData['muscles_worked']['primary'],
-      secondaryMuscles: exerciseData['muscles_worked']['secondary'] != null
-          ? List<String>.from(exerciseData['muscles_worked']['secondary'])
-          : [],
-    ));
+        .addExercise(exercise);
     _exerciseNameController.clear();
   }
 
@@ -317,24 +317,16 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
     // Stop the stopwatch
     _stopwatch.stop();
 
-    print('');
-    // Here, handle the actual submission logic, such as sending data to Firestore
-    // For now, let's print the workout session to the console
-    print('Workout Session: ${workoutSession.date}');
-    // print length of workout session in datetime
-    print('Workout Session Length: ${_stopwatch.elapsed}');
+    logger.info('Workout Session Completed: ${workoutSession.date}');
 
-    print('');
-
-    for (var exercise in workoutSession.exercises) {
-      print('');
-      print('Exercise: ${exercise.name}');
-      for (var set in exercise.sets) {
-        if (set.isCompleted) {
-          print('  ${set.reps} reps - ${set.weight} lbs');
-        }
-      }
-    }
+    // Add the workout session to Firestore
+    _firestore.collection('workout_sessions').add({
+      'date': workoutSession.date,
+      'exercises': workoutSession.exercises
+          .map((e) => e.toJson())
+          .toList(), // Convert exercises to JSON
+      'owner': workoutSession.owner, // Replace with actual user id
+    });
 
     // clear the provider
     Provider.of<WorkoutSessionProvider>(context, listen: false)

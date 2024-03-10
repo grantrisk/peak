@@ -9,7 +9,6 @@ import 'package:intl/intl.dart';
 import 'package:peak/providers/workout_session_provider.dart';
 import 'package:peak/screens/home_screen.dart';
 import 'package:peak/screens/login_screen.dart';
-import 'package:peak/services/database_service/database_service.dart';
 import 'package:peak/services/logger/logger.dart';
 import 'package:provider/provider.dart';
 
@@ -51,12 +50,6 @@ Future<void> main() async {
   } else {
     logger.info('Firebase already initialized');
   }
-
-  // Create the database service
-  AbstractDatabaseService service = DatabaseServiceFactory.create(
-    DatabaseType.firebase,
-    logger,
-  );
 
   // Get the current date and time
   final now = DateTime.now();
