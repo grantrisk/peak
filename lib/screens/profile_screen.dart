@@ -21,7 +21,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.settings),
-            color: theme.colorScheme.secondary,
+            color: theme.colorScheme.onBackground,
             onPressed: () {
               HapticFeedback.heavyImpact();
               Navigator.of(context).push(
@@ -38,17 +38,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
             children: <Widget>[
               _sectionCard(
                   title: 'Fitness Goals',
-                  child: _placeholderWidget('Fitness Goals Placeholder')),
+                  child: _placeholderWidget('Fitness Goals Placeholder', theme),
+                  theme: theme),
               _sectionCard(
                   title: 'Personal Information',
-                  child:
-                      _placeholderWidget('Personal Information Placeholder')),
+                  child: _placeholderWidget(
+                      'Personal Information Placeholder', theme),
+                  theme: theme),
               _sectionCard(
                   title: 'Activity Settings',
-                  child: _placeholderWidget('Activity Settings Placeholder')),
+                  child: _placeholderWidget(
+                      'Activity Settings Placeholder', theme),
+                  theme: theme),
               _sectionCard(
                   title: 'Health Data',
-                  child: _placeholderWidget('Health Data Placeholder')),
+                  child: _placeholderWidget('Health Data Placeholder', theme),
+                  theme: theme),
             ],
           ),
         ),
@@ -59,7 +64,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _sectionCard({required String title, required Widget child}) {
+  Widget _sectionCard(
+      {required String title,
+      required Widget child,
+      required ThemeData theme}) {
     return Card(
       elevation: 4,
       margin: EdgeInsets.only(top: 10, bottom: 10),
@@ -78,7 +86,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,
-                  color: ThemeData.light().colorScheme.secondaryContainer),
+                  color: theme.colorScheme.onPrimary),
             ),
             SizedBox(height: 10),
             child,
@@ -88,14 +96,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _placeholderWidget(String text) {
+  Widget _placeholderWidget(String text, ThemeData theme) {
     return Container(
       height: 150,
       width: double.infinity,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: ThemeData.light().colorScheme.secondaryContainer,
+        color: theme.colorScheme.secondary,
       ),
       child: Text(text),
     );

@@ -74,7 +74,7 @@ class _BottomNavigationState extends State<BottomNavigation> {
       decoration: BoxDecoration(
         border: Border(
           top: BorderSide(
-              color: Colors.grey,
+              color: Theme.of(context).colorScheme.tertiary,
               width: 0.5), // Add your desired border color and width
         ),
       ),

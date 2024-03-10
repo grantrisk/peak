@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:peak/main.dart';
+import 'package:peak/screens/preferences_screen.dart';
 
 import '../services/database_service/firebase_db_service.dart';
 import '../widgets/app_header.dart';
@@ -43,6 +44,9 @@ class SettingsScreen extends StatelessWidget {
             title: 'App Preferences',
             onTap: () {
               HapticFeedback.heavyImpact();
+              Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => PreferencesScreen()),
+              );
               // Handle App Preferences tap
             },
           ),
