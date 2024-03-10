@@ -8,6 +8,7 @@ class PreferencesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     // Access your ThemeProvider
     var themeProvider = Provider.of<ThemeProvider>(context);
+    ThemeData theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -16,35 +17,48 @@ class PreferencesScreen extends StatelessWidget {
       body: ListView(
         children: <Widget>[
           ListTile(
-            title: Text('Dark Theme'),
+            title: Text('Default Peak Theme',
+                style: TextStyle(color: theme.colorScheme.onPrimary)),
+            onTap: () {
+              // Set the theme to Dark Theme
+              themeProvider.setTheme(Themes.defaultTheme());
+            },
+          ),
+          ListTile(
+            title: Text('Dark Theme',
+                style: TextStyle(color: theme.colorScheme.onPrimary)),
             onTap: () {
               // Set the theme to Dark Theme
               themeProvider.setTheme(Themes.darkModeTheme());
             },
           ),
           ListTile(
-            title: Text('Light Theme'),
+            title: Text('Light Theme',
+                style: TextStyle(color: theme.colorScheme.onPrimary)),
             onTap: () {
               // Set the theme to Light Theme
               themeProvider.setTheme(Themes.lightModeTheme());
             },
           ),
           ListTile(
-            title: Text('Dark Green Theme'),
+            title: Text('Dark Green Theme',
+                style: TextStyle(color: theme.colorScheme.onPrimary)),
             onTap: () {
               // Set the theme to Dark Green Theme
               themeProvider.setTheme(Themes.darkGreenTheme());
             },
           ),
           ListTile(
-            title: Text('Maroon Theme'),
+            title: Text('Maroon Theme',
+                style: TextStyle(color: theme.colorScheme.onPrimary)),
             onTap: () {
               // Set the theme to Maroon Theme
               themeProvider.setTheme(Themes.maroonTheme());
             },
           ),
           ListTile(
-            title: Text('Purple Theme'),
+            title: Text('Purple Theme',
+                style: TextStyle(color: theme.colorScheme.onPrimary)),
             onTap: () {
               // Set the theme to Purple Theme
               themeProvider.setTheme(Themes.purpleTheme());
