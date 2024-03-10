@@ -35,7 +35,7 @@ async function recreateExercisesWithAdditionalFields() {
       // Assuming 'sets' and 'custom' are not part of your JSON and need default values or computation
       const defaultSets = []; // Replace with default sets if any
       const defaultCustom = false; // Set a default value for 'custom'
-      const defaultOwnedBy = ""; // Set a default value for 'ownedBy'
+      const defaultOwner = "PEAK"; // Set a default value for 'owner'
 
       // Mapping the JSON structure to the desired Firestore document structure
       const exerciseDoc = {
@@ -45,7 +45,7 @@ async function recreateExercisesWithAdditionalFields() {
         secondaryMuscles: exercise.muscles_worked.secondary || [],
         sets: defaultSets || [],
         custom: defaultCustom,
-        ownedBy: defaultOwnedBy,
+        owner: defaultOwner,
       };
 
       // Creating/updating the document in Firestore

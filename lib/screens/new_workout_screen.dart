@@ -49,7 +49,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<WorkoutSessionProvider>(context, listen: false)
           .initializeWorkoutSession(WorkoutSession(
-              date: DateTime.now(), ownedBy: _auth.currentUser!.uid));
+              date: DateTime.now(), owner: _auth.currentUser!.uid));
 
       if (widget.initialExercises != null) {
         for (var exercise in widget.initialExercises!) {
@@ -325,7 +325,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
       'exercises': workoutSession.exercises
           .map((e) => e.toJson())
           .toList(), // Convert exercises to JSON
-      'ownedBy': workoutSession.ownedBy, // Replace with actual user id
+      'owner': workoutSession.owner, // Replace with actual user id
     });
 
     // clear the provider

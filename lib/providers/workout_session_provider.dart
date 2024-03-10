@@ -14,7 +14,7 @@ class WorkoutSessionProvider with ChangeNotifier {
   void initializeWorkoutSession(WorkoutSession workoutSession) {
     _workoutSession = WorkoutSession(
       date: workoutSession.date,
-      ownedBy: _auth.currentUser!.uid,
+      owner: _auth.currentUser!.uid,
     );
     notifyListeners();
   }
@@ -91,7 +91,7 @@ class WorkoutSessionProvider with ChangeNotifier {
 
   void clearWorkoutSession() {
     _workoutSession =
-        WorkoutSession(date: DateTime.now(), ownedBy: _auth.currentUser!.uid);
+        WorkoutSession(date: DateTime.now(), owner: _auth.currentUser!.uid);
     notifyListeners();
   }
 
