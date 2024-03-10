@@ -1,5 +1,7 @@
 # Peak - Fitness Tracking App for Professionals
 
+![Screenshots of the app](images/Peak_Github_Repo_Banner.png)
+
 Peak is a comprehensive fitness tracking app tailored for fitness professionals. It offers robust tools for tracking workouts, meals, and various health metrics. With its intuitive dashboards, Peak empowers users to analyze and visualize their fitness journey effectively.
 
 ## Features
