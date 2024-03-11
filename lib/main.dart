@@ -75,7 +75,7 @@ Future<void> main() async {
         ChangeNotifierProvider(create: (context) => WorkoutSessionProvider()),
         ChangeNotifierProvider(
             create: (context) => ThemeProvider(Themes
-                .darkGreenTheme())), // Assuming Themes.defaultTheme() is your default theme
+                .defaultTheme())), // Assuming Themes.defaultTheme() is your default theme
       ],
       child: const MyApp(),
     ),
