@@ -1,9 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../main.dart';
 import '../models/exercise_model.dart';
+import '../repositories/ExerciseRepository.dart';
 import '../widgets/app_header.dart';
 
 class CreateCustomExerciseScreen extends StatefulWidget {
@@ -14,7 +14,6 @@ class CreateCustomExerciseScreen extends StatefulWidget {
 
 class _CreateCustomExerciseScreenState
     extends State<CreateCustomExerciseScreen> {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final _auth = FirebaseAuth.instance;
 
   final _formKey = GlobalKey<FormState>();
@@ -161,7 +160,7 @@ class _CreateCustomExerciseScreenState
     );
   }
 
-  void _saveExerciseToDatabase() {
+  Future<void> _saveExerciseToDatabase() async {
     Exercise exercise = Exercise(
       id: _auth.currentUser!.uid + _nameController.text,
       name: _nameController.text,
@@ -172,21 +171,17 @@ class _CreateCustomExerciseScreenState
       custom: true,
     );
 
+    // Save the exercise to the database
     logger.info('Saving exercise: $exercise');
-
-    _firestore
-        .collection('exercises')
-        .doc(exercise.id)
-        .set(exercise.toJson())
-        .then((_) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Exercise saved successfully')));
-    }).catchError((error) {
+    ExerciseRepository exerciseRepository = ExerciseRepository();
+    bool success = await exerciseRepository.saveExercise(exercise);
+    if (!success) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Failed to save exercise')));
-    });
-
-    logger.info('Exercise saved successfully');
+    } else {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Exercise saved successfully')));
+    }
 
     _nameController.clear();
     setState(() {
