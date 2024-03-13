@@ -1,5 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../main.dart';
+import '../models/exercise_model.dart';
 import '../widgets/app_header.dart';
 
 class CreateCustomExerciseScreen extends StatefulWidget {
@@ -10,6 +14,34 @@ class CreateCustomExerciseScreen extends StatefulWidget {
 
 class _CreateCustomExerciseScreenState
     extends State<CreateCustomExerciseScreen> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final _auth = FirebaseAuth.instance;
+
+  final _formKey = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
+  String? _selectedPrimaryMuscle;
+  List<String> _selectedSecondaryMuscles = [];
+  bool _isSecondaryMuscleSelectionOpen = false;
+
+  List<String> muscles = [
+    "shoulders",
+    "traps",
+    "chest",
+    "forearms",
+    "biceps",
+    "triceps",
+    "lats",
+    "lower back",
+    "abs",
+    "glutes",
+    "quads",
+    "hamstrings",
+    "obliques",
+    "adductors",
+    "abductors",
+    "calves"
+  ];
+
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -21,82 +53,150 @@ class _CreateCustomExerciseScreenState
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(16.0),
-          child: Column(
-            children: <Widget>[
-              _sectionCard(
-                  title: 'Custom Routine Creation',
-                  child: _placeholderWidget(
-                      'Create, Save, Manage Routines Placeholder', theme),
-                  theme: theme),
-              _sectionCard(
-                  title: 'Workout Calendar',
-                  child:
-                      _placeholderWidget('Workout Calendar Placeholder', theme),
-                  theme: theme),
-              _sectionCard(
-                  title: 'Progress Tracking Dashboard',
-                  child: _placeholderWidget(
-                      'Progress Dashboard Placeholder', theme),
-                  theme: theme),
-              _sectionCard(
-                  title: 'Workout History and Logs',
-                  child: _placeholderWidget('Workout Logs Placeholder', theme),
-                  theme: theme),
-              _sectionCard(
-                  title: 'Instructional Content and Tips',
-                  child: _placeholderWidget(
-                      'Instructional Content Placeholder', theme),
-                  theme: theme),
-            ],
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: <Widget>[
+                TextFormField(
+                  controller: _nameController,
+                  style: TextStyle(color: theme.colorScheme.onPrimary),
+                  decoration: InputDecoration(
+                    labelText: 'Exercise Name',
+                    labelStyle: TextStyle(
+                      color: theme.colorScheme.onPrimary,
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: theme.colorScheme.onPrimary),
+                    ),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide:
+                          BorderSide(color: theme.colorScheme.onPrimary),
+                    ),
+                  ),
+                  cursorColor: theme.colorScheme.onPrimary,
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'Please enter the exercise name';
+                    }
+                    return null;
+                  },
+                ),
+                DropdownButtonFormField<String>(
+                  value: _selectedPrimaryMuscle,
+                  hint: Text("Select Primary Muscle",
+                      style: TextStyle(color: theme.colorScheme.onPrimary)),
+                  items: muscles.map((String value) {
+                    return DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value,
+                          style: TextStyle(color: theme.colorScheme.onPrimary)),
+                    );
+                  }).toList(),
+                  onChanged: (newValue) {
+                    setState(() {
+                      _selectedPrimaryMuscle = newValue;
+                    });
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Primary Muscle',
+                    labelStyle: TextStyle(color: theme.colorScheme.onPrimary),
+                  ),
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Please select the primary muscle';
+                    }
+                    return null;
+                  },
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    setState(() {
+                      _isSecondaryMuscleSelectionOpen =
+                          !_isSecondaryMuscleSelectionOpen;
+                    });
+                  },
+                  child: Text(
+                      _isSecondaryMuscleSelectionOpen
+                          ? "Close Secondary Muscles"
+                          : "Select Secondary Muscles",
+                      style: TextStyle(color: theme.colorScheme.onPrimary)),
+                ),
+                if (_isSecondaryMuscleSelectionOpen)
+                  Wrap(
+                    children: muscles.map((muscle) {
+                      return ChoiceChip(
+                        label: Text(muscle),
+                        labelStyle:
+                            TextStyle(color: theme.colorScheme.onPrimary),
+                        selected: _selectedSecondaryMuscles.contains(muscle),
+                        onSelected: (bool selected) {
+                          setState(() {
+                            if (selected) {
+                              _selectedSecondaryMuscles.add(muscle);
+                            } else {
+                              _selectedSecondaryMuscles.remove(muscle);
+                            }
+                          });
+                        },
+                      );
+                    }).toList(),
+                  ),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate() &&
+                        _selectedPrimaryMuscle != null) {
+                      _saveExerciseToDatabase();
+                    }
+                  },
+                  child: Text('Save Exercise',
+                      style: TextStyle(color: theme.colorScheme.onPrimary)),
+                ),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _sectionCard(
-      {required String title,
-      required Widget child,
-      required ThemeData theme}) {
-    return Card(
-      elevation: 4,
-      margin: EdgeInsets.only(top: 10, bottom: 10),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(15),
-      ),
-      // TODO: is it possible to remove the shadow of the card?
-      color: Colors.transparent,
-      shadowColor: Colors.transparent,
-      child: Padding(
-        padding: EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              title,
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: theme.colorScheme.onPrimary),
-            ),
-            SizedBox(height: 10),
-            child,
-          ],
-        ),
-      ),
+  void _saveExerciseToDatabase() {
+    Exercise exercise = Exercise(
+      id: _auth.currentUser!.uid + _nameController.text,
+      name: _nameController.text,
+      primaryMuscle: _selectedPrimaryMuscle!,
+      secondaryMuscles: _selectedSecondaryMuscles,
+      sets: [],
+      owner: _auth.currentUser!.uid,
     );
+
+    logger.info('Saving exercise: $exercise');
+
+    _firestore
+        .collection('exercises')
+        .doc(exercise.id)
+        .set(exercise.toJson())
+        .then((_) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Exercise saved successfully')));
+    }).catchError((error) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Failed to save exercise')));
+    });
+
+    logger.info('Exercise saved successfully');
+
+    _nameController.clear();
+    setState(() {
+      _selectedPrimaryMuscle = null;
+      _selectedSecondaryMuscles = [];
+    });
   }
 
-  Widget _placeholderWidget(String text, ThemeData theme) {
-    return Container(
-      height: 150,
-      width: double.infinity,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: theme.colorScheme.secondary,
-      ),
-      child: Text(text),
-    );
+  @override
+  void dispose() {
+    _nameController.dispose();
+    super.dispose();
   }
 }
