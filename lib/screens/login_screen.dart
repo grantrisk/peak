@@ -3,8 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:peak/main.dart';
+import 'package:peak/providers/theme_provider.dart';
 import 'package:peak/screens/sign_up_screen.dart';
 import 'package:peak/services/database_service/firebase_db_service.dart';
+import 'package:provider/provider.dart';
 
 import 'home_screen.dart';
 
@@ -19,7 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   final _auth = FirebaseAuth.instance;
 
-  Future<void> _login() async {
+  Future<void> _login(ThemeProvider themeProvider) async {
     try {
       UserCredential userCreds = await _auth.signInWithEmailAndPassword(
           email: _emailController.text, password: _passwordController.text);
@@ -32,6 +34,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
       try {
         await _dbs.update('users', updatedInfo, criteria);
+        final userDoc = await _dbs.find('users', criteria);
+
+        if (userDoc != null) {
+          final prefs = userDoc['preferences'];
+          themeProvider.setThemeFromString(prefs['theme']);
+        }
       } on FirebaseException catch (e) {
         // If the update fails, then there is no document for this user. Create one.
         // TODO: need to abstract this somehow so that we can use it in other places
@@ -84,6 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
+    final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -147,7 +156,9 @@ class _LoginScreenState extends State<LoginScreen> {
                   foregroundColor: theme.colorScheme.onSecondary,
                   backgroundColor: theme.colorScheme.secondary,
                 ),
-                onPressed: _login,
+                onPressed: () {
+                  _login(themeProvider);
+                },
                 child: Text('Login'),
               ),
               TextButton(

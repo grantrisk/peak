@@ -2,7 +2,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:peak/main.dart';
+import 'package:peak/providers/theme_provider.dart';
 import 'package:peak/screens/preferences_screen.dart';
+import 'package:peak/utils/themes.dart';
+import 'package:provider/provider.dart';
 
 import '../services/database_service/firebase_db_service.dart';
 import '../widgets/app_header.dart';
@@ -11,6 +14,7 @@ import 'login_screen.dart';
 class SettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppHeader(title: 'Settings'),
       body: ListView(
@@ -94,7 +98,11 @@ class SettingsScreen extends StatelessWidget {
                         onPressed: () async {
                           HapticFeedback.heavyImpact();
                           await FirebaseAuth.instance.signOut();
+                          // reset the theme
+                          // TODO: Consider having a method that resets the the whole app when users sign out
+                          themeProvider.setTheme(Themes.defaultTheme());
                           logger.info('User logged out');
+
                           Navigator.of(context).pushAndRemoveUntil(
                             _createFadeRoute(),
                             (Route<dynamic> route) => false,
