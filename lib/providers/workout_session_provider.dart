@@ -102,11 +102,13 @@ class WorkoutSessionProvider with ChangeNotifier {
       return _workoutSession.exercises[exerciseIndex];
     }
     return Exercise(
-        id: '',
-        name: 'Exercise not found',
-        primaryMuscle: '',
-        secondaryMuscles: [],
-        owner: 'NULL');
+      id: '',
+      name: 'Exercise not found',
+      primaryMuscle: '',
+      secondaryMuscles: [],
+      owner: 'NULL',
+      custom: false,
+    );
   }
 
   void toggleSetCompletion(String exerciseId, int index) {

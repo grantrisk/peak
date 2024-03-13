@@ -169,6 +169,7 @@ class _CreateCustomExerciseScreenState
       secondaryMuscles: _selectedSecondaryMuscles,
       sets: [],
       owner: _auth.currentUser!.uid,
+      custom: true,
     );
 
     logger.info('Saving exercise: $exercise');

@@ -110,6 +110,7 @@ class MyApp extends StatelessWidget {
               return LoginScreen();
             }
 
+            // TODO: figure out why this gets called twice when refreshing app
             logger.info('Already Logged In');
 
             logger.info('Updating last login time for user: ${user.email}');
