@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ import 'package:peak/providers/theme_provider.dart';
 import 'package:peak/providers/workout_session_provider.dart';
 import 'package:peak/screens/home_screen.dart';
 import 'package:peak/screens/login_screen.dart';
+import 'package:peak/services/database_service/firebase_db_service.dart';
 import 'package:peak/services/logger/logger.dart';
 import 'package:peak/utils/themes.dart';
 import 'package:provider/provider.dart';
@@ -109,6 +111,13 @@ class MyApp extends StatelessWidget {
             }
 
             logger.info('Already Logged In');
+
+            logger.info('Updating last login time for user: ${user.email}');
+            final updatedInfo = {'lastLogin': Timestamp.now()};
+            final criteria = {'docId': user.uid};
+            final _dbs = FirebaseDatabaseService.getInstance(logger);
+            _dbs.update('users', updatedInfo, criteria);
+
             return HomeScreen();
           }
           return Scaffold(
