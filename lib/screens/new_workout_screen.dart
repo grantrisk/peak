@@ -60,6 +60,8 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
             sets: List.generate(3, (_) => ExerciseSet(reps: 10, weight: 0)),
             primaryMuscle: exercise.primaryMuscle,
             secondaryMuscles: exercise.secondaryMuscles,
+            owner: exercise.owner,
+            custom: exercise.custom,
           ));
         }
       }
@@ -319,6 +321,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
 
     logger.info('Workout Session Completed: ${workoutSession.date}');
 
+    // TODO: see why the exercises that are being saved dont have the primary or secondary muscles
     // Add the workout session to Firestore
     _firestore.collection('workout_sessions').add({
       'date': workoutSession.date,

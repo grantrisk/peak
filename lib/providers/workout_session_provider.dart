@@ -7,7 +7,8 @@ import '../models/workout_session_model.dart';
 
 class WorkoutSessionProvider with ChangeNotifier {
   final _auth = FirebaseAuth.instance;
-  late WorkoutSession _workoutSession;
+  WorkoutSession _workoutSession =
+      WorkoutSession(date: DateTime.now(), owner: 'unknown');
 
   WorkoutSession get workoutSession => _workoutSession;
 
@@ -101,10 +102,13 @@ class WorkoutSessionProvider with ChangeNotifier {
       return _workoutSession.exercises[exerciseIndex];
     }
     return Exercise(
-        id: '',
-        name: 'Exercise not found',
-        primaryMuscle: '',
-        secondaryMuscles: []);
+      id: '',
+      name: 'Exercise not found',
+      primaryMuscle: '',
+      secondaryMuscles: [],
+      owner: 'NULL',
+      custom: false,
+    );
   }
 
   void toggleSetCompletion(String exerciseId, int index) {

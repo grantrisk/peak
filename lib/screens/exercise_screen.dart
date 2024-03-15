@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:peak/screens/create_custom_exercise_screen.dart';
 import 'package:peak/widgets/quick_start_widget.dart';
 
 import '../main.dart';
@@ -181,10 +182,19 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
                 ListTile(
                   leading:
                       Icon(Icons.build, color: theme.colorScheme.onPrimary),
-                  title: Text('Exercise Customization',
+                  title: Text('Create Custom Exercise',
                       style: TextStyle(color: theme.colorScheme.onPrimary)),
                   onTap: () {
                     HapticFeedback.heavyImpact();
+                    Future.delayed(Duration(milliseconds: 100), () {
+                      HapticFeedback.heavyImpact();
+                    });
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CreateCustomExerciseScreen(),
+                      ),
+                    );
                     // Handle other option tap
                   },
                 ),
