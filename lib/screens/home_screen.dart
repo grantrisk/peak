@@ -1,8 +1,12 @@
-import 'package:flutter/material.dart';
+import 'package:peak/providers/theme_provider.dart';
 import 'package:peak/widgets/quick_start_widget.dart';
-
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../widgets/app_header.dart';
 import '../widgets/bottom_navigation.dart';
+import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
+import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
+import 'package:peak/UI/components/components.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -15,33 +19,43 @@ class _HomeScreenState extends State<HomeScreen> {
     ThemeData theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppHeader(
-        title: 'Summary',
+      backgroundColor: theme.colorScheme.background,
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).colorScheme.background,
+        title: Text('Welcome back',
+            style: GoogleFonts.nunitoSans(
+                textStyle: TextStyle(
+                    fontSize: 28,
+                    color: Colors.grey[700],
+                    fontWeight: FontWeight.w900))),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(10.0),
           child: Column(
             children: <Widget>[
               // _logWorkoutButton(context),
               _sectionCard(
-                  title: 'Today\'s Workout',
-                  child: _placeholderWidget('Workout List Placeholder', theme),
+                  title: '',
+                  child: _placeholderWidget('', theme),
                   theme: theme),
               _sectionCard(
-                  title: 'Recent Activity',
-                  child:
-                      _placeholderWidget('Recent Activity Placeholder', theme),
+                  title: '',
+                  child: _placeholderWidget('', theme),
                   theme: theme),
               _sectionCard(
-                  title: 'Your Progress',
-                  child:
-                      _placeholderWidget('Progress Graph Placeholder', theme),
+                  title: '',
+                  child: _placeholderWidget('', theme),
                   theme: theme),
-              _sectionCard(
-                  title: 'Health Tips',
-                  child: _placeholderWidget('Health Tips Placeholder', theme),
-                  theme: theme),
+              // _sectionCard(
+              //     title: 'Your Progress',
+              //     child:
+              //         _placeholderWidget('Progress Graph Placeholder', theme),
+              //     theme: theme),
+              // _sectionCard(
+              //     title: 'Health Tips',
+              //     child: _placeholderWidget('Health Tips Placeholder', theme),
+              //     theme: theme),
             ],
           ),
         ),
@@ -50,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
         selectedIndex: 0,
       ),
       floatingActionButton: QuickStartFAB(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
 
@@ -59,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
       required ThemeData theme}) {
     return Card(
       elevation: 4,
-      margin: EdgeInsets.only(top: 10, bottom: 10),
+      margin: EdgeInsets.only(top: 0, bottom: 0),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
@@ -67,16 +82,17 @@ class _HomeScreenState extends State<HomeScreen> {
       color: Colors.transparent,
       shadowColor: Colors.transparent,
       child: Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(1.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
               title,
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: theme.colorScheme.onPrimary),
+              style: GoogleFonts.nunitoSans(
+                  textStyle: TextStyle(
+                      fontSize: 20,
+                      color: Colors.grey[700],
+                      fontWeight: FontWeight.w700)),
             ),
             SizedBox(height: 10),
             child,
@@ -86,16 +102,22 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // Checks the theme type and renders a themed element accordingly
   Widget _placeholderWidget(String text, ThemeData theme) {
-    return Container(
-      height: 150,
-      width: double.infinity,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: theme.colorScheme.secondary,
-      ),
-      child: Text(text),
-    );
+    ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
+    ThemeType theme = themeProvider.currentThemeType;
+
+    switch (theme) {
+      case ThemeType.defaultTheme:
+        return Container();
+      case ThemeType.dark:
+        return Container();
+      case ThemeType.light:
+        final container = NeumorphicContainer(
+            MediaQuery.of(context).size.width / 2, 150, context, text);
+        return container.makeContainer();
+      default:
+        return Container();
+    }
   }
 }

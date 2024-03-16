@@ -70,52 +70,85 @@ class _BottomNavigationState extends State<BottomNavigation> {
   Widget build(BuildContext context) {
     Color disabledColor = Colors.grey; // Color for disabled items
 
-    return Container(
-      decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(
-              color: Theme.of(context).colorScheme.tertiary,
-              width: 0.5), // Add your desired border color and width
-        ),
-      ),
-      child: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            activeIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: 'Summary',
+    return BottomAppBar(
+      shadowColor: Colors.white,
+      elevation: 30,
+      shape: CircularNotchedRectangle(),
+      notchMargin: 15.0,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: <Widget>[
+          _buildTabItem(
+            icon: Icons.home,
+            index: 0,
+            context: context,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.fitness_center),
-            label: 'Workouts',
+          _buildTabItem(
+            icon: Icons.fitness_center,
+            index: 1,
+            context: context,
           ),
-          // TODO: add meals functionality
-          /*BottomNavigationBarItem(
-            icon: Icon(Icons.restaurant, color: disabledColor),
-            label: 'Meals',
-          ),*/
-          BottomNavigationBarItem(
-            icon: Icon(Icons.draw_outlined, color: disabledColor),
-            label: 'Logs',
+          SizedBox(width: 48), // The gap for the floating action button
+          _buildTabItem(
+            icon: Icons.draw_outlined,
+            index: 2,
+            context: context,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_2_outlined),
-            activeIcon: Icon(Icons.person),
-            label: 'Profile',
+          _buildTabItem(
+            icon: Icons.person_outline,
+            index: 3,
+            context: context,
           ),
         ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Theme.of(context).colorScheme.secondary,
-        unselectedItemColor: Colors.grey[600],
-        onTap: (index) {
-          // TODO: remove disabled navigation for items
-          if (index != 2) {
-            _onItemTapped(index);
-          }
-        },
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Theme.of(context).colorScheme.primary,
+      ),
+      color: Theme.of(context).colorScheme.primary,
+    );
+  }
+
+  Widget _buildTabItem({
+    required IconData icon,
+    required int index,
+    required BuildContext context,
+  }) {
+    final isSelected = _selectedIndex == index;
+    return Container(
+      alignment: Alignment.center,
+      height: 40,
+      width: 40,
+      decoration: BoxDecoration(
+        color: Theme.of(context).colorScheme.primary,
+        borderRadius: BorderRadius.circular(35),
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromARGB(54, 103, 87, 122),
+            offset: Offset(2, 2),
+            blurRadius: 3,
+            spreadRadius: 1,
+          ),
+          BoxShadow(
+            color: Color.fromARGB(255, 255, 242, 254),
+            offset: Offset(-2, -2),
+            blurRadius: 3,
+            spreadRadius: 1,
+          ),
+        ],
+      ),
+      child: IconButton(
+        icon: Icon(icon, size: 20.0),
+        color: isSelected
+            ? Theme.of(context).colorScheme.secondary
+            : Theme.of(context).colorScheme.secondary,
+        onPressed: () => _onItemTapped(index),
       ),
     );
   }
 }
+
+// IconButton(
+//       icon: Icon(icon, size: 24.0),
+//       color: isSelected
+//           ? Theme.of(context).colorScheme.secondary
+//           : Theme.of(context).colorScheme.secondary,
+//       onPressed: () => _onItemTapped(index),
+//     );

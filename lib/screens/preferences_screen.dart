@@ -51,7 +51,8 @@ class PreferencesScreen extends StatelessWidget {
                 style: TextStyle(color: theme.colorScheme.onPrimary)),
             onTap: () async {
               // Set the theme to Dark Theme
-              themeProvider.setTheme(Themes.defaultTheme());
+              themeProvider.setTheme(
+                  Themes.defaultTheme(), ThemeType.defaultTheme);
               await _saveThemeToPrefs('default');
             },
           ),
@@ -60,7 +61,7 @@ class PreferencesScreen extends StatelessWidget {
                 style: TextStyle(color: theme.colorScheme.onPrimary)),
             onTap: () async {
               // Set the theme to Dark Theme
-              themeProvider.setTheme(Themes.darkModeTheme());
+              themeProvider.setTheme(Themes.darkModeTheme(), ThemeType.dark);
               await _saveThemeToPrefs('dark');
             },
           ),
@@ -69,7 +70,7 @@ class PreferencesScreen extends StatelessWidget {
                 style: TextStyle(color: theme.colorScheme.onPrimary)),
             onTap: () async {
               // Set the theme to Light Theme
-              themeProvider.setTheme(Themes.lightModeTheme());
+              themeProvider.setTheme(Themes.lightModeTheme(), ThemeType.light);
               await _saveThemeToPrefs('light');
             },
           ),
@@ -78,7 +79,7 @@ class PreferencesScreen extends StatelessWidget {
                 style: TextStyle(color: theme.colorScheme.onPrimary)),
             onTap: () async {
               // Set the theme to Dark Green Theme
-              themeProvider.setTheme(Themes.darkGreenTheme());
+              themeProvider.setTheme(Themes.darkGreenTheme(), ThemeType.green);
               await _saveThemeToPrefs('green');
             },
           ),
@@ -87,7 +88,7 @@ class PreferencesScreen extends StatelessWidget {
                 style: TextStyle(color: theme.colorScheme.onPrimary)),
             onTap: () async {
               // Set the theme to Maroon Theme
-              themeProvider.setTheme(Themes.maroonTheme());
+              themeProvider.setTheme(Themes.maroonTheme(), ThemeType.maroon);
               await _saveThemeToPrefs('maroon');
             },
           ),
@@ -96,7 +97,7 @@ class PreferencesScreen extends StatelessWidget {
                 style: TextStyle(color: theme.colorScheme.onPrimary)),
             onTap: () async {
               // Set the theme to Purple Theme
-              themeProvider.setTheme(Themes.purpleTheme());
+              themeProvider.setTheme(Themes.purpleTheme(), ThemeType.purple);
               await _saveThemeToPrefs('purple');
             },
           ),

@@ -100,7 +100,8 @@ class SettingsScreen extends StatelessWidget {
                           await FirebaseAuth.instance.signOut();
                           // reset the theme
                           // TODO: Consider having a method that resets the the whole app when users sign out
-                          themeProvider.setTheme(Themes.defaultTheme());
+                          themeProvider.setTheme(
+                              Themes.defaultTheme(), ThemeType.defaultTheme);
                           logger.info('User logged out');
 
                           Navigator.of(context).pushAndRemoveUntil(

@@ -129,10 +129,10 @@ class Themes {
     return ThemeData(
       useMaterial3: true,
       colorScheme: ColorScheme.light(
-        primary: Color(0xFFF5F5F5),
+        primary: Color.fromARGB(255, 255, 234, 254),
         secondary: Color(0xFFA7BBC7),
         tertiary: Color(0xFFCFD8DC),
-        background: Color(0xFFF5F5F5),
+        background: Color.fromARGB(255, 243, 245, 255),
         onPrimary: Colors.black,
         onSecondary: Colors.black,
         onError: Colors.black,

@@ -76,15 +76,43 @@ class QuickStartFAB extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingActionButton(
+    return Container(
+      height: 75,
+      width: 75,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle, // Keeps the FAB circular
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromARGB(106, 103, 87, 122),
+            offset: Offset(3, 3),
+            blurRadius: 5,
+            spreadRadius: 1,
+          ),
+          BoxShadow(
+            color: Color.fromARGB(255, 254, 255, 255),
+            offset: Offset(-3, -3),
+            blurRadius: 5,
+            spreadRadius: 1,
+          ),
+        ],
+      ),
+      child: FloatingActionButton(
         heroTag: 'quick_start_fab',
-        backgroundColor: Colors.amber,
+        backgroundColor: Theme.of(context).colorScheme.background,
         foregroundColor: Theme.of(context).colorScheme.primary,
         splashColor: Theme.of(context).colorScheme.onPrimary,
-        child: const Icon(Icons.electric_bolt),
+        child: const Icon(
+          Icons.electric_bolt,
+          color: Color.fromARGB(118, 255, 7, 143),
+        ),
+        elevation: 0,
         onPressed: () {
           HapticFeedback.heavyImpact();
           showWorkoutOptions(context);
-        });
+        },
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(100))),
+      ),
+    );
   }
 }
