@@ -1,34 +1,26 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter/services.dart';
+import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
+import 'package:peak/UI/components/abstract/themed_nav.dart';
+import 'package:peak/screens/exercise_screen.dart';
+import 'package:peak/screens/home_screen.dart';
+import 'package:peak/screens/profile_screen.dart';
 
-import '../screens/exercise_screen.dart';
-import '../screens/home_screen.dart';
-import '../screens/profile_screen.dart';
-
-class BottomNavigation extends StatefulWidget {
-  final int selectedIndex;
-
-  BottomNavigation({required this.selectedIndex});
+class NeumorphicNav extends ThemedBottomNavigation {
+  NeumorphicNav({required int selectedIndex})
+      : super(selectedIndex: selectedIndex);
 
   @override
-  _BottomNavigationState createState() => _BottomNavigationState();
+  _NeumorphicNavState createState() => _NeumorphicNavState();
 }
 
-class _BottomNavigationState extends State<BottomNavigation> {
+class _NeumorphicNavState extends State<NeumorphicNav> {
   late int _selectedIndex;
 
   @override
   void initState() {
     super.initState();
     _selectedIndex = widget.selectedIndex;
-  }
-
-  @override
-  void didUpdateWidget(covariant BottomNavigation oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.selectedIndex != widget.selectedIndex) {
-      _selectedIndex = widget.selectedIndex;
-    }
   }
 
   void _onItemTapped(int index) {
@@ -68,8 +60,6 @@ class _BottomNavigationState extends State<BottomNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    Color disabledColor = Colors.grey; // Color for disabled items
-
     return BottomAppBar(
       shadowColor: Colors.white,
       elevation: 30,

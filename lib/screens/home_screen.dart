@@ -47,20 +47,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   title: '',
                   child: _placeholderWidget('', theme),
                   theme: theme),
-              // _sectionCard(
-              //     title: 'Your Progress',
-              //     child:
-              //         _placeholderWidget('Progress Graph Placeholder', theme),
-              //     theme: theme),
-              // _sectionCard(
-              //     title: 'Health Tips',
-              //     child: _placeholderWidget('Health Tips Placeholder', theme),
-              //     theme: theme),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigation(
+      bottomNavigationBar: NeumorphicNav(
         selectedIndex: 0,
       ),
       floatingActionButton: QuickStartFAB(),
@@ -68,6 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  // TODO: Figure out what the hell to do with this card
   Widget _sectionCard(
       {required String title,
       required Widget child,
