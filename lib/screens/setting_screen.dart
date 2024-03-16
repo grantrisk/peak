@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:peak/main.dart';
 import 'package:peak/providers/theme_provider.dart';
 import 'package:peak/screens/preferences_screen.dart';
-import 'package:peak/utils/themes.dart';
+import 'package:peak/UI/themes.dart';
 import 'package:provider/provider.dart';
 
 import '../services/database_service/firebase_db_service.dart';

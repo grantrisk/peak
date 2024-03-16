@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:peak/utils/themes.dart';
+import 'package:peak/UI/themes.dart';
 
 class ThemeProvider extends ChangeNotifier {
   ThemeData _themeData;

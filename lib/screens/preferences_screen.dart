@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:peak/providers/theme_provider.dart';
 import 'package:peak/services/logger/default_logger.dart';
 import 'package:peak/services/logger/logger_config.dart';
-import 'package:peak/utils/themes.dart';
+import 'package:peak/UI/themes.dart';
 import 'package:provider/provider.dart';
 import 'package:peak/services/database_service/firebase_db_service.dart';
 
