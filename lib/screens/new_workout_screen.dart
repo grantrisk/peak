@@ -49,7 +49,10 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<WorkoutSessionProvider>(context, listen: false)
           .initializeWorkoutSession(WorkoutSession(
-              date: DateTime.now(), owner: _auth.currentUser!.uid));
+              date: DateTime.now(),
+              owner: _auth.currentUser!.uid,
+              exercises: [],
+              duration: Duration.zero));
 
       if (widget.initialExercises != null) {
         for (var exercise in widget.initialExercises!) {

@@ -1,4 +1,10 @@
-import 'exercise_set_model.dart';
+import 'package:peak/models/exercise_history_model.dart';
+import 'package:peak/models/exercise_set_model.dart';
+import 'package:peak/models/workout_session_model.dart';
+
+enum ExerciseEquipment { bodyWeight, dumbbell, barbell, machine, none }
+
+enum ExerciseType { strength, cardio, flexibility }
 
 class Exercise {
   String id;
@@ -8,6 +14,11 @@ class Exercise {
   List<ExerciseSet> sets;
   String owner = '';
   bool custom;
+  ExerciseEquipment? equipment;
+  int? difficulty; // 1-10
+  ExerciseType? type;
+  WorkoutSession? lastWorkoutSession;
+  ExerciseHistory? history;
 
   Exercise({
     required this.id,
@@ -17,6 +28,11 @@ class Exercise {
     required this.owner,
     required this.custom,
     this.sets = const [],
+    this.equipment,
+    this.difficulty,
+    this.type,
+    this.lastWorkoutSession,
+    this.history,
   });
 
   factory Exercise.fromJson(Map<String, dynamic> json) {
