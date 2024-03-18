@@ -2,3 +2,4 @@
 
 export 'package:peak/UI/components/neumorphic/neumorphic_container.dart';
 export 'package:peak/UI/components/neumorphic/neumorphic_nav.dart';
+export 'package:peak/UI/components/neumorphic/neumorphic_fab.dart';

@@ -1,3 +1,4 @@
+import 'package:peak/UI/components/neumorphic/neumorphic_fab.dart';
 import 'package:peak/providers/theme_provider.dart';
 import 'package:peak/widgets/quick_start_widget.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -54,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: NeumorphicNav(
         selectedIndex: 0,
       ),
-      floatingActionButton: QuickStartFAB(),
+      floatingActionButton: NeumorphicFAB(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
@@ -105,8 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
       case ThemeType.dark:
         return Container();
       case ThemeType.light:
-        final container = NeumorphicContainer(
-            MediaQuery.of(context).size.width / 2, 150, context, text);
+        final container = NeumorphicContainer(500, 150, context, text);
         return container.makeContainer();
       default:
         return Container();

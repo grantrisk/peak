@@ -2,6 +2,7 @@ import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter/services.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:peak/UI/components/abstract/themed_nav.dart';
+import 'package:peak/UI/components/neumorphic/neumorphic_nav_item.dart';
 import 'package:peak/screens/exercise_screen.dart';
 import 'package:peak/screens/home_screen.dart';
 import 'package:peak/screens/profile_screen.dart';
@@ -102,35 +103,38 @@ class _NeumorphicNavState extends State<NeumorphicNav> {
     required BuildContext context,
   }) {
     final isSelected = _selectedIndex == index;
-    return Container(
-      alignment: Alignment.center,
-      height: 40,
-      width: 40,
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primary,
-        borderRadius: BorderRadius.circular(35),
-        boxShadow: [
-          BoxShadow(
-            color: Color.fromARGB(54, 103, 87, 122),
-            offset: Offset(2, 2),
-            blurRadius: 3,
-            spreadRadius: 1,
-          ),
-          BoxShadow(
-            color: Color.fromARGB(255, 255, 242, 254),
-            offset: Offset(-2, -2),
-            blurRadius: 3,
-            spreadRadius: 1,
-          ),
-        ],
-      ),
-      child: IconButton(
-        icon: Icon(icon, size: 20.0),
-        color: isSelected
-            ? Theme.of(context).colorScheme.secondary
-            : Theme.of(context).colorScheme.secondary,
-        onPressed: () => _onItemTapped(index),
-      ),
-    );
+    return NeumorphicNavItem(
+        icon: icon, isSelected: isSelected, onTap: () => _onItemTapped(index));
   }
 }
+
+// Container(
+//       alignment: Alignment.center,
+//       height: 40,
+//       width: 40,
+//       decoration: BoxDecoration(
+//         color: Theme.of(context).colorScheme.primary,
+//         borderRadius: BorderRadius.circular(35),
+//         boxShadow: [
+//           BoxShadow(
+//             color: Color.fromARGB(54, 103, 87, 122),
+//             offset: Offset(2, 2),
+//             blurRadius: 3,
+//             spreadRadius: 1,
+//           ),
+//           BoxShadow(
+//             color: Color.fromARGB(255, 255, 242, 254),
+//             offset: Offset(-2, -2),
+//             blurRadius: 3,
+//             spreadRadius: 1,
+//           ),
+//         ],
+//       ),
+//       child: IconButton(
+//         icon: Icon(icon, size: 20.0),
+//         color: isSelected
+//             ? Theme.of(context).colorScheme.secondary
+//             : Theme.of(context).colorScheme.secondary,
+//         onPressed: () => _onItemTapped(index),
+//       ),
+//     );

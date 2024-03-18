@@ -17,8 +17,8 @@ class NeumorphicContainer extends ThemedContainer {
   @override
   Widget makeContainer() {
     return Container(
-      height: 150,
-      width: MediaQuery.of(context).size.width / 2,
+      height: height,
+      width: width,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(35),
