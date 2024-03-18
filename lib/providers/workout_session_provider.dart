@@ -7,8 +7,11 @@ import '../models/workout_session_model.dart';
 
 class WorkoutSessionProvider with ChangeNotifier {
   final _auth = FirebaseAuth.instance;
-  WorkoutSession _workoutSession =
-      WorkoutSession(date: DateTime.now(), owner: 'unknown');
+  WorkoutSession _workoutSession = WorkoutSession(
+      date: DateTime.now(),
+      owner: 'unknown',
+      exercises: [],
+      duration: Duration.zero);
 
   WorkoutSession get workoutSession => _workoutSession;
 
@@ -16,6 +19,8 @@ class WorkoutSessionProvider with ChangeNotifier {
     _workoutSession = WorkoutSession(
       date: workoutSession.date,
       owner: _auth.currentUser!.uid,
+      exercises: workoutSession.exercises,
+      duration: workoutSession.duration,
     );
     notifyListeners();
   }
@@ -91,8 +96,11 @@ class WorkoutSessionProvider with ChangeNotifier {
   }
 
   void clearWorkoutSession() {
-    _workoutSession =
-        WorkoutSession(date: DateTime.now(), owner: _auth.currentUser!.uid);
+    _workoutSession = WorkoutSession(
+        date: DateTime.now(),
+        owner: _auth.currentUser!.uid,
+        exercises: [],
+        duration: Duration.zero);
     notifyListeners();
   }
 
@@ -108,6 +116,8 @@ class WorkoutSessionProvider with ChangeNotifier {
       secondaryMuscles: [],
       owner: 'NULL',
       custom: false,
+      type: ExerciseType.strength,
+      equipment: ExerciseEquipment.none,
     );
   }
 

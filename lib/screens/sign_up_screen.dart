@@ -26,6 +26,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       // The "!" tells the interpreter that we know this cannot be null.
       final newUser = userCreds.user!;
 
+      // TODO: need to add this to the user model instead of hardcoding it
       final userInfo = {
         'docId': newUser.uid,
         'email': _email,
@@ -33,6 +34,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
         'lastLogin': Timestamp.now(),
         'preferences': {'example': 1234},
       };
+      /*
+        FIXME: the preferences field could be an issue especially as that
+          scales. If you update the preferences, you would also have to pass
+          back in all the other points in the preference field. So instead of
+          it being just a write, its a read, update, write. This could be
+      */
 
       await _dbs.insert('users', newUser.uid, userInfo);
 
