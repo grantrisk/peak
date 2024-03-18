@@ -22,4 +22,32 @@ class UserGoal {
     required this.endDate,
     required this.completed,
   });
+
+  static fromJson(model) {
+    return UserGoal(
+      id: model['id'] ?? '',
+      name: model['name'] ?? '',
+      owner: model['owner'] ?? '',
+      type: GoalType.values[model['type']],
+      targetValue: model['target_value'] ?? '',
+      currentValue: model['current_value'] ?? '',
+      startDate: DateTime.parse(model['start_date']),
+      endDate: DateTime.parse(model['end_date']),
+      completed: model['completed'] ?? false,
+    );
+  }
+
+  toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'owner': owner,
+      'type': type.index,
+      'target_value': targetValue,
+      'current_value': currentValue,
+      'start_date': startDate.toIso8601String(),
+      'end_date': endDate.toIso8601String(),
+      'completed': completed,
+    };
+  }
 }

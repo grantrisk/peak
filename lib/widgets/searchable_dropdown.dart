@@ -56,6 +56,7 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
     super.initState();
     _filteredItems = widget.items;
     _initPrimaryMuscles();
+    _sortItems();
   }
 
   void _initPrimaryMuscles() {
@@ -64,6 +65,10 @@ class _SearchableDropdownState extends State<SearchableDropdown> {
         .toSet()
         .toList();
     primaryMuscles.insert(0, 'All');
+  }
+
+  void _sortItems() {
+    widget.items.sort((a, b) => a.name.compareTo(b.name));
   }
 
   void _filterItems(String enteredKeyword) {

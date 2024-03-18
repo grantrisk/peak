@@ -14,9 +14,9 @@ class Exercise {
   List<ExerciseSet> sets;
   String owner = '';
   bool custom;
-  ExerciseEquipment? equipment;
+  ExerciseType type;
+  ExerciseEquipment equipment;
   int? difficulty; // 1-10
-  ExerciseType? type;
   WorkoutSession? lastWorkoutSession;
   ExerciseHistory? history;
 
@@ -27,10 +27,10 @@ class Exercise {
     required this.secondaryMuscles,
     required this.owner,
     required this.custom,
+    required this.type,
+    required this.equipment,
     this.sets = const [],
-    this.equipment,
     this.difficulty,
-    this.type,
     this.lastWorkoutSession,
     this.history,
   });
@@ -46,6 +46,19 @@ class Exercise {
           : [],
       owner: json['owner'] ?? 'NULL',
       custom: json['custom'] ?? false,
+      type: stringToExerciseType(json['type']),
+      equipment: stringToExerciseEquipment(json['equipment']),
+      sets: json['sets'] != null
+          ? List<ExerciseSet>.from(
+              json['sets'].map((model) => ExerciseSet.fromJson(model)))
+          : [],
+      difficulty: json['difficulty'] ?? 5,
+      lastWorkoutSession: json['last_workout_session'] != null
+          ? WorkoutSession.fromJson(json['last_workout_session'])
+          : null,
+      history: json['history'] != null
+          ? ExerciseHistory.fromJson(json['history'])
+          : null,
     );
   }
 
@@ -63,6 +76,36 @@ class Exercise {
         'secondary': secondaryMuscles,
       },
       'owner': owner,
+      'custom': custom,
+      'type': exerciseTypeToString(type),
+      'equipment': exerciseEquipmentToString(equipment),
+      'sets': sets.map((e) => e.toJson()).toList(),
+      'difficulty': difficulty,
+      'last_workout_session':
+          lastWorkoutSession != null ? lastWorkoutSession!.id : null,
+      'history': history != null ? history!.toJson() : null,
     };
   }
+}
+
+ExerciseType stringToExerciseType(String? typeString) {
+  return ExerciseType.values.firstWhere(
+    (type) => type.toString().split('.').last == typeString,
+    orElse: () => ExerciseType.strength, // Default value if not found
+  );
+}
+
+ExerciseEquipment stringToExerciseEquipment(String? equipmentString) {
+  return ExerciseEquipment.values.firstWhere(
+    (equipment) => equipment.toString().split('.').last == equipmentString,
+    orElse: () => ExerciseEquipment.none, // Default value if not found
+  );
+}
+
+String exerciseTypeToString(ExerciseType type) {
+  return type.toString().split('.').last;
+}
+
+String exerciseEquipmentToString(ExerciseEquipment equipment) {
+  return equipment.toString().split('.').last;
 }

@@ -116,6 +116,8 @@ class WorkoutSessionProvider with ChangeNotifier {
       secondaryMuscles: [],
       owner: 'NULL',
       custom: false,
+      type: ExerciseType.strength,
+      equipment: ExerciseEquipment.none,
     );
   }
 

@@ -65,6 +65,8 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
             secondaryMuscles: exercise.secondaryMuscles,
             owner: exercise.owner,
             custom: exercise.custom,
+            type: exercise.type,
+            equipment: exercise.equipment,
           ));
         }
       }

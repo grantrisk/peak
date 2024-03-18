@@ -20,4 +20,34 @@ class WorkoutSession {
       this.intensity,
       this.goals,
       this.notes});
+
+  static fromJson(json) {
+    return WorkoutSession(
+      date: DateTime.parse(json['date']),
+      owner: json['owner'] ?? 'unknown',
+      exercises: json['exercises'] != null
+          ? List<Exercise>.from(
+              json['exercises'].map((model) => Exercise.fromJson(model)))
+          : [],
+      duration: Duration(seconds: json['duration']),
+      intensity: json['intensity'],
+      goals: json['goals'] != null
+          ? List<UserGoal>.from(
+              json['goals'].map((model) => UserGoal.fromJson(model)))
+          : [],
+      notes: json['notes'],
+    );
+  }
+
+  toJson() {
+    return {
+      'date': date.toIso8601String(),
+      'owner': owner,
+      'exercises': exercises.map((e) => e.toJson()).toList(),
+      'duration': duration.inSeconds,
+      'intensity': intensity,
+      'goals': goals?.map((g) => g.toJson()).toList(),
+      'notes': notes,
+    };
+  }
 }
