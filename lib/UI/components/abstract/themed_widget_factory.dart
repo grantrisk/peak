@@ -8,11 +8,37 @@ class ThemedWidgetFactory {
       case ThemeType.defaultTheme:
         return DefaultContainer(null, 500.00, 150.00, text);
       case ThemeType.dark:
-        return Container(); // Ideally, you'd return a dark-themed container here
+        return Container();
       case ThemeType.light:
         return NeumorphicContainer(null, 500.00, 150.00, text);
       default:
-        return Container(); // A fallback container
+        return Container();
+    }
+  }
+
+  static Widget createNav(int selectedIndex, ThemeType themeType) {
+    switch (themeType) {
+      case ThemeType.defaultTheme:
+        return DefaultNav(selectedIndex: selectedIndex);
+      case ThemeType.dark:
+        return DefaultNav(selectedIndex: selectedIndex);
+      case ThemeType.light:
+        return NeumorphicNav(selectedIndex: selectedIndex);
+      default:
+        return Container();
+    }
+  }
+
+  static Widget createFab(ThemeType themeType) {
+    switch (themeType) {
+      case ThemeType.defaultTheme:
+        return DefaultFAB();
+      case ThemeType.dark:
+        return Container();
+      case ThemeType.light:
+        return NeumorphicFAB();
+      default:
+        return Container();
     }
   }
 }

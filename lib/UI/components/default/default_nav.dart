@@ -2,20 +2,20 @@ import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
 import 'package:flutter/services.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:peak/UI/components/abstract/themed_nav.dart';
-import 'package:peak/UI/components/neumorphic/neumorphic_nav_item.dart';
+import 'package:peak/UI/components/default/default_nav_item.dart';
 import 'package:peak/screens/exercise_screen.dart';
 import 'package:peak/screens/home_screen.dart';
 import 'package:peak/screens/profile_screen.dart';
 
-class NeumorphicNav extends ThemedBottomNavigation {
-  NeumorphicNav({required int selectedIndex})
+class DefaultNav extends ThemedBottomNavigation {
+  DefaultNav({required int selectedIndex})
       : super(selectedIndex: selectedIndex);
 
   @override
-  _NeumorphicNavState createState() => _NeumorphicNavState();
+  _DefaultNavState createState() => _DefaultNavState();
 }
 
-class _NeumorphicNavState extends State<NeumorphicNav> {
+class _DefaultNavState extends State<DefaultNav> {
   late int _selectedIndex;
 
   @override
@@ -62,10 +62,6 @@ class _NeumorphicNavState extends State<NeumorphicNav> {
   @override
   Widget build(BuildContext context) {
     return BottomAppBar(
-      shadowColor: Colors.white,
-      elevation: 30,
-      shape: CircularNotchedRectangle(),
-      notchMargin: 15.0,
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -103,7 +99,7 @@ class _NeumorphicNavState extends State<NeumorphicNav> {
     required BuildContext context,
   }) {
     final isSelected = _selectedIndex == index;
-    return NeumorphicNavItem(
+    return DefaultNavItem(
         icon: icon, isSelected: isSelected, onTap: () => _onItemTapped(index));
   }
 }

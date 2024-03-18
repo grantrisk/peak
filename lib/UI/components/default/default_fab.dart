@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:peak/UI/components/abstract/themed_fab.dart';
+import 'package:peak/screens/new_workout_screen.dart';
 
-import '../screens/new_workout_screen.dart';
+class DefaultFAB extends ThemedFAB {
+  const DefaultFAB({Key? key}) : super(key: key);
 
-class QuickStartFAB extends StatelessWidget {
-  const QuickStartFAB({Key? key}) : super(key: key);
+  @override
+  ThemeData getThemeData(BuildContext context) {
+    return Theme.of(context);
+  }
 
   void showWorkoutOptions(BuildContext context) {
     ThemeData theme = Theme.of(context);

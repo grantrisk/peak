@@ -53,10 +53,8 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: NeumorphicNav(
-        selectedIndex: 0,
-      ),
-      floatingActionButton: NeumorphicFAB(),
+      bottomNavigationBar: _navigationWidget(0),
+      floatingActionButton: _fabWidget(),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
     );
   }
@@ -99,10 +97,23 @@ class _HomeScreenState extends State<HomeScreen> {
   // Checks the theme type and renders a themed element accordingly
   Widget _placeholderWidget(
       String text, ThemeData themeData, BuildContext context) {
-    // Use a different variable name to avoid shadowing
     ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
     ThemeType currentThemeType = themeProvider.currentThemeType;
 
     return ThemedWidgetFactory.createContainer(text, currentThemeType);
+  }
+
+  Widget _navigationWidget(int selectedIndex) {
+    ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
+    ThemeType currentThemeType = themeProvider.currentThemeType;
+
+    return ThemedWidgetFactory.createNav(selectedIndex, currentThemeType);
+  }
+
+  Widget _fabWidget() {
+    ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
+    ThemeType currentThemeType = themeProvider.currentThemeType;
+
+    return ThemedWidgetFactory.createFab(currentThemeType);
   }
 }
