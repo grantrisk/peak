@@ -1,3 +1,4 @@
+import 'package:peak/UI/components/abstract/themed_widget_factory.dart';
 import 'package:peak/UI/components/neumorphic/neumorphic_fab.dart';
 import 'package:peak/providers/theme_provider.dart';
 import 'package:peak/widgets/quick_start_widget.dart';
@@ -38,15 +39,15 @@ class _HomeScreenState extends State<HomeScreen> {
               // _logWorkoutButton(context),
               _sectionCard(
                   title: '',
-                  child: _placeholderWidget('', theme),
+                  child: _placeholderWidget('', theme, context),
                   theme: theme),
               _sectionCard(
                   title: '',
-                  child: _placeholderWidget('', theme),
+                  child: _placeholderWidget('', theme, context),
                   theme: theme),
               _sectionCard(
                   title: '',
-                  child: _placeholderWidget('', theme),
+                  child: _placeholderWidget('', theme, context),
                   theme: theme),
             ],
           ),
@@ -96,20 +97,12 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   // Checks the theme type and renders a themed element accordingly
-  Widget _placeholderWidget(String text, ThemeData theme) {
+  Widget _placeholderWidget(
+      String text, ThemeData themeData, BuildContext context) {
+    // Use a different variable name to avoid shadowing
     ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
-    ThemeType theme = themeProvider.currentThemeType;
+    ThemeType currentThemeType = themeProvider.currentThemeType;
 
-    switch (theme) {
-      case ThemeType.defaultTheme:
-        return Container();
-      case ThemeType.dark:
-        return Container();
-      case ThemeType.light:
-        final container = NeumorphicContainer(500, 150, context, text);
-        return container.makeContainer();
-      default:
-        return Container();
-    }
+    return ThemedWidgetFactory.createContainer(text, currentThemeType);
   }
 }

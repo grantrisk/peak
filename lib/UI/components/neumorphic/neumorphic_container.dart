@@ -5,22 +5,24 @@ import 'package:flutter/services.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:peak/UI/components/abstract/themed_container.dart';
+import 'package:peak/UI/components/components.dart';
 import 'package:peak/screens/exercise_screen.dart';
 import 'package:peak/screens/home_screen.dart';
 import 'package:peak/screens/profile_screen.dart';
 
 class NeumorphicContainer extends ThemedContainer {
-  NeumorphicContainer(
-      double width, double height, BuildContext context, String text)
-      : super(width, height, context, text);
+  const NeumorphicContainer(Key? key, double width, double height, String text)
+      : super(key: key, width: width, height: height, text: text);
 
   @override
-  Widget makeContainer() {
+  Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
     return Container(
       height: height,
       width: width,
       alignment: Alignment.center,
       decoration: BoxDecoration(
+        color: theme.colorScheme.background,
         borderRadius: BorderRadius.circular(35),
         boxShadow: [
           BoxShadow(

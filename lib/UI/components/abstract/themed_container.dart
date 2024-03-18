@@ -15,13 +15,18 @@ import 'package:peak/services/logger/logger.dart';
 import 'package:peak/UI/themes.dart';
 import 'package:provider/provider.dart';
 
-abstract class ThemedContainer {
+abstract class ThemedContainer extends StatelessWidget {
   final double width;
   final double height;
-  final BuildContext context;
   final String text;
 
-  ThemedContainer(this.width, this.height, this.context, this.text);
+  const ThemedContainer({
+    Key? key,
+    required this.width,
+    required this.height,
+    required this.text,
+  }) : super(key: key);
 
-  Widget makeContainer();
+  @override
+  Widget build(BuildContext context);
 }
