@@ -28,7 +28,7 @@ class UserGoal {
       id: model['id'] ?? '',
       name: model['name'] ?? '',
       owner: model['owner'] ?? '',
-      type: GoalType.values[model['type']],
+      type: stringToGoalType(model['type']),
       targetValue: model['target_value'] ?? '',
       currentValue: model['current_value'] ?? '',
       startDate: DateTime.parse(model['start_date']),
@@ -50,4 +50,15 @@ class UserGoal {
       'completed': completed,
     };
   }
+}
+
+GoalType stringToGoalType(String? typeString) {
+  return GoalType.values.firstWhere(
+    (type) => type.toString().split('.').last == typeString,
+    orElse: () => GoalType.other, // Default value if not found
+  );
+}
+
+String goalTypeToString(GoalType type) {
+  return type.toString().split('.').last;
 }
