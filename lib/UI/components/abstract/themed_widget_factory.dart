@@ -16,14 +16,21 @@ class ThemedWidgetFactory {
     }
   }
 
-  static Widget createNav(int selectedIndex, ThemeType themeType) {
+  static Widget createNav(
+      int selectedIndex, ThemeType themeType, void Function(int) onTap) {
     switch (themeType) {
       case ThemeType.defaultTheme:
-        return DefaultNav(selectedIndex: selectedIndex);
+        return DefaultNav(
+          selectedIndex: selectedIndex,
+          onTap: onTap,
+        );
       case ThemeType.dark:
-        return DefaultNav(selectedIndex: selectedIndex);
+        return DefaultNav(
+          selectedIndex: selectedIndex,
+          onTap: onTap,
+        );
       case ThemeType.light:
-        return NeumorphicNav(selectedIndex: selectedIndex);
+        return NeumorphicNav(selectedIndex: selectedIndex, onTap: onTap);
       default:
         return Container();
     }

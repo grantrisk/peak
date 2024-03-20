@@ -43,6 +43,12 @@ class PreferencesScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('App Preferences'),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop(); // Manually handle back navigation
+          },
+        ),
       ),
       body: ListView(
         children: <Widget>[

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
+import 'package:peak/providers/navigation_provider.dart';
 import 'package:peak/providers/theme_provider.dart';
 import 'package:peak/providers/workout_session_provider.dart';
 import 'package:peak/screens/home_screen.dart';
@@ -14,6 +15,7 @@ import 'package:peak/screens/login_screen.dart';
 import 'package:peak/services/database_service/firebase_db_service.dart';
 import 'package:peak/services/logger/logger.dart';
 import 'package:peak/UI/themes.dart';
+import 'package:peak/widgets/screen_view.dart';
 import 'package:provider/provider.dart';
 
 final Logger logger = LoggerServiceFactory.create(
@@ -76,10 +78,9 @@ Future<void> main() async {
       providers: [
         ChangeNotifierProvider(create: (context) => WorkoutSessionProvider()),
         ChangeNotifierProvider(
-            create: (context) => ThemeProvider(
-                Themes.lightModeTheme(),
-                ThemeType
-                    .light)), // Assuming Themes.defaultTheme() is your default theme
+            create: (context) =>
+                ThemeProvider(Themes.lightModeTheme(), ThemeType.light)),
+        ChangeNotifierProvider(create: (context) => NavigationProvider())
       ],
       child: const MyApp(),
     ),
@@ -121,7 +122,7 @@ class MyApp extends StatelessWidget {
             final _dbs = FirebaseDatabaseService.getInstance(logger);
             _dbs.update('users', updatedInfo, criteria);
 
-            return HomeScreen();
+            return ScreenView();
           }
           return Scaffold(
             body: Center(

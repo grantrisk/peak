@@ -69,10 +69,6 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigation(
-        selectedIndex: 1,
-      ),
-      floatingActionButton: QuickStartFAB(),
     );
   }
 

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:peak/UI/components/components.dart';
 import 'package:peak/screens/setting_screen.dart';
+import 'package:peak/widgets/app_header.dart';
+import 'package:provider/provider.dart';
 
-import '../widgets/app_header.dart';
-import '../widgets/bottom_navigation.dart';
+import '../providers/theme_provider.dart';
+// Assume ThemedWidgetFactory and ThemeProvider are defined elsewhere
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -16,12 +20,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
     ThemeData theme = Theme.of(context);
 
     return Scaffold(
-      appBar: AppHeader(
-        title: 'Profile',
+      backgroundColor: theme.colorScheme.background,
+      appBar: AppBar(
+        backgroundColor: theme.colorScheme.background,
+        title: Text(
+          'Profile',
+          style: GoogleFonts.nunitoSans(
+              textStyle: TextStyle(
+                  fontSize: 28,
+                  color: Colors.grey[700],
+                  fontWeight: FontWeight.w900)),
+        ),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.settings),
-            color: theme.colorScheme.onBackground,
+            color: Colors.grey[700],
             onPressed: () {
               HapticFeedback.heavyImpact();
               Navigator.of(context).push(
@@ -33,34 +46,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: EdgeInsets.all(10.0),
           child: Column(
             children: <Widget>[
-              _sectionCard(
-                  title: 'Fitness Goals',
-                  child: _placeholderWidget('Fitness Goals Placeholder', theme),
-                  theme: theme),
+              // Example Widgets for Profile Screen
               _sectionCard(
                   title: 'Personal Information',
-                  child: _placeholderWidget(
-                      'Personal Information Placeholder', theme),
+                  child: _placeholderWidget('Name: John Doe', theme, context),
                   theme: theme),
               _sectionCard(
-                  title: 'Activity Settings',
+                  title: 'Preferences',
                   child: _placeholderWidget(
-                      'Activity Settings Placeholder', theme),
+                      'Favorite Color: Blue', theme, context),
                   theme: theme),
               _sectionCard(
-                  title: 'Health Data',
-                  child: _placeholderWidget('Health Data Placeholder', theme),
+                  title: 'Account Settings',
+                  child: _placeholderWidget(
+                      'Email: john.doe@example.com', theme, context),
                   theme: theme),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: BottomNavigation(
-        selectedIndex: 3, //Index for profile in your BottomNavigation
-      ),
+      // Assuming you want the same FAB across different screens
     );
   }
 
@@ -69,24 +77,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
       required Widget child,
       required ThemeData theme}) {
     return Card(
-      elevation: 4,
-      margin: EdgeInsets.only(top: 10, bottom: 10),
+      color: theme.colorScheme.background,
+      elevation: 0,
+      margin: EdgeInsets.all(8), // Gives space around the card
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
-      color: Colors.transparent,
-      shadowColor: Colors.transparent,
       child: Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
               title,
-              style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: theme.colorScheme.onPrimary),
+              style: GoogleFonts.nunitoSans(
+                  textStyle: TextStyle(
+                      fontSize: 20,
+                      color: theme.colorScheme.onSurface,
+                      fontWeight: FontWeight.w700)),
             ),
             SizedBox(height: 10),
             child,
@@ -96,16 +104,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _placeholderWidget(String text, ThemeData theme) {
-    return Container(
-      height: 150,
-      width: double.infinity,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        color: theme.colorScheme.secondary,
-      ),
-      child: Text(text),
-    );
+  Widget _placeholderWidget(
+      String text, ThemeData themeData, BuildContext context) {
+    ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
+    ThemeType currentThemeType = themeProvider.currentThemeType;
+
+    return ThemedWidgetFactory.createContainer(text, currentThemeType);
+  }
+
+  Widget _fabWidget() {
+    ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
+    ThemeType currentThemeType = themeProvider.currentThemeType;
+
+    return ThemedWidgetFactory.createFab(currentThemeType);
   }
 }

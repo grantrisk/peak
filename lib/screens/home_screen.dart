@@ -1,21 +1,12 @@
-import 'package:peak/UI/components/abstract/themed_widget_factory.dart';
-import 'package:peak/UI/components/neumorphic/neumorphic_fab.dart';
-import 'package:peak/providers/theme_provider.dart';
-import 'package:peak/widgets/quick_start_widget.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import '../widgets/app_header.dart';
-import '../widgets/bottom_navigation.dart';
-import 'package:flutter/material.dart' hide BoxDecoration, BoxShadow;
-import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:peak/UI/components/components.dart';
+import 'package:provider/provider.dart';
 
-class HomeScreen extends StatefulWidget {
-  @override
-  _HomeScreenState createState() => _HomeScreenState();
-}
+import '../providers/theme_provider.dart';
+// Ensure you've imported your ThemeProvider and ThemedWidgetFactory
 
-class _HomeScreenState extends State<HomeScreen> {
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = Theme.of(context);
@@ -23,58 +14,50 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: theme.colorScheme.background,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor: theme.colorScheme.background,
         title: Text('Welcome back',
             style: GoogleFonts.nunitoSans(
                 textStyle: TextStyle(
                     fontSize: 28,
                     color: Colors.grey[700],
                     fontWeight: FontWeight.w900))),
+        elevation: 0, // Removes the shadow under the AppBar
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.all(10.0),
           child: Column(
             children: <Widget>[
-              // _logWorkoutButton(context),
+              // Example Widgets for Profile Screen
               _sectionCard(
-                  title: '',
-                  child: _placeholderWidget('', theme, context),
+                  title: 'Weather',
+                  child: _placeholderWidget('Its wet outside', theme, context),
                   theme: theme),
               _sectionCard(
-                  title: '',
-                  child: _placeholderWidget('', theme, context),
-                  theme: theme),
-              _sectionCard(
-                  title: '',
-                  child: _placeholderWidget('', theme, context),
+                  title: 'Today\'s Workout',
+                  child: _placeholderWidget('Gooch Stretch', theme, context),
                   theme: theme),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: _navigationWidget(0),
-      floatingActionButton: _fabWidget(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // Assuming you want the same FAB across different screens
     );
   }
 
-  // TODO: Figure out what the hell to do with this card
   Widget _sectionCard(
       {required String title,
       required Widget child,
       required ThemeData theme}) {
     return Card(
-      elevation: 4,
-      margin: EdgeInsets.only(top: 0, bottom: 0),
+      elevation: 0,
+      margin: EdgeInsets.only(top: 20, bottom: 20),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
-      // TODO: is it possible to remove the shadow of the card?
-      color: Colors.transparent,
-      shadowColor: Colors.transparent,
+      color: theme.colorScheme.background,
       child: Padding(
-        padding: EdgeInsets.all(1.0),
+        padding: EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
@@ -94,26 +77,12 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // Checks the theme type and renders a themed element accordingly
   Widget _placeholderWidget(
       String text, ThemeData themeData, BuildContext context) {
-    ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
+    ThemeProvider themeProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
     ThemeType currentThemeType = themeProvider.currentThemeType;
 
     return ThemedWidgetFactory.createContainer(text, currentThemeType);
-  }
-
-  Widget _navigationWidget(int selectedIndex) {
-    ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
-    ThemeType currentThemeType = themeProvider.currentThemeType;
-
-    return ThemedWidgetFactory.createNav(selectedIndex, currentThemeType);
-  }
-
-  Widget _fabWidget() {
-    ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
-    ThemeType currentThemeType = themeProvider.currentThemeType;
-
-    return ThemedWidgetFactory.createFab(currentThemeType);
   }
 }

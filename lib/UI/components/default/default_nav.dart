@@ -3,64 +3,22 @@ import 'package:flutter/services.dart';
 import 'package:flutter_inset_box_shadow/flutter_inset_box_shadow.dart';
 import 'package:peak/UI/components/abstract/themed_nav.dart';
 import 'package:peak/UI/components/default/default_nav_item.dart';
+import 'package:peak/providers/navigation_provider.dart';
 import 'package:peak/screens/exercise_screen.dart';
 import 'package:peak/screens/home_screen.dart';
 import 'package:peak/screens/profile_screen.dart';
+import 'package:provider/provider.dart';
 
 class DefaultNav extends ThemedBottomNavigation {
-  DefaultNav({required int selectedIndex})
-      : super(selectedIndex: selectedIndex);
-
-  @override
-  _DefaultNavState createState() => _DefaultNavState();
-}
-
-class _DefaultNavState extends State<DefaultNav> {
-  late int _selectedIndex;
-
-  @override
-  void initState() {
-    super.initState();
-    _selectedIndex = widget.selectedIndex;
-  }
-
-  void _onItemTapped(int index) {
-    HapticFeedback.heavyImpact();
-    if (index == _selectedIndex) {
-      return; // Do nothing if the current index is tapped again
-    }
-
-    setState(() {
-      _selectedIndex = index;
-    });
-
-    void _navigateToScreen(Widget screen) {
-      Navigator.of(context).pushReplacement(PageRouteBuilder(
-        pageBuilder: (context, animation, secondaryAnimation) => screen,
-        transitionsBuilder: (context, animation, secondaryAnimation, child) {
-          return FadeTransition(opacity: animation, child: child);
-        },
-        transitionDuration: Duration(milliseconds: 100),
-      ));
-    }
-
-    switch (index) {
-      case 0:
-        _navigateToScreen(HomeScreen());
-        break;
-      case 1:
-        _navigateToScreen(ExerciseScreen());
-        break;
-      case 3:
-        _navigateToScreen(ProfileScreen());
-        break;
-      default:
-        break;
-    }
-  }
+  DefaultNav({required int selectedIndex, required void Function(int) onTap})
+      : super(selectedIndex: selectedIndex, onTap: onTap);
 
   @override
   Widget build(BuildContext context) {
+    final navigationProvider = Provider.of<NavigationProvider>(context);
+    final _selectedIndex = navigationProvider.selectedIndex;
+    final _onTap = navigationProvider.setSelectedIndex;
+
     return BottomAppBar(
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -70,22 +28,30 @@ class _DefaultNavState extends State<DefaultNav> {
             icon: Icons.home,
             index: 0,
             context: context,
+            isSelected: _selectedIndex == 0,
+            onTap: _onTap,
           ),
           _buildTabItem(
             icon: Icons.fitness_center,
             index: 1,
             context: context,
+            isSelected: _selectedIndex == 1,
+            onTap: _onTap,
           ),
           SizedBox(width: 48), // The gap for the floating action button
           _buildTabItem(
             icon: Icons.draw_outlined,
             index: 2,
             context: context,
+            isSelected: _selectedIndex == 2,
+            onTap: _onTap,
           ),
           _buildTabItem(
             icon: Icons.person_outline,
             index: 3,
             context: context,
+            isSelected: _selectedIndex == 3,
+            onTap: _onTap,
           ),
         ],
       ),
@@ -97,9 +63,14 @@ class _DefaultNavState extends State<DefaultNav> {
     required IconData icon,
     required int index,
     required BuildContext context,
+    required bool isSelected,
+    required Function(int) onTap,
   }) {
-    final isSelected = _selectedIndex == index;
     return DefaultNavItem(
-        icon: icon, isSelected: isSelected, onTap: () => _onItemTapped(index));
+      icon: icon,
+      isSelected: isSelected,
+      onTap: () =>
+          onTap(index), // Call the provided onTap method with the index.
+    );
   }
 }

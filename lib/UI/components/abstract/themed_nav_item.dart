@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 abstract class ThemedNavItem extends StatelessWidget {
   final IconData icon;
-  final bool isSelected;
+  bool isSelected;
   final VoidCallback onTap;
 
-  const ThemedNavItem({
+  ThemedNavItem({
     Key? key,
     required this.icon,
-    this.isSelected = false,
+    required this.isSelected,
     required this.onTap,
   }) : super(key: key);
 
