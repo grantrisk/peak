@@ -1,6 +1,7 @@
 {
   "scripts": {
-    "format": "dart format . && npx prettier --write ."
+    "format": "dart format . && npx prettier --write .",
+    "tests": "flutter test"
   },
   "devDependencies": {
     "prettier": "^3.2.5"
