@@ -100,6 +100,8 @@ class SettingsScreen extends StatelessWidget {
                           await FirebaseAuth.instance.signOut();
                           // reset the theme
                           // TODO: Consider having a method that resets the the whole app when users sign out
+                          // TODO: clear the UserRepository cache
+                          // TODO: clear the ExerciseRepository cache?
                           themeProvider.setTheme(Themes.defaultTheme());
                           logger.info('User logged out');
 
@@ -172,6 +174,9 @@ class SettingsScreen extends StatelessWidget {
                         onPressed: () async {
                           try {
                             // TODO: Need to figure out how to reverse the delete if one of the operations fails
+                            // TODO: Need to delete all of their related data in the database
+                            // TODO: clear the UserRepository cache
+                            // TODO: clear the ExerciseRepository cache
                             HapticFeedback.heavyImpact();
                             // Delete the users document in the database
                             final _dbs =

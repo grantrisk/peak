@@ -1,11 +1,11 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:peak/main.dart';
+import 'package:peak/models/user_model.dart';
 import 'package:peak/providers/theme_provider.dart';
+import 'package:peak/repositories/UserRepository.dart';
 import 'package:peak/screens/sign_up_screen.dart';
-import 'package:peak/services/database_service/firebase_db_service.dart';
 import 'package:provider/provider.dart';
 
 import 'home_screen.dart';
@@ -16,47 +16,47 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _dbs = FirebaseDatabaseService.getInstance(logger);
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _auth = FirebaseAuth.instance;
 
   Future<void> _login(ThemeProvider themeProvider) async {
     try {
-      UserCredential userCreds = await _auth.signInWithEmailAndPassword(
+      logger.info('Logging in user: ${_emailController.text}');
+      // Log in the user
+      await _auth.signInWithEmailAndPassword(
           email: _emailController.text, password: _passwordController.text);
 
-      final user = userCreds.user!;
+      logger.info('User logged in successfully');
 
-      final updatedInfo = {'lastLogin': Timestamp.now()};
+      logger.info('Fetching user data');
+      // Fetch the user data with the logged in user's ID
+      PeakUser? userModel = await UserRepository().fetchUser();
+      logger.info('User data fetched');
 
-      final criteria = {'docId': user.uid};
-
-      try {
-        await _dbs.update('users', updatedInfo, criteria);
-        final userDoc = await _dbs.find('users', criteria);
-
-        if (userDoc != null) {
-          final prefs = userDoc['preferences'];
-          themeProvider.setThemeFromString(prefs['theme']);
-        }
-      } on FirebaseException catch (e) {
-        // If the update fails, then there is no document for this user. Create one.
-        // TODO: need to abstract this somehow so that we can use it in other places
-        //  and not have to duplicate the code.
-        final userInfo = {
-          'docId': user.uid,
-          'email': user.email,
-          'createdAt': Timestamp.now(),
-          'lastLogin': Timestamp.now(),
-          'preferences': {'example': 1234},
-        };
-
-        await _dbs.insert('users', user.uid, userInfo);
-        logger.info('User document created for user with email: ${user.email}');
+      if (userModel == null) {
+        /* FIXME: Need to handle this case differently? If they can
+            auth in but no user document exists, that's a huge issue
+        */
+        logger.error('User record not found in Firestore');
+        return;
       }
 
-      logger.info('User logged in with email: ${_emailController.text}');
+      logger.info(
+          'Updating last login time for user: ${userModel.firstName} ${userModel.lastName}');
+      await userModel.update(PUEnum.lastLogin, DateTime.now()).then((_) {
+        logger.info(
+            'Last login time updated for user: ${userModel.firstName} ${userModel.lastName}');
+      }).catchError((error) {
+        logger.error('Error updating last login time: $error');
+        return;
+      });
+
+      logger.info('Setting theme from user preferences');
+      // TODO: fix the way we handle preferences in the model
+      themeProvider.setThemeFromString(userModel.preferences['theme']);
+
+      logger.info('${userModel.firstName} ${userModel.lastName} logged in');
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => HomeScreen()));
     } on FirebaseAuthException catch (_) {
