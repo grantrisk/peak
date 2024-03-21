@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:peak/main.dart';
 import 'package:peak/providers/theme_provider.dart';
+import 'package:peak/repositories/UserRepository.dart';
 import 'package:peak/screens/preferences_screen.dart';
 import 'package:peak/utils/themes.dart';
 import 'package:provider/provider.dart';
 
-import '../services/database_service/firebase_db_service.dart';
 import '../widgets/app_header.dart';
 import 'login_screen.dart';
 
@@ -178,17 +178,15 @@ class SettingsScreen extends StatelessWidget {
                             // TODO: clear the UserRepository cache
                             // TODO: clear the ExerciseRepository cache
                             HapticFeedback.heavyImpact();
-                            // Delete the users document in the database
-                            final _dbs =
-                                FirebaseDatabaseService.getInstance(logger);
-                            await _dbs.delete('users',
-                                FirebaseAuth.instance.currentUser!.uid, {});
-
                             // Delete the user's account
-                            await FirebaseAuth.instance.currentUser!
-                                .delete(); // Delete the user
-
-                            logger.info('User account deleted');
+                            await UserRepository().deleteUser().then((value) {
+                              logger.info('User account deleted');
+                            }).catchError((e) {
+                              logger.error('Error deleting user account: $e');
+                              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                  content: Text(
+                                      'Error deleting account. Please try again.')));
+                            });
 
                             // Navigate to the login screen
                             Navigator.of(context).pushAndRemoveUntil(

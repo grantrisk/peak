@@ -3,8 +3,8 @@ import 'dart:typed_data';
 
 import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 
-// CustomCacheManager is a singleton class designed to manage cache operations
-// such as caching data and retrieving cached data.
+/// CustomCacheManager is a singleton class designed to manage cache operations
+/// such as caching data and retrieving cached data.
 class CustomCacheManager {
   // The static _instance variable holds the single instance of the class.
   // It is initialized immediately and only once, using the private constructor _internal.
@@ -31,8 +31,8 @@ class CustomCacheManager {
     maxNrOfCacheObjects: 100, // Maximum number of objects the cache can hold
   ));
 
-  // cacheData method takes a key and data (as String), converts the data into bytes,
-  // and uses the _cacheManager to store these bytes in the cache.
+  /// Takes a key and data (as String), converts the data into bytes,
+  /// and uses the _cacheManager to store these bytes in the cache.
   Future<void> cacheData(String key, String data) async {
     Uint8List bytes = utf8.encode(data); // Convert string to bytes
     await _cacheManager.putFile(
@@ -44,13 +44,18 @@ class CustomCacheManager {
     );
   }
 
-  // getCachedData method attempts to retrieve cached data for a given key.
-  // If the data exists, it returns the data as a String. Otherwise, it returns null.
+  /// Attempts to retrieve cached data for a given key.
+  /// If the data exists, it returns the data as a String. Otherwise, it returns null.
   Future<dynamic> getCachedData(String key) async {
     final fileInfo = await _cacheManager.getFileFromCache(key);
     if (fileInfo != null) {
       return fileInfo.file.readAsString(); // Read the file content as String
     }
     return null; // Return null if the file does not exist in cache
+  }
+
+  /// Deletes a cached file for a given key.
+  deleteCache(String peakUserKey) {
+    _cacheManager.removeFile(peakUserKey);
   }
 }

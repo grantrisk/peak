@@ -7,12 +7,16 @@ import 'package:peak/main.dart';
 import '../models/user_model.dart';
 import '../services/cache_manager/cache_manager.dart';
 
+/// UserRepository is a class designed to
+/// handle all user-related operations such as
+/// fetching, saving, updating, and deleting user data.
 class UserRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final CustomCacheManager _cacheManager = CustomCacheManager();
   final String peakUserKey = 'peak_user';
 
+  /// Fetch the user from the DB or cache
   Future<PeakUser?> fetchUser() async {
     logger.info('Fetching user data');
     var cachedUserData = await _cacheManager.getCachedData(peakUserKey);
@@ -40,6 +44,7 @@ class UserRepository {
     }
   }
 
+  /// Save the user to the DB and cache
   Future<bool> saveUser(PeakUser user) async {
     try {
       logger.info('Saving user: ${user.email}');
@@ -63,6 +68,7 @@ class UserRepository {
     }
   }
 
+  /// Update the user in the DB and cache
   Future<bool> updateUserValue(PeakUser user, PUEnum key, dynamic value) async {
     // Update the cache
     try {
@@ -94,6 +100,7 @@ class UserRepository {
     }
   }
 
+  /// Insert the user into the DB and cache
   Future<bool> insertUser(PeakUser userInfo) async {
     // Insert the user into the cache
     try {
@@ -116,6 +123,17 @@ class UserRepository {
     } catch (e) {
       logger.error('Failed to insert user: $e');
       return false;
+    }
+  }
+
+  /// Delete the user from the DB and cache
+  Future<void> deleteUser() async {
+    try {
+      await _firestore.collection('users').doc(_auth.currentUser!.uid).delete();
+      await _auth.currentUser!.delete();
+      await _cacheManager.deleteCache(peakUserKey);
+    } catch (e) {
+      logger.error('Failed to delete user: $e');
     }
   }
 }
