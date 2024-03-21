@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
       logger.info('Setting theme from user preferences');
       // TODO: fix the way we handle preferences in the model
-      themeProvider.setThemeFromString(userModel.preferences['theme']);
+      themeProvider.setThemeFromString(userModel.preferences.theme);
 
       logger.info('${userModel.firstName} ${userModel.lastName} logged in');
       Navigator.of(context).pushReplacement(

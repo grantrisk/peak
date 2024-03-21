@@ -41,7 +41,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         weight: 180,
         birthDate: DateTime.timestamp(),
         sex: 'Male',
-        preferences: {'example': 1234},
+        preferences: UserPreferences(), // Default preferences
       );
 
       // Insert the user into the DB and cache

@@ -25,7 +25,7 @@ class PeakUser {
   int weight;
   DateTime birthDate;
   String sex;
-  Map<String, dynamic> preferences;
+  UserPreferences preferences;
 
   PeakUser({
     required this.userId,
@@ -38,7 +38,7 @@ class PeakUser {
     required this.weight,
     required this.birthDate,
     required this.sex,
-    this.preferences = const {},
+    required this.preferences,
   });
 
   Map<String, dynamic> toJson() => {
@@ -52,7 +52,7 @@ class PeakUser {
         'weight': weight,
         'birthDate': birthDate.toIso8601String(),
         'sex': sex,
-        'preferences': preferences,
+        'preferences': preferences.toJson(),
       };
 
   static PeakUser fromJson(Map<String, dynamic> json) => PeakUser(
@@ -66,7 +66,9 @@ class PeakUser {
         weight: json['weight'],
         birthDate: DateTime.parse(json['birthDate']),
         sex: json['sex'],
-        preferences: json['preferences'],
+        preferences: json['preferences'] != null
+            ? UserPreferences.fromJson(json['preferences'])
+            : UserPreferences(),
       );
 
   Future<bool> update(PUEnum key, dynamic value) async {
@@ -110,4 +112,18 @@ class PeakUser {
     // Update cache and DB, return success
     return await UserRepository().updateUserValue(this, key, value);
   }
+}
+
+class UserPreferences {
+  String theme;
+
+  UserPreferences({this.theme = 'default'});
+
+  Map<String, dynamic> toJson() => {
+        'theme': theme,
+      };
+
+  static UserPreferences fromJson(Map<String, dynamic> json) => UserPreferences(
+        theme: json['theme'],
+      );
 }

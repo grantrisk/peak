@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peak/main.dart';
 import 'package:peak/models/user_model.dart';
 import 'package:peak/providers/theme_provider.dart';
 import 'package:peak/repositories/UserRepository.dart';
@@ -10,14 +11,13 @@ class PreferencesScreen extends StatelessWidget {
     PeakUser? user = await UserRepository().fetchUser();
 
     if (user != null) {
-      Map<String, dynamic> prefs = user.preferences;
-      prefs['theme'] = theme;
+      // Update the user's theme preference
+      user.preferences.theme = theme;
       try {
-        user.update(PUEnum.preferences, prefs);
-        await UserRepository().saveUser(user);
-        print("User theme preference updated successfully.");
+        await user.update(PUEnum.preferences, user.preferences);
+        logger.info('User theme preference updated successfully.');
       } catch (error) {
-        print("Error updating user theme preference: $error");
+        logger.error('Error updating user theme preference: $error');
       }
     }
   }

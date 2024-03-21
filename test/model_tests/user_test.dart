@@ -14,7 +14,7 @@ void main() {
       'weight': 180,
       'birthDate': '1990-01-01T00:00:00.000Z',
       'sex': 'male',
-      'preferences': new Map<String, dynamic>(),
+      'preferences': {'theme': 'default'},
     };
 
     test('PeakUser.fromJson creates an instance from JSON', () {
@@ -44,7 +44,7 @@ void main() {
         weight: 180,
         birthDate: DateTime.parse('1990-01-01T00:00:00Z'),
         sex: 'male',
-        preferences: new Map<String, dynamic>(),
+        preferences: UserPreferences(),
       );
 
       final json = peakUser.toJson();
