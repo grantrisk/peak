@@ -55,13 +55,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         logger.info('User inserted into the DB');
       }
 
-      /*
-        FIXME: the preferences field could be an issue especially as that
-          scales. If you update the preferences, you would also have to pass
-          back in all the other points in the preference field. So instead of
-          it being just a write, its a read, update, write. This could be
-      */
-
       logger.info('User created with email: $_email');
       Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => HomeScreen()));
