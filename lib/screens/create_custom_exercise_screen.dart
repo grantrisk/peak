@@ -1,5 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:peak/models/user_model.dart';
+import 'package:peak/repositories/UserRepository.dart';
 
 import '../main.dart';
 import '../models/exercise_model.dart';
@@ -14,8 +15,6 @@ class CreateCustomExerciseScreen extends StatefulWidget {
 
 class _CreateCustomExerciseScreenState
     extends State<CreateCustomExerciseScreen> {
-  final _auth = FirebaseAuth.instance;
-
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   String? _selectedPrimaryMuscle;
@@ -218,13 +217,20 @@ class _CreateCustomExerciseScreenState
   }
 
   Future<void> _saveExerciseToDatabase() async {
+    PeakUser? user = await UserRepository().fetchUser();
+    if (user == null) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Failed to save exercise')));
+      return;
+    }
+
     Exercise exercise = Exercise(
-      id: _auth.currentUser!.uid + _nameController.text,
+      id: user.userId + _nameController.text,
       name: _nameController.text,
       primaryMuscle: _selectedPrimaryMuscle!,
       secondaryMuscles: _selectedSecondaryMuscles,
       sets: [],
-      owner: _auth.currentUser!.uid,
+      owner: user.userId,
       custom: true,
       type: _selectedExerciseType!,
       equipment: _selectedExerciseEquipment!,

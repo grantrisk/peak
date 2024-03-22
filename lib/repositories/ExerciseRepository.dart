@@ -1,18 +1,27 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:peak/main.dart';
 
 import '../models/exercise_model.dart';
+import '../models/user_model.dart';
 import '../services/cache_manager/cache_manager.dart';
+import 'UserRepository.dart';
 
 class ExerciseRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final CustomCacheManager _cacheManager = CustomCacheManager();
   final String defaultExerciseKey = 'default_exercises';
   final String customExerciseKey = 'custom_exercises';
+  PeakUser? _user; // Removed the initialization from here
+
+  ExerciseRepository() {
+    _initializeUser();
+  }
+
+  Future<void> _initializeUser() async {
+    _user = await UserRepository().fetchUser();
+  }
 
   Future<List<Exercise>> fetchExercises() async {
     logger.info('Fetching exercises');
@@ -47,7 +56,7 @@ class ExerciseRepository {
       logger.info('Fetching user exercises from Firestore');
       var collection2 = await _firestore
           .collection(customExerciseKey)
-          .where('owner', isEqualTo: _auth.currentUser!.uid)
+          .where('owner', isEqualTo: _user!.userId)
           .get();
 
       List<Exercise> exercises =
