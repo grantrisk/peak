@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:peak/models/exercise_model.dart';
 import 'package:peak/models/user_goal_model.dart';
+import 'package:uuid/uuid.dart';
 
 class WorkoutSession {
-  String id = UniqueKey().toString();
+  String id = Uuid().v4();
   String owner = '';
   DateTime date;
   List<Exercise> exercises;

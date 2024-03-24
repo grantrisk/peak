@@ -1,36 +1,23 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:peak/main.dart';
+import 'package:peak/models/user_model.dart';
 import 'package:peak/providers/theme_provider.dart';
-import 'package:peak/services/logger/default_logger.dart';
-import 'package:peak/services/logger/logger_config.dart';
+import 'package:peak/repositories/UserRepository.dart';
 import 'package:peak/utils/themes.dart';
 import 'package:provider/provider.dart';
-import 'package:peak/services/database_service/firebase_db_service.dart';
 
 class PreferencesScreen extends StatelessWidget {
-  final _dbs = FirebaseDatabaseService.getInstance(DefaultLogger(
-      config: LoggerConfig(
-          logLevel: LogLevel.debug,
-          destination: LogDestination.console,
-          filePath: 'logs.txt')));
-
-  final _auth = FirebaseAuth.instance;
-
   Future<void> _saveThemeToPrefs(String theme) async {
-    final User? user = _auth.currentUser;
+    PeakUser? user = await UserRepository().fetchUser();
 
     if (user != null) {
+      // Update the user's theme preference
+      user.preferences.theme = theme;
       try {
-        final userInfo = {
-          'preferences': {'theme': theme}
-        };
-
-        final critera = {'docId': user.uid};
-
-        await _dbs.update('users', userInfo, critera);
-        print("User theme preference updated successfully.");
+        await user.update(PUEnum.preferences, user.preferences);
+        logger.info('User theme preference updated successfully.');
       } catch (error) {
-        print("Error updating user theme preference: $error");
+        logger.error('Error updating user theme preference: $error');
       }
     }
   }
