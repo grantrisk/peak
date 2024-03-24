@@ -1,23 +1,34 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../models/exercise_model.dart';
 import '../models/exercise_set_model.dart';
+import '../models/user_model.dart';
 import '../models/workout_session_model.dart';
+import '../repositories/UserRepository.dart';
 
 class WorkoutSessionProvider with ChangeNotifier {
-  final _auth = FirebaseAuth.instance;
-  WorkoutSession _workoutSession =
-      WorkoutSession(date: DateTime.now(), owner: 'unknown');
+  WorkoutSession _workoutSession = WorkoutSession(
+      date: DateTime.now(),
+      owner: 'unknown',
+      exercises: [],
+      duration: Duration.zero);
 
   WorkoutSession get workoutSession => _workoutSession;
 
-  void initializeWorkoutSession(WorkoutSession workoutSession) {
+  Future<bool> initializeWorkoutSession(WorkoutSession workoutSession) async {
+    PeakUser? user = await UserRepository().fetchUser();
+    if (user == null) {
+      return false;
+    }
+
     _workoutSession = WorkoutSession(
       date: workoutSession.date,
-      owner: _auth.currentUser!.uid,
+      owner: user.userId,
+      exercises: workoutSession.exercises,
+      duration: workoutSession.duration,
     );
     notifyListeners();
+    return true;
   }
 
   void reorderExercises(int oldIndex, int newIndex) {
@@ -90,10 +101,19 @@ class WorkoutSessionProvider with ChangeNotifier {
     }
   }
 
-  void clearWorkoutSession() {
-    _workoutSession =
-        WorkoutSession(date: DateTime.now(), owner: _auth.currentUser!.uid);
+  Future<bool> clearWorkoutSession() async {
+    PeakUser? user = await UserRepository().fetchUser();
+    if (user == null) {
+      return false;
+    }
+
+    _workoutSession = WorkoutSession(
+        date: DateTime.now(),
+        owner: user.userId,
+        exercises: [],
+        duration: Duration.zero);
     notifyListeners();
+    return true;
   }
 
   Exercise getExerciseById(String id) {
@@ -108,6 +128,8 @@ class WorkoutSessionProvider with ChangeNotifier {
       secondaryMuscles: [],
       owner: 'NULL',
       custom: false,
+      type: ExerciseType.strength,
+      equipment: ExerciseEquipment.none,
     );
   }
 

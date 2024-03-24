@@ -1,5 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:peak/models/user_model.dart';
+import 'package:peak/repositories/UserRepository.dart';
 
 import '../main.dart';
 import '../models/exercise_model.dart';
@@ -14,13 +15,12 @@ class CreateCustomExerciseScreen extends StatefulWidget {
 
 class _CreateCustomExerciseScreenState
     extends State<CreateCustomExerciseScreen> {
-  final _auth = FirebaseAuth.instance;
-
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   String? _selectedPrimaryMuscle;
+  ExerciseType? _selectedExerciseType;
+  ExerciseEquipment? _selectedExerciseEquipment;
   List<String> _selectedSecondaryMuscles = [];
-  bool _isSecondaryMuscleSelectionOpen = false;
 
   List<String> muscles = [
     "shoulders",
@@ -82,6 +82,70 @@ class _CreateCustomExerciseScreenState
                   },
                 ),
                 DropdownButtonFormField<String>(
+                  value: _selectedExerciseType != null
+                      ? exerciseTypeToString(_selectedExerciseType!)
+                      : null,
+                  hint: Text(
+                    "Select Exercise Type",
+                    style: TextStyle(color: theme.colorScheme.onPrimary),
+                  ),
+                  items: ExerciseType.values.map((ExerciseType value) {
+                    return DropdownMenuItem<String>(
+                      value: exerciseTypeToString(value),
+                      child: Text(
+                        exerciseTypeToString(value),
+                        style: TextStyle(color: theme.colorScheme.onPrimary),
+                      ),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedExerciseType = stringToExerciseType(newValue);
+                    });
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Exercise Type',
+                    labelStyle: TextStyle(color: theme.colorScheme.onPrimary),
+                  ),
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Please select the exercise type';
+                    }
+                    return null;
+                  },
+                ),
+                DropdownButtonFormField<String>(
+                  value: _selectedExerciseEquipment != null
+                      ? exerciseEquipmentToString(_selectedExerciseEquipment!)
+                      : null,
+                  hint: Text("Select Equipment Type",
+                      style: TextStyle(color: theme.colorScheme.onPrimary)),
+                  items:
+                      ExerciseEquipment.values.map((ExerciseEquipment value) {
+                    return DropdownMenuItem<String>(
+                      value: exerciseEquipmentToString(value),
+                      child: Text(exerciseEquipmentToString(value),
+                          style: TextStyle(color: theme.colorScheme.onPrimary)),
+                    );
+                  }).toList(),
+                  onChanged: (String? newValue) {
+                    setState(() {
+                      _selectedExerciseEquipment =
+                          stringToExerciseEquipment(newValue);
+                    });
+                  },
+                  decoration: InputDecoration(
+                    labelText: 'Equipment Type',
+                    labelStyle: TextStyle(color: theme.colorScheme.onPrimary),
+                  ),
+                  validator: (value) {
+                    if (value == null) {
+                      return 'Please select the equipment type';
+                    }
+                    return null;
+                  },
+                ),
+                DropdownButtonFormField<String>(
                   value: _selectedPrimaryMuscle,
                   hint: Text("Select Primary Muscle",
                       style: TextStyle(color: theme.colorScheme.onPrimary)),
@@ -94,7 +158,7 @@ class _CreateCustomExerciseScreenState
                   }).toList(),
                   onChanged: (newValue) {
                     setState(() {
-                      _selectedPrimaryMuscle = newValue;
+                      _selectedPrimaryMuscle = newValue!;
                     });
                   },
                   decoration: InputDecoration(
@@ -108,39 +172,27 @@ class _CreateCustomExerciseScreenState
                     return null;
                   },
                 ),
-                ElevatedButton(
-                  onPressed: () {
-                    setState(() {
-                      _isSecondaryMuscleSelectionOpen =
-                          !_isSecondaryMuscleSelectionOpen;
-                    });
-                  },
-                  child: Text(
-                      _isSecondaryMuscleSelectionOpen
-                          ? "Close Secondary Muscles"
-                          : "Select Secondary Muscles",
-                      style: TextStyle(color: theme.colorScheme.onPrimary)),
+                SizedBox(height: 20),
+                Text("Secondary Muscles",
+                    style: TextStyle(color: theme.colorScheme.onPrimary)),
+                Wrap(
+                  children: muscles.map((muscle) {
+                    return ChoiceChip(
+                      label: Text(muscle),
+                      labelStyle: TextStyle(color: theme.colorScheme.onPrimary),
+                      selected: _selectedSecondaryMuscles.contains(muscle),
+                      onSelected: (bool selected) {
+                        setState(() {
+                          if (selected) {
+                            _selectedSecondaryMuscles.add(muscle);
+                          } else {
+                            _selectedSecondaryMuscles.remove(muscle);
+                          }
+                        });
+                      },
+                    );
+                  }).toList(),
                 ),
-                if (_isSecondaryMuscleSelectionOpen)
-                  Wrap(
-                    children: muscles.map((muscle) {
-                      return ChoiceChip(
-                        label: Text(muscle),
-                        labelStyle:
-                            TextStyle(color: theme.colorScheme.onPrimary),
-                        selected: _selectedSecondaryMuscles.contains(muscle),
-                        onSelected: (bool selected) {
-                          setState(() {
-                            if (selected) {
-                              _selectedSecondaryMuscles.add(muscle);
-                            } else {
-                              _selectedSecondaryMuscles.remove(muscle);
-                            }
-                          });
-                        },
-                      );
-                    }).toList(),
-                  ),
                 SizedBox(height: 20),
                 ElevatedButton(
                   onPressed: () {
@@ -151,6 +203,10 @@ class _CreateCustomExerciseScreenState
                   },
                   child: Text('Save Exercise',
                       style: TextStyle(color: theme.colorScheme.onPrimary)),
+                  style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                        theme.colorScheme.secondary),
+                  ),
                 ),
               ],
             ),
@@ -161,14 +217,23 @@ class _CreateCustomExerciseScreenState
   }
 
   Future<void> _saveExerciseToDatabase() async {
+    PeakUser? user = await UserRepository().fetchUser();
+    if (user == null) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Failed to save exercise')));
+      return;
+    }
+
     Exercise exercise = Exercise(
-      id: _auth.currentUser!.uid + _nameController.text,
+      id: user.userId + _nameController.text,
       name: _nameController.text,
       primaryMuscle: _selectedPrimaryMuscle!,
       secondaryMuscles: _selectedSecondaryMuscles,
       sets: [],
-      owner: _auth.currentUser!.uid,
+      owner: user.userId,
       custom: true,
+      type: _selectedExerciseType!,
+      equipment: _selectedExerciseEquipment!,
     );
 
     // Save the exercise to the database
@@ -187,6 +252,8 @@ class _CreateCustomExerciseScreenState
     setState(() {
       _selectedPrimaryMuscle = null;
       _selectedSecondaryMuscles = [];
+      _selectedExerciseType = null;
+      _selectedExerciseEquipment = null;
     });
   }
 

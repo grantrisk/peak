@@ -1,10 +1,9 @@
 import 'dart:async';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:peak/models/user_model.dart';
 import 'package:peak/widgets/searchable_dropdown.dart';
 import 'package:provider/provider.dart';
 import 'package:uuid/uuid.dart';
@@ -15,6 +14,8 @@ import '../models/exercise_set_model.dart';
 import '../models/workout_session_model.dart';
 import '../providers/workout_session_provider.dart';
 import '../repositories/ExerciseRepository.dart';
+import '../repositories/UserRepository.dart';
+import '../repositories/WorkoutSessionRepository.dart';
 import '../widgets/plate_loader_widget.dart';
 import '../widgets/rest_timer_widget.dart';
 import '../widgets/workout_timer.dart';
@@ -29,10 +30,9 @@ class NewWorkoutScreen extends StatefulWidget {
 }
 
 class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final _auth = FirebaseAuth.instance;
   final TextEditingController _exerciseNameController = TextEditingController();
   final Stopwatch _stopwatch = Stopwatch();
+  PeakUser? _user;
   List<Exercise> _allExercises = []; // This will hold all exercises
   bool _isRestTimerVisible = false;
   Timer? _restTimer;
@@ -42,6 +42,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
   @override
   void initState() {
     super.initState();
+    _initializeUser();
     _stopwatch.start();
     _loadExercises();
 
@@ -49,7 +50,10 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<WorkoutSessionProvider>(context, listen: false)
           .initializeWorkoutSession(WorkoutSession(
-              date: DateTime.now(), owner: _auth.currentUser!.uid));
+              date: DateTime.now(),
+              owner: _user!.userId,
+              exercises: [],
+              duration: Duration.zero));
 
       if (widget.initialExercises != null) {
         for (var exercise in widget.initialExercises!) {
@@ -62,10 +66,19 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
             secondaryMuscles: exercise.secondaryMuscles,
             owner: exercise.owner,
             custom: exercise.custom,
+            type: exercise.type,
+            equipment: exercise.equipment,
           ));
         }
       }
     });
+  }
+
+  void _initializeUser() async {
+    _user = await UserRepository().fetchUser();
+    if (_user != null) {
+      logger.error('Error fetching user');
+    }
   }
 
   void _loadExercises() async {
@@ -293,7 +306,7 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
     );
   }
 
-  void _finishWorkout() {
+  Future<void> _finishWorkout() async {
     Navigator.pop(context); // Dismiss the dialog
 
     WorkoutSession workoutSession =
@@ -323,13 +336,45 @@ class _NewWorkoutScreenState extends State<NewWorkoutScreen> {
 
     // TODO: see why the exercises that are being saved dont have the primary or secondary muscles
     // Add the workout session to Firestore
-    _firestore.collection('workout_sessions').add({
+    /*_firestore.collection('workout_sessions').add({
       'date': workoutSession.date,
       'exercises': workoutSession.exercises
           .map((e) => e.toJson())
           .toList(), // Convert exercises to JSON
       'owner': workoutSession.owner, // Replace with actual user id
-    });
+    });*/
+
+    bool success =
+        await WorkoutSessionRepository().saveWorkoutSession(workoutSession);
+    if (success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Workout session saved successfully'),
+          elevation: 4,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
+          margin: EdgeInsets.all(16.0),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: EdgeInsets.all(16.0),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Failed to save workout session'),
+          elevation: 4,
+          backgroundColor: Theme.of(context).colorScheme.error,
+          margin: EdgeInsets.all(16.0),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          padding: EdgeInsets.all(16.0),
+        ),
+      );
+    }
 
     // clear the provider
     Provider.of<WorkoutSessionProvider>(context, listen: false)

@@ -253,14 +253,12 @@ class _ExerciseScreenState extends State<ExerciseScreen> {
   Future<List<Exercise>> _generateRandomWorkout() async {
     // TODO: need to figure out another way of importing the logger other than importing main.dart
     logger.info('Generating random workout');
-    ExerciseRepository exerciseRepository = ExerciseRepository();
-    List<Exercise> exercises = await exerciseRepository.fetchExercises();
+    List<Exercise> exercises = await ExerciseRepository().fetchExercises();
 
     Random random = Random();
-    int exercisesPerDay = 6; // Example number of exercises per day
-    List<Exercise> dailyWorkout = List.generate(
-        exercisesPerDay, (_) => exercises[random.nextInt(exercises.length)]);
+    List<Exercise> workout =
+        List.generate(6, (_) => exercises[random.nextInt(exercises.length)]);
 
-    return dailyWorkout;
+    return workout;
   }
 }

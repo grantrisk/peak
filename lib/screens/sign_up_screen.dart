@@ -1,9 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:peak/main.dart';
-import 'package:peak/services/database_service/firebase_db_service.dart';
+import 'package:peak/models/user_model.dart';
+import 'package:peak/repositories/UserRepository.dart';
 
 import 'home_screen.dart';
 
@@ -14,7 +14,6 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final _auth = FirebaseAuth.instance;
-  final _dbs = FirebaseDatabaseService.getInstance(logger);
   String _email = '';
   String _password = '';
 
@@ -26,15 +25,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
       // The "!" tells the interpreter that we know this cannot be null.
       final newUser = userCreds.user!;
 
-      final userInfo = {
-        'docId': newUser.uid,
-        'email': _email,
-        'createdAt': Timestamp.now(),
-        'lastLogin': Timestamp.now(),
-        'preferences': {'example': 1234},
-      };
+      /*
+        TODO: need to create the functionality for the user to fill out
+          the rest of this information. For now we'll just hard code it.
+       */
 
-      await _dbs.insert('users', newUser.uid, userInfo);
+      PeakUser userInfo = PeakUser(
+        userId: newUser.uid,
+        email: _email,
+        createdAt: DateTime.timestamp(),
+        lastLogin: DateTime.timestamp(),
+        firstName: 'John',
+        lastName: 'Doe',
+        height: '6\'0',
+        weight: 180,
+        birthDate: DateTime.timestamp(),
+        sex: 'Male',
+        preferences: UserPreferences(), // Default preferences
+      );
+
+      // Insert the user into the DB and cache
+      bool success = await UserRepository().insertUser(userInfo);
+      if (!success) {
+        logger.error('Failed to insert user into the DB');
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to create user. Please try again')));
+        return;
+      } else {
+        logger.info('User inserted into the DB');
+      }
 
       logger.info('User created with email: $_email');
       Navigator.of(context).pushReplacement(

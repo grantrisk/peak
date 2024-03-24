@@ -10,7 +10,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:peak/providers/theme_provider.dart';
-import 'package:peak/services/database_service/firebase_db_service.dart';
 import 'package:peak/services/logger/logger.dart';
 import 'package:peak/UI/themes.dart';
 import 'package:provider/provider.dart';

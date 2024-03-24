@@ -1,18 +1,27 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:peak/main.dart';
 
 import '../models/exercise_model.dart';
+import '../models/user_model.dart';
 import '../services/cache_manager/cache_manager.dart';
+import 'UserRepository.dart';
 
 class ExerciseRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   final CustomCacheManager _cacheManager = CustomCacheManager();
   final String defaultExerciseKey = 'default_exercises';
-  final String customExerciseKey = 'exercises';
+  final String customExerciseKey = 'custom_exercises';
+  PeakUser? _user; // Removed the initialization from here
+
+  ExerciseRepository() {
+    _initializeUser();
+  }
+
+  Future<void> _initializeUser() async {
+    _user = await UserRepository().fetchUser();
+  }
 
   Future<List<Exercise>> fetchExercises() async {
     logger.info('Fetching exercises');
@@ -32,6 +41,11 @@ class ExerciseRepository {
       logger.info('Fetching default exercises from Firestore');
       var collection = await _firestore.collection(defaultExerciseKey).get();
 
+      /*
+        TODO: when generating a random workout, the default exercises are
+          fetched from Firestore and display on the workout screen with no
+          muscle groups
+      */
       List<Exercise> defaultExercises =
           collection.docs.map((doc) => Exercise.fromJson(doc.data())).toList();
 
@@ -42,7 +56,7 @@ class ExerciseRepository {
       logger.info('Fetching user exercises from Firestore');
       var collection2 = await _firestore
           .collection(customExerciseKey)
-          .where('owner', isEqualTo: _auth.currentUser!.uid)
+          .where('owner', isEqualTo: _user!.userId)
           .get();
 
       List<Exercise> exercises =
@@ -67,7 +81,7 @@ class ExerciseRepository {
           .then((_) {
         logger.info('Exercise saved successfully');
       }).catchError((error) {
-        logger.error('Failed to save exercise');
+        logger.error('DB error: $error');
       });
 
       // Save the exercise to the cache
@@ -85,7 +99,7 @@ class ExerciseRepository {
 
       return true;
     } catch (e) {
-      logger.error('Failed to save exercise');
+      logger.error('Failed to save exercise: $e');
       return false;
     }
   }

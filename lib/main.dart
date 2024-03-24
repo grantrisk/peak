@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -8,11 +7,12 @@ import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:intl/intl.dart';
 import 'package:peak/providers/navigation_provider.dart';
+import 'package:peak/models/user_model.dart';
 import 'package:peak/providers/theme_provider.dart';
 import 'package:peak/providers/workout_session_provider.dart';
+import 'package:peak/repositories/UserRepository.dart';
 import 'package:peak/screens/home_screen.dart';
 import 'package:peak/screens/login_screen.dart';
-import 'package:peak/services/database_service/firebase_db_service.dart';
 import 'package:peak/services/logger/logger.dart';
 import 'package:peak/UI/themes.dart';
 import 'package:peak/widgets/screen_view.dart';
@@ -113,16 +113,41 @@ class MyApp extends StatelessWidget {
               return LoginScreen();
             }
 
-            // TODO: figure out why this gets called twice when refreshing app
-            logger.info('Already Logged In');
+            return FutureBuilder<PeakUser?>(
+              future: UserRepository().fetchUser(),
+              builder: (context, userSnapshot) {
+                if (userSnapshot.connectionState == ConnectionState.done) {
+                  PeakUser? userModel = userSnapshot.data;
+                  if (userModel == null) {
+                    /* FIXME: Need to handle this case differently? If they can
+                        auth in but no user document exists, that's a huge issue
+                    */
+                    logger.error('User record not found in Firestore');
+                    return LoginScreen();
+                  }
 
-            logger.info('Updating last login time for user: ${user.email}');
-            final updatedInfo = {'lastLogin': Timestamp.now()};
-            final criteria = {'docId': user.uid};
-            final _dbs = FirebaseDatabaseService.getInstance(logger);
-            _dbs.update('users', updatedInfo, criteria);
+                  // TODO: figure out why this gets called twice when refreshing app
+                  logger.info('Already Logged In');
+                  logger.info(
+                      'Updating last login time for user: ${userModel.firstName} ${userModel.lastName}');
 
-            return ScreenView();
+                  userModel.update(PUEnum.lastLogin, DateTime.now()).then((_) {
+                    logger.info(
+                        'Last login time updated for user: ${userModel.firstName} ${userModel.lastName}');
+                  }).catchError((error) {
+                    logger.error('Error updating last login time: $error');
+                  });
+
+                  return HomeScreen();
+                }
+                // While waiting for the future to complete, show a progress indicator
+                return Scaffold(
+                  body: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                );
+              },
+            );
           }
           return Scaffold(
             body: Center(
