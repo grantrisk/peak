@@ -13,7 +13,7 @@ class ExerciseRepository {
   final CustomCacheManager _cacheManager = CustomCacheManager();
   final String defaultExerciseKey = 'default_exercises';
   final String customExerciseKey = 'custom_exercises';
-  PeakUser? _user; // Removed the initialization from here
+  PeakUser? _user;
 
   ExerciseRepository() {
     _initializeUser();
